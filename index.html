@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="myButton">click me</button>
+    <script>
+        /** @format */
+    
+const debounce=(func, delay)=>{
+    let timer 
+    return function(){
+  clearTimeout(timer)
+       timer = setTimeout(()=>{
+            func()
+        },delay)
+    }
+
+}
+const debouncedFunction=debounce(printmyname,1000)
+
+function printmyname(){
+    console.log(`print my name`)
+}
+document.getElementById('myButton').addEventListener('click', debouncedFunction);
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="myButton">click me</button>
+    <script>
+ function debounce (cb,delay){
+    let timer 
+    return function(a,b){
+        clearTimeout(timer)
+       timer= setTimeout(()=>{
+             cb(a,b)
+       },delay)
+    }
+ }
+ const debouncedFunction=debounce(doSum,1000)
+
+ function doSum(a,b){
+     console.log(a+b)
+     return a+b
+ }
+ 
+ document.getElementById('myButton').addEventListener('click', ()=>debouncedFunction(2,7));
+
+
+ let user ={
+    address:{vill:"varanasi"}
+ }
+console.log(user)
+    </script>
+</body>
+</html>
