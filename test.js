@@ -59,7 +59,7 @@ const transformed = Object.fromEntries(
 console.log(transformed);
 // Output: { a: 2, b: 4, c: 6 }
 */
-
+/*
 let nestedArr = [
   ["a", 1],
   ["b", 2],
@@ -68,3 +68,35 @@ let nestedArr = [
 for (let [key, val] of nestedArr) {
   console.log({ key, val }); //{ key: 'a', val: 1 } { key: 'b', val: 2 } { key: 'c', val: 3 }
 }
+*/
+/*
+let actualObj = {
+  name: "arif",
+  email: "arif@gmail.com",
+  getName: function () {
+    console.log(`detail : name=>${this.name}, email=>${this.email}`);
+  },
+};
+let updatedObj = {
+  name: "md arif",
+  email: "arifmedianv@gmail.com",
+};
+let obj = {};
+// actualObj.getName();
+const updated = Object.assign(actualObj, updatedObj); // actualObj also got changed like updated
+// const updated = Object.assign({}, actualObj, updatedObj);// in this actualObj is safe
+console.log(updated); //{name: 'md arif',email: 'arifmedianv@gmail.com',getName: [Function: getName]}
+console.log("actualObj", actualObj);
+*/
+(function () {
+  try {
+    if (true) {
+      const ids = [];
+      const res = null;
+      ids.push(res?.name);
+      console.log(ids);
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+})();
