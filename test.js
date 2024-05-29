@@ -88,6 +88,7 @@ const updated = Object.assign(actualObj, updatedObj); // actualObj also got chan
 console.log(updated); //{name: 'md arif',email: 'arifmedianv@gmail.com',getName: [Function: getName]}
 console.log("actualObj", actualObj);
 */
+/*
 (function () {
   try {
     if (true) {
@@ -100,3 +101,4 @@ console.log("actualObj", actualObj);
     console.log(error.message);
   }
 })();
+*/
