@@ -529,6 +529,7 @@ function b() {
 b();
 console.log(a)
 */
+
 /*
 function b() {
   // var a = 5;
@@ -541,3 +542,57 @@ function b() {
 }
 b();
 */
+
+// let obj1 = { name: "arid" };// this data is safe in memory and only this dat's ref is assigned to obj1 , if at any point of time a brand new data is assigned to obj1 this data will be safe new
+// let obj2 = obj1;
+// obj2.email = "EMAIL@GMAIL.COM";
+// obj1 = {};// obj1 now referencing to a brand new empty object , but obj2 referencing to old one
+// console.log(obj2.name); //?
+
+/*
+const obj = { name: "arif", address: { vill: "sihoriya" } };// address key of obj has stored address of {vill:"sihoriya "}
+let b = obj.address;// that address assigned to b also 
+obj.address = { vill: "badgawa" };// now address key of obj has stored address of {vill:"badgawa"} but b has still ref of {vill:"sihoriya"}, ref is changing or say breaking
+console.log(b);//?
+console.log(obj);//?
+let c = obj.address
+console.log(c)//?
+
+*/
+// in one word always check that address is changing  or data of address if data of address is being updated with . operator changes will reflect every where like in below code
+
+/*
+const obj = { name: "arif", address: { vill: "sihoriya" } };
+let b = obj.address;
+obj.address.vill = "badgawa";// data of same ref being change
+console.log(b);
+*/
+/*
+var a = 10;
+var a;
+console.log(a);//10
+*/
+
+//object.create
+/*
+const user = { name: "sdsfsd" };
+let copy = Object.create(user);
+console.log(copy); //{}
+console.log(copy.name); //?
+const keys = Object.keys(copy);
+console.log({ keys });
+*/
+//to string on array and on object
+/*
+let arr = [1, "ab", 5];
+let stringOfArr = arr.toString();
+// console.log(stringOfArr);
+const user = { name: "sdsfsd" };
+let stringOfObj = user.toString();
+console.log(stringOfObj); //'[object Object]'
+*/
+
+// console.log({} + []);
+
+var user = "arif";
+console.log(globalThis.user);
