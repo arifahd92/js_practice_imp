@@ -21,7 +21,8 @@ function outer() {
   inner();
 }
 outer();
-// */
+*/
+
 /*
 function myFunction() {
   var arr = [];
@@ -37,9 +38,29 @@ var functions = myFunction();
 functions[0]();
 functions[1]();
 functions[2]();
+
+*/
+
+/*
+function myFunction() {
+  var arr = [];
+  for (var i = 0; i < 3; i++) {
+    (function (i) {
+      arr.push(function () {
+        console.log(i);
+      });
+    })(i);
+  }
+  return arr;
+}
+
+var functions = myFunction();
+functions[0]();
+functions[1]();
+functions[2]();
 */
 /*
-function foo() {// no binding
+function foo() {
   let a = 1;
   setTimeout(function () {
     console.log(a);
@@ -49,6 +70,7 @@ function foo() {// no binding
 
 foo();
 */
+
 /*
 var x = 10;
 function outer() {
@@ -269,12 +291,13 @@ function bar() {
 }
 
 bar();
-*/
+// */
 /*
 var a = 1;
 
 function foo() {
-  a = 10;
+  a = 10; // first hoisting of declared variables and functions then assignment, here a is not declared so only hoisting of function a will take place and inside variable a a function will be stored (a new scope of a will be created) 
+  console.log({ a });
   return;
   function a() {}
 }
@@ -309,9 +332,11 @@ function outer() {
   var arr = [];
 
   for (var i = 0; i < 3; i++) {
+    // ((i) => {
     arr.push(function () {
       console.log(i);
     });
+    // })(i);
   }
 
   return arr;
@@ -381,8 +406,9 @@ for (var i = 1; i <= 5; i++) {
 /*
 let tricky = { x: 1, y: 2 };
 let copy = tricky;
-copy.x =copy.x++;
-// copy.x++;
+copy.x = 5;
+tricky.x = copy.x++; //copy.x ke value ko 1 se increment karo and then then return previous value, so finally copy.x remain same
+// copy.x++;// copy.x ke value ko 1 se increment
 console.log(tricky.x);
 */
 /*
@@ -399,7 +425,7 @@ var c = { key: "c" };
 a[b] = 123;
 a[c] = 456;
 
-console.log(a[b]);// 465
+console.log(a[b]); // 465
 */
 /*
 (function () {
@@ -593,6 +619,149 @@ console.log(stringOfObj); //'[object Object]'
 */
 
 // console.log({} + []);
+/*
+const arr = ["str1", "str2", 5];
+console.log(Object.keys(arr)); //['0,'1,'2]
+*/
+/*
+let val;
+let obj = { marks: val };
+console.log(obj.marks ? obj.marks : "default"); // if obj.marks is a falsy then default
+console.log(obj.marks || "default");
+// The nullish coalescing operator (??) is designed for this purpose. It only considers null or undefined as nullish values.
+console.log(obj.marks ?? "default"); // Output: 0, it will return default only and only if obj.marks is undefined or null , in case of empty string it will result empty string
+*/
 
-var user = "arif";
-console.log(globalThis.user);
+/*
+let num;
+// console.log(num.name); //error can not read properties of undefined reading name
+//proto is only created after assignment (assignment should not be null or undefined), and if proto created we do not ge error
+let num2 = "";
+console.log(num2.name); // undefined
+*/
+
+/*
+function anonymous() {}
+console.log(anonymous.name); //anonymous
+console.log(anonymous.name2); //undefined
+*/
+
+/*
+const fruits = ["Apple", "banana"];
+const result = fruits.join(", ");
+console.log(result); // Output: "Apple, banana"
+*/
+/*
+for (var i = 0; i < 5; i++) {
+  ((i) => {
+    setTimeout(() => {
+      console.log(i);
+    })(i);
+    }, 100);
+
+}
+*/
+/*
+for (var i = 0; i < 5; i++) {
+  setTimeout(
+    (i) => {
+      console.log(i);
+    },
+    100,
+    i
+  );
+}
+*/
+
+//******************************************************* imp ***************************************************
+
+/*
+let perPage = " "; // space is a truthy value but it returns true in case of " " == 0  or ( "     " == 0 ) it also will return true
+console.log(
+  " " == 0, // true
+  "" == 0, //true
+
+  " " == null, // false
+  "" == null, //false
+
+  " " == undefined, //false
+  "" == undefined // false
+);
+
+// all space (" "), multiple spaces ("   ") and empty ("") string are loosely equal to 0
+
+//neither space (" ") nor empty string ("") are loosely equal to both ( undefined or null)
+
+console.log(
+  null === null, //true
+  undefined === undefined, // true
+  null == undefined, // true
+  NaN == NaN, // false **
+  NaN === NaN //false **
+);
+
+// if (perPage == 0 || perPage == null || perPage == undefined) {// it assigns 20 in case of space
+//   perPage = 20;
+// }
+// perPage = perPage || 20; // in case of space it assigns perPage, but if assigns 20
+
+perPage = (perPage != " " && perPage) || 20; // in case of space it assigns 20
+console.log({ perPage });
+*/
+
+/*
+let ids = ["1", "2", "3"];
+const docPrefix = "user";
+console.log(ids.join()); //1,2,3
+console.log(ids.join(",")); //1,2,3
+console.log(ids.join("")); //123
+console.log(ids.join(docPrefix)); //1user2user3
+
+// 'user::1', 'user::3' IT IS MY TARGET TO ACHIEVE
+
+let idsInKeyForm = ids.map((id) => `${docPrefix}::${id}`); // [ 'user::1', 'user::2', 'user::3' ]
+console.log(idsInKeyForm);
+console.log(idsInKeyForm.join(", ")); // user::1, user::2, user::3
+
+const data = {
+  ids: ["1", "2", "3"],
+};
+
+*/
+// imp******************
+/*
+
+const fruits = ["apple", "banana", "apple", "orange", "banana", "apple"];
+let freqObj = {};
+for (item of fruits) {
+  freqObj[item] = freqObj[item] ? freqObj[item] + 1 : 1;
+  // in   freqObj[item] = freqObj[item] ? freqObj[item] + 1 : 1; left freqObj[item] represent key and right freqObj[item] represent value of that value 
+  //left side is like creating dynamic key and right side is like accessing dynamic value
+}
+console.log(freqObj);//{ apple: 3, banana: 2, orange: 1 }
+*/
+//***********************************imp reduce method */
+/*
+const numbers = [1, 2, 3, 4, 5];
+
+const sum = numbers.reduce((accumulator, currentValue) => {
+  return accumulator + currentValue;
+}, 0);
+//reduce methods  callback is executed for each elements of array and return value is accumulated in accumulator variable and when all elements are done in end accumulator is returned
+// in first iteration cb returns 1+0 =1 now accumulator will be 1
+
+
+
+console.log(sum); // Output: 15
+
+const fruits = ["apple", "banana", "apple", "orange", "banana", "apple"];
+const freqObj = fruits.reduce((dummyObject, item) => {
+  if (dummyObject[item]) {
+    dummyObject[item] = dummyObject[item] + 1;
+  } else {
+    dummyObject[item] = 1;
+  }
+  return dummyObject; // if you do not return dummyObject (that is updated dummyObject nex time dummyObject will be undefined coz dummyObject is here accumulator and accumulator is assigned by returned value of callback)
+}, {});
+console.log(freqObj);
+*/
