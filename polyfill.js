@@ -39,22 +39,3 @@ let res = num.myFilter((item, i) => i != 4);
 console.log(res);
 
 */
-
-class User {
-  name = "aear";
-  constructor(fname, email, message) {
-    // Correctly assign the parameters to instance variables
-    this.fname = fname;
-    this.email = email;
-    this.message = message;
-  }
-
-  detail() {
-    return "im detai";
-  }
-}
-
-const user1 = new User("arif", "arif@gmail.com", "im fine");
-// console.log(user1); // { name: 'aear', fname: 'arif', email: 'arif@gmail.com', message: 'im fine'}, method is in its prototype
-console.log(Object.getPrototypeOf(user1));
-console.log(Object.getPrototypeOf(user1).hasOwnProperty("detail"));

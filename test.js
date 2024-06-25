@@ -65,10 +65,16 @@ let nestedArr = [
   ["b", 2],
   ["c", 3],
 ];
+
+let arrOfObj = [];
 for (let [key, val] of nestedArr) {
-  console.log({ key, val }); //{ key: 'a', val: 1 } { key: 'b', val: 2 } { key: 'c', val: 3 }
+  //similar to item of nestedArr and item or say key will get each element one by one that is being destructured here it is like let [key, val]=["a",1]
+  arrOfObj.push({ key, val });
 }
+console.log(arrOfObj); //[ { key: 'a', val: 1 }, { key: 'b', val: 2 }, { key: 'c', val: 3 } ]
+
 */
+
 /*
 let actualObj = {
   name: "arif",
@@ -102,3 +108,61 @@ console.log("actualObj", actualObj);
   }
 })();
 */
+
+/*
+let locationId = "123456",
+  ids = [1111, "22222"],
+  scope = "user";
+
+let mappedId = ids.map((id) => `'${scope}::${locationId}::${id}'`).join(", ");
+
+console.log(ids.join("', '"));
+
+const UsingKeysCustomer = (collectionName, keys) => {
+  // return `SELECT * FROM \`${collectionName}\` USE KEYS [${keys}] `;
+  return `SELECT RAW A.id FROM \`${"featureList.APPOINTMENT_SVC__APPOINTMENT"}\` AS A WHERE A.locationId="${locationId}" AND A.id IN ["${ids.join(
+    '", "'
+  )}"] ;`;
+};
+console.log(UsingKeysCustomer("User", ids));
+*/
+/*
+const rateLimitWindowMs = 1000;
+const maxRequests = 10;
+const requestCounts = {};
+let ip1 = "12345";
+const rateLimiter = (req) => {
+  const userIp = req.ip1; // Use the user's IP address as the key
+  //check if user already has made any request or not with this ip
+  let currentTime = Date.now();
+  let timeGap = currentTime - requestCounts[userIp]?.startTime;
+  if (!requestCounts[userIp] || timeGap > rateLimitWindowMs) {
+    // new user
+    console.log(userIp);
+    requestCounts[userIp] = {
+      count: 1,
+      startTime: Date.now(),
+    };
+    console.log(`smooth`);
+    // next();
+  } else {
+    requestCounts[userIp].count += 1;
+    if (requestCounts[userIp].count > maxRequests) {
+      console.log(`limit reached `);
+    } else {
+      console.log(`smooth from else`);
+    }
+  }
+};
+
+for (let i = 0; i < 11; i++) {
+  rateLimiter({ ip1 });
+}
+console.log(requestCounts);
+*/
+// var t = 7;
+// console.log(3 - (undefined ?? 1));
+// console.log(3 - (undefined || 1));
+
+// var t = 9;
+// console.log(globalThis.t);
