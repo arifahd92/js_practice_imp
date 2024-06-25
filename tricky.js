@@ -765,3 +765,41 @@ const freqObj = fruits.reduce((dummyObject, item) => {
 }, {});
 console.log(freqObj);
 */
+
+/*
+
+const userData = [
+  { id: 1, name: "Alice", email: "dummy1" },
+  { id: 2, name: "Bob", email: "dummy2" },
+  { id: 3, name: "Charlie", email: "dummy3" },
+];
+//required output
+
+// {  '1': { name: 'Alice', email: 'dummy1' },  '2': { name: 'Bob', email: 'dummy2' },  '3': { name: 'Charlie', email: 'dummy3' }}
+
+//solution
+const result = userData.reduce((dummyObj, item) => {
+  //remember mutating item will mutate original data  inside userData like if we delete a key like id from item instead of destructuring id field also will be deleted from userData
+  const { id, ...res } = item;
+  dummyObj[id] = res;
+  return dummyObj;
+}, {});
+
+console.log(result); 
+console.log(userData);
+
+*/
+
+let arr = [1, , 3, 4]; // Sparse array, no element at index 1
+console.log(arr.toString()); //1,,3,4
+let transformedArr = [];
+for (let i = 0; i < arr.length; i++) {
+  if (i in arr) {
+    transformedArr.push(arr[i]);
+  }
+  console.log(arr[i]);
+}
+console.log(transformedArr);
+console.log(0 in arr); // true, there is an element at index 0
+console.log(1 in arr); // false, no element at index 1
+console.log(2 in arr); // true, there is an element at index 2
