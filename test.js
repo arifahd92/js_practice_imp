@@ -110,23 +110,6 @@ console.log("actualObj", actualObj);
 */
 
 /*
-let locationId = "123456",
-  ids = [1111, "22222"],
-  scope = "user";
-
-let mappedId = ids.map((id) => `'${scope}::${locationId}::${id}'`).join(", ");
-
-console.log(ids.join("', '"));
-
-const UsingKeysCustomer = (collectionName, keys) => {
-  // return `SELECT * FROM \`${collectionName}\` USE KEYS [${keys}] `;
-  return `SELECT RAW A.id FROM \`${"featureList.APPOINTMENT_SVC__APPOINTMENT"}\` AS A WHERE A.locationId="${locationId}" AND A.id IN ["${ids.join(
-    '", "'
-  )}"] ;`;
-};
-console.log(UsingKeysCustomer("User", ids));
-*/
-/*
 const rateLimitWindowMs = 1000;
 const maxRequests = 10;
 const requestCounts = {};

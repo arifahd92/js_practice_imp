@@ -790,6 +790,8 @@ console.log(userData);
 
 */
 
+/*
+
 let arr = [1, , 3, 4]; // Sparse array, no element at index 1
 console.log(arr.toString()); //1,,3,4
 let transformedArr = [];
@@ -803,3 +805,62 @@ console.log(transformedArr);
 console.log(0 in arr); // true, there is an element at index 0
 console.log(1 in arr); // false, no element at index 1
 console.log(2 in arr); // true, there is an element at index 2
+*/
+
+/*
+function user(name) {
+  this.name = name;
+}
+const obj = { fn: user };
+obj.fn("java script");
+console.log(obj.name);
+*/
+
+/*
+function myMethod() {
+  console.log(`my method called on  `, this);
+}
+const myObj = {
+  userName: "ashif",
+  myMethod,
+};
+// myObj.myMethod();
+myObj["myMethod"]();
+*/
+
+/*
+//Imp *******
+var length = 20;
+function count() {
+  console.log(this.length);
+}
+const obj2 = [count, "A", 0];
+obj2[0](); //3, in js everything is object array is also an object 0 is key of method it is like obj2.method()
+console.log(obj2["1"]); //A
+*/
+let people = [
+  { name: "John", age: 30 },
+  { name: "Jane", age: 25 },
+  { name: "Alice", age: 35 },
+  { name: "Bob", age: 20 },
+];
+people.sort((a, b) => a.name.localeCompare(b.name)); // will fail for people2
+
+console.log(people);
+
+let people2 = [
+  { name: "John", age: 30 },
+  { name: "Jane", age: 25 },
+  { name: "Alice", age: 35 },
+  { name: null, age: 20 },
+  { name: undefined, age: 40 },
+  { age: 45 },
+];
+
+people2.sort((a, b) => {
+  let nameA = a.name ? a.name : "";
+  let nameB = b.name ? b.name : "";
+  return nameA.localeCompare(nameB);
+});
+
+console.log(people2);

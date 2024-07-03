@@ -195,185 +195,9 @@ const getMonthlyNetBalance = (transactions, year, month) => {
   return total;
 };
 
-const transactions = [
-  { id: 1, amount: 100, type: "debit", date: "2024-05-10" },
-  { id: 2, amount: 200, type: "credit", date: "2024-05-15" },
-  { id: 3, amount: 50, type: "debit", date: "2024-06-01" },
-  { id: 4, amount: 150, type: "credit", date: "2024-05-20" },
-];
 
-console.log(getMonthlyNetBalance(transactions, 2024, 5)); // Output: 150 (200 - 100)
-console.log(getMonthlyNetBalance(transactions, 2024, 6)); // Output: -50 (0 - 50)
-*/
 
-/*
-const finalStatus = [
-  {
-    count: 0,
-    statusText: "CONFIRMED",
-  },
-  {
-    count: 0,
-    statusText: "COMPLETE",
-  },
-  {
-    count: 0,
-    statusText: "BROKEN",
-  },
-  {
-    count: 0,
-    statusText: "SCHEDULED",
-  },
-];
 
-// ids mapping info
-const dailyStatusData = {
-  SCHEDULED: [
-    "295",
-    "256",
-    "7",
-    "6",
-    "97",
-    "312",
-    "93",
-    "1",
-    "291",
-    "296",
-    "297",
-    "252",
-    "92",
-    "247",
-    "142",
-    "23",
-  ],
-  CONFIRMED: ["2", "9", "21", "95", "292", "142", "20", "5", "10"],
-  BROKEN: ["293", "98", "94", "0", "100", "99", "96", "19", "24", "4"],
-  COMPLETE: ["-106", "8", "246", "3", "25", "22"],
-};
-
-//@ client data
-const nullStatus = [
-  { count: 2, statusId: "5", statusText: "1LMOM      Left Message On Machine" },
-  { count: 2, statusId: "21", statusText: "Confirmed" },
-  { count: 1, statusId: "2", statusText: "2FIRM      Appointment Confirmed" },
-  { count: 3, statusId: "-106", statusText: "<COMPLETE>" },
-  { count: 5, statusId: "3", statusText: "xPREMED    Premedication Req'd" },
-  { count: 1, statusId: "95", statusText: "Patient Will Call Us" },
-  { count: 5, statusId: "293", statusText: "Patient Will Call Us" },
-  { count: 5, statusId: "293", statusText: "Patient Will Call Us" },
-  { count: 10, statusId: "256", statusText: "Patient Will Call Us" },
-  { count: 10, statusId: "256", statusText: "Patient Will Call Us" },
-];
-let statusIdObj = {};
-let n = nullStatus.length;
-for (let i = 0; i < n; i++) {
-  const { statusId } = nullStatus[i];
-  for (let key in dailyStatusData) {
-    let index = dailyStatusData[key].indexOf(statusId);
-    if (index != -1) {
-      console.log(`${statusId} found inside ${key}`);
-      for (item of finalStatus) {
-        if (item.statusText == key) {
-          item.count = item.count + nullStatus[i].count;
-          break;
-        }
-      }
-      break;
-    }
-  }
-}
-console.log(finalStatus);
-*/
-
-/*
-const getKeyByValue = (object, value) => {
-  for (const prop in object) {
-    if (object.hasOwnProperty(prop)) {
-      if (object[prop].includes(value)) return prop;
-    }
-  }
-  return "UNKNOWN";
-};
-
-const dailyStatusData = {
-  SCHEDULED: [
-    "295",
-    "256",
-    "7",
-    "6",
-    "97",
-    "312",
-    "93",
-    "1",
-    "291",
-    "296",
-    "297",
-    "252",
-    "92",
-    "247",
-    "142",
-    "23",
-  ],
-  CONFIRMED: ["2", "9", "21", "95", "292", "142", "20", "5", "10"],
-  BROKEN: ["293", "98", "94", "0", "100", "99", "96", "19", "24", "4"],
-  COMPLETE: ["-106", "8", "246", "3", "25", "22"],
-};
-
-const data = [
-  {
-    count: 4,
-    statusId: "6",
-    statusText: "1LMWORK    Left Message At Work",
-  },
-  {
-    count: 2,
-    statusId: "5",
-    statusText: "1LMOM      Left Message On Machine",
-  },
-  {
-    count: 1,
-    statusId: "2",
-    statusText: "2FIRM      Appointment Confirmed",
-  },
-  { count: 2, statusId: "4", statusText: " NA        No Answer" },
-  { count: 3, statusId: "-106", statusText: "<COMPLETE>" },
-  { count: 3, statusId: "21", statusText: "Confirmed" },
-  {
-    count: 3,
-    statusId: "7",
-    statusText: "xLMPERS    Left Message With Person",
-  },
-  { count: 1, statusId: "95", statusText: "Patient Will Call Us" },
-  {
-    count: 5,
-    statusId: "3",
-    statusText: "xPREMED    Premedication Req'd",
-  },
-  {
-    count: 4,
-    statusId: "1",
-    statusText: "xSET       Appointment Set/ Not Conf",
-  },
-  { count: 3, statusId: "0", statusText: "<none>" },
-];
-
-data.forEach((item, index) => {
-  if (item.statusId) {
-    item.statusText = getKeyByValue(dailyStatusData, item.statusId);
-  }
-  const { statusId, ...newData } = item;
-  data[index] = newData; // Directly update the original array
-});
-
-console.log(data);
-
-const finalStatus = [
-  {
-    count: 0,
-    statusText: "CONFIRMED",
-  },
-];
-*/
 
 /*
 var animal = "a";
@@ -383,63 +207,6 @@ if (1) {
   animal = "c";
 }
 console.log(animal);
-*/
-/*
-const response = [];
-let data = [
-  { count: 4, statusText: "SCHEDULED" },
-  { count: 2, statusText: "CONFIRMED" },
-  { count: 1, statusText: "CONFIRMED" },
-  { count: 2, statusText: "BROKEN" },
-  { count: 3, statusText: "COMPLETE" },
-  { count: 3, statusText: "CONFIRMED" },
-  { count: 3, statusText: "SCHEDULED" },
-  { count: 1, statusText: "CONFIRMED" },
-  { count: 5, statusText: "COMPLETE" },
-  { count: 4, statusText: "SCHEDULED" },
-  { count: 3, statusText: "BROKEN" },
-];
-
-let n = response.length;
-for (item of data) {
-  const text = item.statusText;
-  let found = false;
-  for (var i = 0; i < n; i++) {
-    if (response[i].statusText == text) {
-      found = true;
-      break;
-    }
-  }
-  if (found) {
-    response[i].count += item.count;
-    found = false;
-  } else {
-    response.push({ ...item });
-  }
-}
-// console.log(response);
-// data = data.reduce((acc, curr) => {
-//   const existing = acc.find((item) => item.statusText === curr.statusText);
-//   if (existing) {
-//     existing.count += curr.count;
-//   } else {
-//     acc.push({ ...curr });
-//   }
-//   return acc;
-// }, []);
-// console.log(data);
-
-let op = data.reduce((acc, item) => {
-  const exists = acc.find((resitem) => resitem.statusText == item.statusText);
-  if (exists) {
-    exists.count += item.count;
-    return acc;
-  } else {
-    acc.push({ ...item });
-    return acc;
-  }
-}, []);
-console.log(op);
 */
 
 /*
@@ -587,3 +354,12 @@ for (let i = 0; i < n1; i++) {
 }
 console.log({ op });
 */
+let str1 = `1" OR "1"="1`;
+let str2 = "arif";
+
+let strs = (anything) => {
+  return `"${anything}"`;
+};
+
+console.log(strs(str1));
+console.log(strs(str2));
