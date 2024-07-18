@@ -838,6 +838,8 @@ const obj2 = [count, "A", 0];
 obj2[0](); //3, in js everything is object array is also an object 0 is key of method it is like obj2.method()
 console.log(obj2["1"]); //A
 */
+
+/*
 let people = [
   { name: "John", age: 30 },
   { name: "Jane", age: 25 },
@@ -845,8 +847,10 @@ let people = [
   { name: "Bob", age: 20 },
 ];
 people.sort((a, b) => a.name.localeCompare(b.name)); // will fail for people2
-
 console.log(people);
+*/
+
+/*
 
 let people2 = [
   { name: "John", age: 30 },
@@ -858,9 +862,143 @@ let people2 = [
 ];
 
 people2.sort((a, b) => {
-  let nameA = a.name ? a.name : "";
-  let nameB = b.name ? b.name : "";
+  let nameA = a.name ?? ""; //handling null or undefined
+  let nameB = b.name ?? "";
   return nameA.localeCompare(nameB);
 });
 
 console.log(people2);
+*/
+
+/*
+// const grades = getData().grades
+const grades = (Math.random() > 0.5 ? [30, 40, 50] : undefined) || [];
+
+let newGrade = 80;
+
+let updatedGrade = [newGrade, ...grades];
+
+// let updatedGrade
+// if(Array.isArray(grades)){
+// updatedGrade=[...grades,6]
+// }
+// else{
+//   updatedGrade=[6]
+// }
+*/
+
+/*
+const grades = Math.random() > 0.5 ? [30, 40, 50] : undefined;
+console.log(grades);
+let randIndex = Math.ceil(Math.random() * 10);
+console.log(randIndex);
+const grade = grades?.[randIndex]; // optional chaining in array
+console.log(grade);
+*/
+
+/*
+console.log(0 / 0); //NaN
+
+console.log(Number.isNaN(0 / 0)); //true
+*/
+
+/*
+function saveData(payload) {
+  const { isNew, ...data } = payload;
+  //here data has different ref than payload, and payload has same ref of  saveData called  with args
+  data.address = "varanasi";
+  payload.state="Uttar Pradesh"
+  console.log(data);
+}
+const data = { isNew: false, name: "arif", age: 26 };
+saveData(data);
+console.log(data);
+*/
+
+/*
+//handling is new in single variable 
+function saveData({ isNew, ...data }) {// here data has different ref as actual data on which this was called
+  console.log({ isNew });
+  data.address = "varanasi";
+  console.log(data);
+}
+const data = { isNew: false, name: "arif", age: 26 };
+saveData(data);
+console.log(data);
+*/
+/*
+//empty array and object are truthy value but conversion of empty  array  in string results empty string so inside if, it behave like truthy but when it is equated with false returns true , see below example
+
+let arr = [];
+// console.log(arr.toString()); //empty string
+// console.log(!arr); //false
+// console.log(!!arr); //true, boolean conversion is true as it directly converts not through string, other wise it returns false
+// console.log(arr == true); //*** false ****
+// console.log(arr == false); //*** true **** here both will be converted to number, arr=>""=>0, false=>""=>0 thats why true
+
+let obj = {};
+// console.log(obj.toString()); //empty string
+// console.log(!obj); //false
+// console.log(!!obj); //true
+// console.log(obj == true); //*** false ****, here both will be converted to number, obj=>"Object object"=>NaN, true=>1 thats why false
+// console.log(obj == false); //*** false ****, in array it was true
+// console.log(arr == false); //*** true **** here both will be converted to number, arr=>""=>0, false=>""=>0 thats why true
+
+console.log(arr == 0); //true
+console.log(obj == 0); //false
+console.log(arr == 1); //false
+console.log(obj == 1); //false
+//empty array ka number conversion 0 hota hai aur obj ka NaN
+*/
+
+/*
+let arr = [1, 2, 3];
+// arr.shift();
+arr.unshift(8);
+console.log(arr);
+*/
+
+/*
+let num = 6;
+let res1 = num.toString();
+console.log({ num, res1 }); // num is number
+let res2 = String(num);
+console.log({  num, res2 });// still num is number
+*/
+/*
+console.log(Boolean(-0)); //false
+console.log(Boolean(-1)); // true
+console.log(Boolean([])); //true
+console.log(Boolean(String([]))); //false
+*/
+
+/*
+//toString vs JSON.stringify()
+let arr = [1, "2", [3, "4"]];
+let message1 = ` my array is ${arr}`;// here actually concatenation taking place so in case of concatenation first both are being converted in string 
+console.log(message1); //my array is 1,2,3,4
+let message2 = ` my array is "${arr}"`;//same thing happened here
+console.log(message2); //my array is "1,2,3,4"
+//imp***********************
+let message3 = `my array is ${JSON.stringify(arr)}`; 
+console.log(message3);////my array is [1,"2",[3,"4"]]
+*/
+
+/*
+let arr = [1, 2, 3, "a", "b", `c`];
+let toStringStore = [];
+let stringifyStore = [];
+for (item of arr) {
+  toStringStore.push(item.toString());
+}
+console.log(toStringStore); //[ '1', '2', '3', 'a', 'b', 'c' ], toString has no effect on strings values
+
+for (item of arr) {
+  stringifyStore.push(JSON.stringify(item));
+}
+console.log(stringifyStore); //[ '1', '2', '3', '"a"', '"b"', '"c"' ]
+*/
+
+let user;
+// const name=user?.name
+const { name } = user ?? {};

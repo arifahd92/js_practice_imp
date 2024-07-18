@@ -354,12 +354,399 @@ for (let i = 0; i < n1; i++) {
 }
 console.log({ op });
 */
+
+/*
 let str1 = `1" OR "1"="1`;
 let str2 = "arif";
-
+let arr = [];
 let strs = (anything) => {
-  return `"${anything}"`;
+  arr.push(`"${anything}"`);
+  console.log(`"${anything}"`); 
 };
 
-console.log(strs(str1));
-console.log(strs(str2));
+strs(str1);
+strs(str2);
+console.log(arr);
+*/
+
+/*
+let data = [
+  {
+    count: 2,
+    month: 6,
+  },
+  {
+    count: 1,
+    month: 6,
+  },
+  {
+    count: 1,
+    month: 4,
+  },
+  {
+    count: 62,
+    month: 6,
+  },
+  {
+    count: 7,
+    month: 2,
+  },
+  {
+    count: 8,
+    month: 3,
+  },
+  {
+    count: 314,
+    month: 5,
+  },
+  {
+    count: 175,
+    month: 6,
+  },
+  {
+    count: 30,
+    month: 4,
+  },
+];
+let objArr = [];
+// for (item of data) {
+//   let index = objArr.findIndex((item2) => item2.month == item.month);
+//   if (index == -1) {
+//     let obj = {
+//       month: item.month,
+//       count: item.count,
+//     };
+//     objArr.push(obj);
+//   } else {
+//     objArr[index].count += item.count;
+//   }
+// }
+
+//now using reduce method
+const res = data.reduce((acc, curr) => {
+  let index = acc.findIndex((item) => item.month == curr.month);
+  if (index != -1) {
+    acc[index].count += curr.count;
+  } else {
+    acc.push({ month: curr.month, count: curr.count });
+  }
+  return acc;
+}, []);
+console.log(`before`);
+console.log(res);
+
+let arr = [0, 1, 2, 3, 4, 6, 7, 8, 9, 10, 11];
+for (items of arr) {
+  let index = res.findIndex((item) => item.month == items);
+  if (index == -1) {
+    res.push({ month: items, count: 0 });
+  }
+}
+console.log("after");
+res.sort((a, b) => +a.month - +b.month);
+console.log(res);
+*/
+
+/*
+const currentDate = new Date();
+const isoString = currentDate.toISOString();
+console.log(isoString);
+*/
+
+/*
+function getToFromDate(month) {
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+  const currentDay = currentDate.getDate();
+  console.log({ currentDay });
+  const toDate = new Date(Date.UTC(currentYear, month, 9));
+  const fromDate = new Date(Date.UTC(currentYear, month, 1));
+  const toDateIsoString = toDate.toISOString();
+  const fromDateIsoString = fromDate.toISOString();
+  return {
+    fromDateIsoString,
+    toDateIsoString,
+  };
+}
+console.log(getToFromDate(-1));
+// const currentMonth = new Date().getMonth();
+
+function daysInMonth(year, month) {
+  // month is 0-indexed (0 for January, 11 for December)
+  return new Date(year, month + 1, 0).getDate();
+}
+
+// Example usage
+const currentDate = new Date();
+const currentYear = currentDate.getFullYear();
+const currentMonth = currentDate.getMonth();
+
+const days = daysInMonth(currentYear, currentMonth);
+console.log(
+  `The month ${currentMonth + 1} in the year ${currentYear} has ${days} days.`
+);
+*/
+
+/*
+const today = new Date();
+const dayOfWeek = today.getDay(); // Get the current day of the week (0-6)
+const startOfWeek = new Date(today); // Clone today's date
+const endOfWeek = new Date(today); // Clone today's date
+
+// Adjust startOfWeek to the previous Monday
+startOfWeek.setDate(
+  today.getDate() - 1 - dayOfWeek + (dayOfWeek === 0 ? -6 : 1)
+);
+
+// Adjust endOfWeek to the next Monday
+endOfWeek.setDate(
+  today.getDate() + (7 - dayOfWeek) + (dayOfWeek === 0 ? 0 : -1)
+);
+
+// Format dates to ISO strings
+const startOfWeekISO = startOfWeek.toISOString();
+const endOfWeekISO = endOfWeek.toISOString();
+
+console.log({ startOfWeekISO, endOfWeekISO });
+*/
+
+/*
+const today = new Date();
+const dayOfWeek = today.getDay();
+const startOfWeek = new Date(today);
+const endOfWeek = new Date(today);
+
+startOfWeek.setDate(today.getDate() - dayOfWeek - 7);
+
+endOfWeek.setDate(today.getDate() - dayOfWeek - 1);
+
+const startOfWeekISO = startOfWeek.toISOString();
+const endOfWeekISO = endOfWeek.toISOString();
+
+console.log({ startOfWeekISO, endOfWeekISO });
+*/
+/*
+function getToFromOfWeek(prev) {
+  const today = new Date(); //current date
+  const dayOfWeek = today.getDay(); // 4 as of it is  thursday,(0 for sunday), getDate() gives actual date day 1 to 31
+  const startOfWeek = new Date(today); // current date hi hai as today
+  const endOfWeek = new Date(today); // aaj ka date hi is week ka end
+  console.log(today.getDate(), "today.getDate()");
+  startOfWeek.setDate(today.getDate() - dayOfWeek); //ajj ki tarikh se utne din subtract kar diya jitna sunday se jyada hai
+
+  // const startOfWeekISO = startOfWeek.toISOString();
+  // const endOfWeekISO = endOfWeek.toISOString();
+  console.log(typeof (endOfWeek + ""));
+  return { startOfWeek, endOfWeek };
+}
+
+getToFromOfWeek(false); // Current week: from Sunday to today
+// getToFromOfWeek(true); // Previous week: from previous Sunday to previous Saturday
+*/
+
+// const date = new Date();
+// const endDate = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+// console.log(endDate);
+
+// let getRowData= getPatient?.row?.[0];
+
+// const{name,email}=getRowData
+/*
+const dayjs = require("dayjs");
+const weekday = require("dayjs/plugin/weekday");
+
+dayjs.extend(weekday);
+
+// Helper function to get custom week range
+function getCustomWeekRange(date) {
+  const startOfWeek = date.weekday(1); // Monday
+  const endOfWeek = date.weekday(6); // Saturday
+  return {
+    start: startOfWeek.toDate(),
+    end: endOfWeek.toDate(),
+  };
+}
+
+// Get the start and end dates of the current week (Monday to Saturday)
+const currentWeekRange = getCustomWeekRange(dayjs());
+console.log("Current week start (Monday):", currentWeekRange.start);
+console.log("Current week end (Saturday):", currentWeekRange.end);
+
+// Get the start and end dates of the previous week (Monday to Saturday)
+const previousWeekRange = getCustomWeekRange(dayjs().subtract(1, "week"));
+console.log("Previous week start (Monday):", previousWeekRange.start);
+console.log("Previous week end (Saturday):", previousWeekRange.end);
+*/
+
+/*
+let monthName = {
+  1: "jan",
+  2: "feb",
+  3: "march",
+  4: "apr",
+  5: "may",
+  6: "june",
+  7: "july",
+  8: "aug",
+  9: "sep",
+  10: "oct",
+  11: "nov",
+  12: "dec",
+};
+let data = [
+  {
+    count: 3,
+    monthCount: 8,
+    wayOfBooking: "way2",
+    year: 2023,
+  },
+  {
+    count: 3,
+    monthCount: 9,
+    wayOfBooking: "way2",
+    year: 2023,
+  },
+  {
+    count: 7,
+    monthCount: 10,
+    wayOfBooking: "way2",
+    year: 2023,
+  },
+  {
+    count: 4,
+    monthCount: 12,
+    year: 2023,
+  },
+  {
+    count: 8,
+    monthCount: 1,
+    year: 2024,
+  },
+  {
+    count: 4,
+    monthCount: 1,
+    wayOfBooking: "way3",
+    year: 2024,
+  },
+  {
+    count: 3,
+    monthCount: 1,
+    wayOfBooking: "way5",
+    year: 2024,
+  },
+  {
+    count: 4,
+    monthCount: 1,
+    wayOfBooking: "way4",
+    year: 2024,
+  },
+  {
+    count: 10,
+    monthCount: 1,
+    wayOfBooking: "way1",
+    year: 2024,
+  },
+  {
+    count: 24,
+    monthCount: 2,
+    year: 2024,
+  },
+  {
+    count: 6,
+    monthCount: 2,
+    wayOfBooking: "way3",
+    year: 2024,
+  },
+  {
+    count: 10,
+    monthCount: 2,
+    wayOfBooking: "way2",
+    year: 2024,
+  },
+  {
+    count: 25,
+    monthCount: 3,
+    wayOfBooking: "way3",
+    year: 2024,
+  },
+  {
+    count: 19,
+    monthCount: 3,
+    wayOfBooking: "way2",
+    year: 2024,
+  },
+  {
+    count: 1,
+    monthCount: 4,
+    wayOfBooking: "way3",
+    year: 2024,
+  },
+  {
+    count: 6,
+    monthCount: 4,
+    wayOfBooking: "way2",
+    year: 2024,
+  },
+  {
+    count: 6,
+    monthCount: 5,
+    wayOfBooking: "way1",
+    year: 2024,
+  },
+  {
+    count: 16,
+    monthCount: 5,
+    wayOfBooking: "way3",
+    year: 2024,
+  },
+  {
+    count: 9,
+    monthCount: 5,
+    wayOfBooking: "way2",
+    year: 2024,
+  },
+  {
+    count: 5,
+    monthCount: 6,
+    wayOfBooking: "way3",
+    year: 2024,
+  },
+  {
+    count: 37,
+    monthCount: 6,
+    wayOfBooking: "way1",
+    year: 2024,
+  },
+  {
+    count: 7,
+    monthCount: 6,
+    wayOfBooking: "way2",
+    year: 2024,
+  },
+  {
+    count: 67,
+    monthCount: 7,
+    wayOfBooking: "way1",
+    year: 2024,
+  },
+];
+
+let res = data.map((item) => {
+  let key = item.monthCount;
+  item.monthCount = monthName[key];
+  let sum = 0;
+  for (item2 of data) {
+    if (
+      item2["monthCount"] == item["monthCount"] &&
+      item2["year"] == item2["year"]
+    ) {
+      sum += item2["count"];
+    }
+  }
+  // item.total = sum;
+  let modified = { ...item, total: sum };
+  sum = 0;
+  return modified;
+});
+console.log(res);
+*/

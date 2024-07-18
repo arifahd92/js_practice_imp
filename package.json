@@ -10,6 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "dayjs": "^1.11.11"
+    "compression": "^1.7.4",
+    "dayjs": "^1.11.11",
+    "express": "^4.19.2",
+    "morgan": "^1.10.0"
   }
 }

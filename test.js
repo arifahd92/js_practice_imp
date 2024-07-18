@@ -149,3 +149,42 @@ console.log(requestCounts);
 
 // var t = 9;
 // console.log(globalThis.t);
+
+/*
+const person = {
+  name: "John",
+  age: 30,
+  occupation: "Engineer",
+};
+
+const keyArr = [];
+
+for (key in person) {
+  if (person.hasOwnProperty(key)) {
+    keyArr.push(key);
+  }
+}
+console.log(keyArr);
+*/
+
+/*
+const proto = {
+  nationality: "American",
+  gender: "Male",
+};
+
+const person = Object.create(proto);
+person.name = "John";
+person.age = 30;
+person.occupation = "Engineer";
+
+console.log(person, "person object");
+console.log(Object.getOwnPropertyNames(person));
+const keyArr = [];
+console.log(Object.keys(person));
+for (let key in person) {
+  keyArr.push(key);
+}
+
+console.log(keyArr); // Output: ["name", "age", "occupation", "nationality", "gender"]
+*/
