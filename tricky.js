@@ -1,4 +1,5 @@
 /** @format */
+
 /*
 function foo() {
   return bar();
@@ -11,6 +12,7 @@ function foo() {
 }
 console.log(foo());
 */
+
 /*
 function outer() {
   let x = 10;
@@ -59,6 +61,7 @@ functions[0]();
 functions[1]();
 functions[2]();
 */
+
 /*
 function foo() {
   let a = 1;
@@ -79,6 +82,7 @@ function outer() {
 }
 outer();
 */
+
 /*
 function outer() {
   var x = 10;
@@ -91,6 +95,7 @@ function outer() {
 var innerFunction = outer();
 innerFunction();
 */
+
 /*
 function outer() {
   var x = 10;
@@ -104,6 +109,7 @@ function outer() {
 
 outer();
 */
+
 /*
 const arr = [1, 2, 3, 4, 5];
 
@@ -117,16 +123,17 @@ console.log(multiplyByIndex());
 
 /*
 const person = {
-  firstName: 'John',
-  lastName: 'Doe',
-  getFullName: function() {
+  firstName: "John",
+  lastName: "Doe",
+  getFullName: function () {
     return `${this.firstName} ${this.lastName}`;
-  }
+  },
 };
 
 const getFullName = person.getFullName;
 console.log(getFullName());
 */
+
 /*
 const myObj = {
   a: 10,
@@ -146,23 +153,27 @@ const {
 
 console.log(a, b, d, e, f);
 */
+
 /*
 let x = 4;
 x = x++; //first increments value of x then returns previous value(value before inc) & ++x first increments value of x then returns incremented value
 // console.log(x++);//4 output
 console.log(x++ + ++x);//10
 */
+
 /*
 var a = 1;
 function foo() {
   if (!a) {
+    // let a = 10;
     var a = 10;
   }
   console.log(a);
 }
 foo();
-console.log(a);// final output 10,1
+console.log(a); // final output 10,1
 */
+
 /*
 function foo() {
   bar = { a: "hello" };
@@ -174,6 +185,7 @@ foo();
 
 console.log(bar.a); //'world' bar is global variable as bar is not declared using variable declaration keyword like vae let or const
 */
+
 /*
 var a = 1;
 
@@ -203,6 +215,7 @@ function outer() {
 
 outer();
 */
+
 /*
 function foo() {
   console.log(a);
@@ -225,6 +238,7 @@ function outer() {
 outer();
 console.log(a);
 */
+
 /*
 var a = 1;
 
@@ -236,6 +250,7 @@ function foo() {
 foo();
 console.log(a);
 */
+
 /*
 function outer() {
   var a = 1;
@@ -250,6 +265,7 @@ function outer() {
 
 outer();
 */
+
 /*
 var a = 1;
 
@@ -257,12 +273,14 @@ function foo() {
   console.log(a);
   if (false) {
     var a = 2;
+    // let a = 2;
   }
 }
 
 foo();
 console.log(a);
 */
+/////////////////////////////////////////////////////////////////////////////
 /*
 function outer() {
   var a = 1;
@@ -284,6 +302,7 @@ var a = 1;
 function foo() {
   console.log(a);
 }
+
 
 function bar() {
   var a = 2;
@@ -999,6 +1018,591 @@ for (item of arr) {
 console.log(stringifyStore); //[ '1', '2', '3', '"a"', '"b"', '"c"' ]
 */
 
+/*
 let user;
 // const name=user?.name
 const { name } = user ?? {};
+*/
+
+/*
+let isLoggedIn = false;
+console.log(isLoggedIn ? "<h1>Welcome back!</h1>" : "<h1>Please sign up.</h1>");
+// console.log(
+//   if(isLoggedIn){
+//     return "<h1>Welcome back!</h1>"
+//   }
+//   else{
+//     return "<h1>Please sign up.</h1>"
+//   }
+// )
+  */
+
+/*
+let arr = 9;
+console.log(arr[0]);
+
+let nameKey = "name";
+const user = {
+  email: "ag",
+  [nameKey]: "arif",
+};
+console.log(user);
+*/
+
+//imp iife
+/*
+const res = (() => {
+  return { name: "iife", email: "123" };
+})();
+console.log(res); //5
+
+const cachedAdder = (function () {
+  let obj = {};
+  return function MainCachedAdderFunctionCloserFormedWithObj(a, b) {
+    let key = a + "" + b + "";
+    if (obj[key]) {
+      return obj[key];
+    }
+    console.log(`returning by calculating`);
+    let sum = a + b;
+    obj[key] = sum;
+    return sum;
+  };
+})();
+let a = 9,
+  b = 10;
+for (let i = 0; i < 5; i++) {
+  if (i % 2 == 0) {
+    a++;
+  }
+  let addedRes = cachedAdder(a, b);
+  console.log(addedRes);
+}
+*/
+
+/*
+//IIFE and closure
+let hiddenImportedCounter = (() => {
+  let count = 0;
+  const increMent = (a = 1) => {
+    count += a * 5;
+  };
+  const decrement = (a = 1) => {
+    count -= a * 3;
+  };
+  const getCount = () => count / 4;
+  return { getCount, increMent, decrement };
+})();
+// IIFE is returning 3 methods now these all returned  methods will form  closure with
+// there lexical scope (IIFE scope) and will be able to access realtime value of count
+const counter = hiddenImportedCounter;
+for (let i = 0; i < 5; i++) {
+  counter.increMent(i);
+}
+console.log(counter.getCount());
+*/
+
+/*
+const data = {};
+let arr1 = [1, 2, 2, 3];
+const unique = [
+  ...new Set([...arr1, ...(Array.isArray(data.grade) ? data.grade : [])]),
+];
+console.log(unique); //[ 1, 2, 3 ]
+*/
+
+//obj destructuring and default assignment
+
+/*
+function useCounter({
+  initialValue = 0,
+  step = 1,
+  min = -Infinity,
+  max = Infinity,
+} = {}) {
+  console.log({ initialValue, step, min, max }); //{ initialValue: 0, step: 1, min: -Infinity, max: Infinity }
+}
+useCounter();
+// but it will fail in case of useCounter(null) as null is valid argument for function and empty {} will not be assigned so now all data will be read from null (null has not prototype) so null.anything will throw error
+
+useCounter(""); //only  in absence or undefined are invalid argument and default value s assigned  in case of function arguments empty string is also valid argument and "".anything returns undefined (as it has proto type )
+*/
+
+/*
+function useCounter(data) {
+  const {
+    initialValue = 0,
+    step = 1,
+    min = -Infinity,
+    max = Infinity,
+  } = data ?? {};
+  console.log({ initialValue, step, min, max });
+}
+useCounter(null); //{ initialValue: 0, step: 1, min: -Infinity, max: Infinity }
+useCounter("");////{ initialValue: 0, step: 1, min: -Infinity, max: Infinity }
+*/
+
+/*
+console.log(true.age); //undefined, only null and undefined throws error
+*/
+
+/*
+function catchError() {
+  try {
+    getError();
+  } catch (error) {
+    console.log(error.message); //im error from get error function
+  }
+  // try catch of this function is enough to catch error of getError()
+}
+function getError() {
+  throw new Error("im error from get error function");
+}
+catchError();
+*/
+
+/*
+let arr = [];
+
+let idsArr = ["1", "2", "3"];
+console.log(idsArr.join());
+let correctQuery = `select * from user where id in ${JSON.stringify(idsArr)}`;
+let badQuery = `select * from user where id in ["${idsArr.join('", "')}"]`;
+arr.push(correctQuery, badQuery);
+console.log(arr);
+*/
+
+/*
+var length = 1;
+function checkThisConcept() {
+  console.log(this);
+  console.log(this.length);
+}
+let arr = [checkThisConcept, 1, 2, 3];
+arr[0](); //4
+*/
+
+/*
+var length = 1;
+function checkThisConcept() {
+  console.log(this);
+}
+let arr = { checkThisConcept: checkThisConcept, 1: 1, 2: 2, 3: 3 };
+arr["checkThisConcept"](); //arr object
+*/
+
+/*
+// console.log(!!NaN);//false,  Nan is a  falsy value
+let arr = [1, 2, 5, 3, 4, 3, 5, 6];
+let obj = {};
+for (let i = 0; i < arr.length; i++) {
+  obj[arr[i]] = obj[arr[i]] + 1 || 1;
+}
+// console.log(obj);//{ '1': 1, '2': 1, '3': 2, '4': 1, '5': 2, '6': 1 }
+
+for (let item of arr) {
+  if (obj[item] > 1) {
+    console.log(item);
+    break;
+  }
+}
+  */
+
+/*
+//sort an object by its key
+const obj = {
+  c: 3,
+  a: 1,
+  b: 2,
+};
+console.log({ obj });
+
+let sorted = Object.keys(obj).sort((a, b) => (a > b ? 1 : a < b ? -1 : 0));
+console.log(sorted);
+sortedObject = sorted.reduce((acc, item) => {
+  acc[item] = obj[item];
+  return acc;
+}, {});
+console.log(sortedObject);
+*/
+
+/*
+const obj = { 2: 2, 1: 2, 3: 4 };
+console.log(obj);//{ '1': 2, '2': 2, '3': 4 } always if keys are number they will be sorted automatically 
+*/
+
+/*
+const obj = { a: 1, c: 2, b: 3, d: 4 };
+console.log(obj); //{ a: 1, c: 2, b: 3, d: 4 }
+let sorted = Object.keys(obj)
+  .sort()
+  .reduce((acc, item) => {
+    acc[item] = obj[item];
+    return acc;
+  }, {});
+console.log(sorted); //{ a: 1, b: 3, c: 2, d: 4 }
+*/
+
+/*
+function returnObj() {
+  return { a: 1, c: 2, b: 3 };
+}
+console.log(returnObj());//{ a: 1, c: 2, b: 3 }, always
+*/
+
+/*
+//tricky infinite loop
+let flag = true;
+setTimeout(() => {
+  flag = false;
+}, 0);
+while (flag) {
+  // flag will never be false cause this loop will not let be call stack empty ( that's why  event loop can not push call back in call stack )
+  console.log(flag);
+}
+*/
+
+/*
+const sql1 = `select * from \`User\` ;`;
+const sql2 = `select * from \`${"User"}\` ;`; //${"User"} this part is js and will be converted to string then will be concatenated so it is same as "user"+"user"=useruser
+console.log(sql2); //select * from `User` ;
+console.log(sql1 == sql2); //true
+*/
+
+/*
+let a = { name: "abcd", age: 20 };
+let b = a;
+// now b can modify properties of a but if we reassign any value to b it will not affect to a
+b.address = "up";
+b = {};
+console.log(a);//{ name: 'abcd', age: 20, address: 'up' }
+*/
+
+/*
+//imp
+// if b is referencing to a then assignment to either a or b both will break reference to each other
+let a = { name: "abcd", age: 20 };
+let b = a;
+let newObj = {};
+a = newObj;
+//now a and b both are referencing to different different object , b is still referencing to old object but a is now referencing to new
+
+b.address = "abcd"; // now this will not affect to a
+*/
+
+//imp async concept********************************
+/*
+function func1() {
+  return new Promise((res, rej) => {
+    setTimeout(() => {
+      res("data1");
+    }, 100);
+  });
+}
+
+function func2() {
+  return new Promise((res, rej) => {
+    setTimeout(() => {
+      res("data2");
+    }, 200);
+  });
+}
+function func3() {
+  return new Promise((res, rej) => {
+    setTimeout(() => {
+      res("data3");
+    }, 300);
+  });
+}
+async function badResolver() {
+  let start = new Date().getTime();
+  const one = await func1();
+  const two = await func2();
+  const three = await func3();
+
+  console.log(`${one}::${two}::${three}`);
+  console.log(new Date().getTime() - start);
+}
+
+async function goodResolver() {
+  let start = new Date().getTime();
+
+  const dataOne = func1();
+  const dataTwo = func2();
+  const dataThree = func3();
+  const one = await dataOne;
+  const two = await dataTwo;
+  const three = await dataThree;
+
+  console.log(`${one}::${two}::${three}`);
+  console.log(new Date().getTime() - start);
+}
+goodResolver(); // taking 300 millisecond only
+// badResolver(); //600 milliseconds
+*/
+
+/*
+const str1 = `LEFT JOIN \`${"AnyTable"}\``;// unnecessary ${}
+const str2 = `LEFT JOIN \`AnyTable\``;
+const arr = [];
+arr.push(str1);
+arr.push(str2);
+console.log(arr); //[ 'LEFT JOIN `Patient`', 'LEFT JOIN `Patient`' ]
+*/
+
+/*
+let arr1 = [1, 2, 3];
+let arr2 = ["1", "2", "3"];
+console.log([arr1.toString()]); //[ '1,2,3' ]
+console.log([arr2.toString()]); //[ '1,2,3' ]
+
+let user = {
+  name: "asd",
+};
+console.log([JSON.stringify(user)]); //[ '{"name":"asd"}' ]
+*/
+
+// node js related concept *************************************************************************
+/*
+Key Differences between global and globalThis
+Environment Compatibility:
+
+global is specific to Node.js and will not work in browser environments.
+globalThis works in both browsers and Node.js, making it a more versatile way to reference the global object.
+Standardization:
+
+globalThis was introduced in ECMAScript 2020 (ES11) to standardize the way the global object is accessed across different environments.
+Usage in Code:
+
+If you're writing code that is meant to run only in Node.js, you can use global to reference the global object.
+If you aim for cross-environment compatibility, use globalThis to ensure your code works in both browsers and Node.js.
+*/
+
+/*
+function myFunction() {
+  //inside regular function this will point either global(object) or object on which the function is called
+  console.log(globalThis === global); //true
+  console.log(this === global); //true
+  console.log((globalThis == this) == global); //false, now you have to find reason
+}
+myFunction(); // this inside function "myFunction" will refer to global(object) but in global scope this points to an empty object
+console.log(this); //{}
+*/
+
+/*
+var a = 50; // its scope is module scope not global
+console.log(globalThis.a); // undefined
+
+//reason
+Node.js Module Scope: In Node.js, each file is treated as a separate module. Variables declared with var, let, or const at the top level of a module are scoped to that module and do not become global properties.
+Global Object: Only explicitly assigned properties to global or globalThis will become global properties in Node.js.
+*/
+
+/*
+const appleOnTheTree = {
+  a: 100,
+  print1: function () {
+    console.log(this.a); //100
+  },
+  print2: () => {
+    console.log(this); //50 in browser environment, but here in nodejs environment it is like this in global scope and in global scope this is {}
+  },
+  print3: function () {
+    (() => {
+      console.log(this.a); //100
+    })();
+  },
+};
+
+appleOnTheTree.print1();
+appleOnTheTree.print2();
+appleOnTheTree.print3();
+*/
+
+/*
+let obj = {};
+// obj ? console.log("obj is truthy") : console.log("obj is falsy");
+// console.log(obj == true); //false, reason type coercing (finally comparing NaN==1)
+// console.log(obj == false); //false, reason type coercing (finally comparing NaN==1)
+// console.log(!!obj === true); //true, !! operator gives boolean equivalent of its operand
+// console.log(NaN == obj, NaN == false, NaN == undefined, NaN == NaN);// all false
+*/
+
+//&& operator
+/*
+let find = false;
+const res = true && "default"; // && operator searches for falsy value in a chain as it is it found falsy value it return that if not found last one is returned without check so last one is like a fallback
+console.log(res); // "default"
+
+let arr = [];
+console.log({} && false && "default"); //false
+const res2 = true && arr.push(5);
+console.log({ arr, res2 }); //{ arr: [ 5 ], res2: 1 }, arr.push returns length of arr after pushing
+*/
+
+/*
+let str = "im string";
+let flag = true;
+flag ? (str += " true") : (str += " false");
+console.log({ str }); //{ str: 'im string true' }
+*/
+
+/*
+function getUpdatedData(num) {
+  setTimeout(() => {
+    num = num * 5;
+    return num;
+  }, 200);
+}
+console.log(getUpdatedData(3)); // undefined
+*/
+
+/*
+let arr = [1, 2, 3, 4];
+let res = arr.filter((item, ind) => ind);
+console.log(res); // [ 2, 3, 4 ]
+*/
+
+/*
+let arr = [1, 2, 3, 4];
+let res = arr.map((item, ind) => ind);
+console.log(res); //[ 0, 1, 2, 3 ]
+*/
+/*
+let arr = [1, 2, 3, 4];
+let res = arr.map(async (item, ind) => ind);
+console.log(res); //[ 0, 1, 2, 3 ]
+*/
+
+////////////////////////////////imp
+/*
+let arr = [1, 2, 3, 4];
+let res = arr.filter(async (item, ind) => ind);//[ 1, 2, 3, 4 ]
+//cb 'async (item, ind) => ind' (its return value is a promise for each item and promise is being treated as truthy value
+console.log(res);
+*/
+
+/*
+//now your task is that even it is a promise based on resolve value you have to filter elm
+let arr = [1, 2, 3, 4];
+let res = arr.filter(async (item, ind) => {
+  return ind;
+}); //[ 1, 2, 3, 4 ]
+
+console.log(res);
+*/
+/*
+function doSomething(q) {
+  console.log(`done`, q);
+}
+let flag = true;
+let met = (() => {
+  console.log(`ran 1`);
+  flag = false;
+  return doSomething;
+})();
+console.log(`ran2`);
+flag || met(6);
+
+*/
+/*
+function add() {
+  let a = (b = 5);
+}
+add();
+console.log(b); //5
+console.log(a);
+*/
+
+/*
+const user = {
+  name: "",
+  email: 123,
+};
+let res = user.name === "" && delete user.name; //delete user.name; it returns true
+console.log(res);
+console.log(user);
+*/
+
+/*
+const user = {
+  name: "",
+  email: 123,
+};
+user.name || delete user.name; //delete user.name; it returns true
+console.log(user);
+*/
+
+/*
+(() => {
+  let arr = []; //possibility of null and undefined
+  const isNew = arr?.length > 0 ? false : true;
+  const betterIsNew = !arr?.length;
+  console.log({ isNew, betterIsNew }); //{ isNew: true, betterIsNew: true }
+  console.log(!!arr); //true
+  console.log(arr == true); //false
+})();
+
+let myfunc = (() => {
+  let count = 0;
+  return () => {
+    count++;
+    console.log({ count });
+  };
+})();
+
+myfunc();
+*/
+
+// proto types
+
+/*
+
+// constructor function , can not use arrow function
+
+function UserFunc(name, email) {
+  this.name = name;
+  this.email = email;
+}
+console.log(Function.prototype === Function.__proto__); //true, it is like module.exports and exports, both pointing same object
+console.log(UserFunc.__proto__); //{}, same as prototype of Function
+const funcUser1 = new UserFunc("a", "a@gmail.com"); // false
+console.log(funcUser1); //{ name: 'a', email: 'a@gmail.com' }
+console.log(funcUser1.__proto__ === Function.prototype); //false, funcUser1.__proto__ deep copy of Function.prototype, same in value but not in reference
+*/
+
+/*
+// classes can be used in place of constructor function
+class User {
+  constructor(name, email) {
+    this.name = name;
+    this.email = email;
+  }
+}
+console.log(User.__proto__, User.prototype); //{},{} but not same by reference
+const user1 = new User("a", "a@gmail.com");
+console.log(user1.__proto__); //{}, like it created fom a function
+console.log(user1); //{ name: 'a', email: 'a@gmail.com' }
+// */
+
+/*
+const literalUser = {
+  name: "a",
+  email: "a@gmail.com",
+};
+console.log(literalUser); //{ name: 'a', email: 'a@gmail.com' }
+console.log(literalUser.__proto__ === Object.prototype, "from here"); // true, both hasa same ref
+console.log(Object.prototype); //[Object: null prototype] {}
+console.log(literalUser.__proto__);
+console.log(Object.keys(literalUser));
+*/
+
+/*
+const user1 = { name: "a", email: "a@gmail.com " };
+const user2 = { name: "b", email: "b@gmail.com " };
+function printDetail() {
+  console.log("my detail  ", "name =>", this.name, "email=>", this.email);
+}
+printDetail.call(user1);
+printDetail.call(user2);
+*/

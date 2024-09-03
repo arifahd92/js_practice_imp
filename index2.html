@@ -1,36 +1,48 @@
+<!-- @format -->
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-    <button id="myButton">click me</button>
+  </head>
+  <body>
+    <button id="" onclick="callDebouncedFunc()">btn2</button>
+    <button id="myButton">btn1</button>
     <script>
- function debounce (cb,delay){
-    let timer 
-    return function(a,b){
-        clearTimeout(timer)
-       timer= setTimeout(()=>{
-             cb(a,b)
-       },delay)
-    }
- }
- const debouncedFunction=debounce(doSum,1000)
+      //for bt2
+      const callDebouncedFunc = (function () {
+        let timer;
+        return () => {
+          clearTimeout(timer);
+          console.log(`function called `);
+          timer = setTimeout(() => {
+            // implement here expensive task (calling api )
+            // or call an other function that calls api
+            console.log(`api called`);
+          }, 300);
+        };
+      })();
+      //for btn1
+      function debounce(cb, delay) {
+        // created just for creating closure between returned function and timer variable
+        let timer;
+        return function () {
+          clearTimeout(timer);
+          timer = setTimeout(cb, delay); //cb == expensiveFunc
+        };
+      }
+      const debouncedFunction = debounce(expensiveFunc, 400);
 
- function doSum(a,b){
-     console.log(a+b)
-     return a+b
- }
- 
- document.getElementById('myButton').addEventListener('click', ()=>debouncedFunction(2,7));
+      //actual expensive function
+      function expensiveFunc() {
+        console.log(`made api call................`);
+      }
 
-
- let user ={
-    address:{vill:"varanasi"}
- }
-console.log(user)
+      document
+        .getElementById("myButton")
+        .addEventListener("click", () => debouncedFunction());
     </script>
-</body>
+  </body>
 </html>

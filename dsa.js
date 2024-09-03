@@ -750,3 +750,341 @@ let res = data.map((item) => {
 });
 console.log(res);
 */
+
+/*
+const Data = [
+  {
+    count: 1,
+    date: 7,
+    origin: "eeee",
+  },
+  {
+    count: 3,
+    date: 7,
+    origin: "wwwww",
+  },
+  {
+    count: 1,
+    date: 12,
+    origin: "eeee",
+  },
+  {
+    count: 20,
+    date: 13,
+    origin: "wwwww",
+  },
+  {
+    count: 12,
+    date: 14,
+    origin: "dddddd",
+  },
+  {
+    count: 8,
+    date: 14,
+    origin: "wwwww",
+  },
+  {
+    count: 5,
+    date: 14,
+    origin: "eeee",
+  },
+  {
+    count: 10,
+    date: 17,
+    origin: "dddddd",
+  },
+  {
+    count: 4,
+    date: 18,
+    origin: "dddddd",
+  },
+  {
+    count: 3,
+    date: 19,
+    origin: "dddddd",
+  },
+  {
+    count: 2,
+    date: 20,
+    origin: "dddddd",
+  },
+];
+let formatted = {};
+Data.forEach(({ date, count, origin }, ind) => {
+  const key = date;
+  if (formatted[key]) {
+    let { countArr, originArr } = formatted[key];
+    countArr.push(count);
+    originArr.push(origin);
+    formatted[key].total += count;
+  } else {
+    formatted[key] = { countArr: [count], originArr: [origin], total: count };
+  }
+});
+console.log(formatted);
+*/
+
+// const apiData = require("./data.js");
+// const { data, sources } = apiData;
+// console.log(data);
+// console.log(sources);
+// const obj = {};
+// data.forEach((item) => {
+//   const { count, name, year, source } = item;
+//   if (!obj[name]) {
+//     obj[name] = {
+//       totalCount: count,
+//       details: {
+//         ...sources,
+//         [source]: count,
+//       },
+//     };
+//   } else {
+//     obj[name].totalCount += count;
+//     obj[name].details[source] += count;
+//   }
+// });
+// console.log(obj);
+
+/*
+const aggregateArr = data.reduce((acc, curr) => {
+  const { count, name, year, source } = curr;
+  const index = acc.findIndex((item) => item.name == name);
+  if (index == -1) {
+    const brandNew = {
+      name,
+      totalCount: count,
+      detail: { ...sources, [source]: count },
+    };
+    acc.push(brandNew);
+  } else {
+    acc[index].totalCount += count;
+    acc[index].detail[source] += count;
+  }
+  return acc;
+}, []);
+console.log(aggregateArr);
+// const makeUpObj = { name: [name], totalCount: 0, detail: { ...sources } };
+*/
+
+/*
+const mapperObj = {
+  1: "Jan",
+  2: "Feb",
+  3: "Mar",
+  4: "Apr",
+  5: "May",
+  6: "Jun",
+  7: "Jul",
+  8: "Aug",
+  9: "Sep",
+  10: "Oct",
+  11: "Nov",
+  12: "Dec",
+};
+const { threeMonthData } = apiData;
+// console.log(sources);
+const start = 2,
+  end = 7;
+
+const obj = {};
+const mapped = threeMonthData.reduce((acc, item) => {
+  const { name, count, source, year } = item;
+  if (!acc[name]) {
+    acc[name] = {
+      name: mapperObj[name],
+      year: year,
+      count: { ...sources, [source]: count },
+    };
+  } else {
+    acc[name].count[source] += count;
+  }
+  return acc;
+}, {});
+
+for (i = start; i <= end; i++) {
+  let year;
+
+  if (!mapped[i]) {
+    mapped[i] = {
+      name: mapperObj[i],
+      count: { ...sources },
+      year: NaN,
+    };
+  }
+}
+console.log(mapped);
+
+// 15 1
+let k = 1;
+let arr = [7, 6, 7, 10, 3, 2, 8, 9, 4, 7, 2, 5, 2, 8, 4];
+
+function firstElement(arr, n, k) {
+  //your code here
+  const obj = {};
+  for (const item of arr) {
+    obj[item] = obj[item] + 1 || 1;
+  }
+  let res = -1;
+  console.log(obj);
+  for (const item of arr) {
+    console.log({ item, val: arr });
+    if (obj[item] === k) {
+      res = item;
+      break;
+    }
+  }
+  return res;
+}
+console.log(firstElement(arr, arr.length, k));
+*/
+
+// let opIdFromService = ["1", "a", "3"];
+// let opIdFromRequest = ["3", "1", "e"];
+
+// let isOpIdFromRequestSubsetOfOpIdFromService = opIdFromRequest.every((item) =>
+//   opIdFromService.includes(item)
+// );
+// console.log({ isOpIdFromRequestSubsetOfOpIdFromService });
+/*
+const arrOfArr = [["1"], ["a"], ["3"]];
+try {
+  const updated = arrOfArr.reduce((acc, curr) => {
+    let flag = true;
+    acc.push(...curr);
+    curr.forEach(async (item) => {
+      console.log({ item });
+      if (item == "a") {
+        flag = false;
+        // console.log(`going to threw error`);
+        // throw new Error();
+        //due to async nature this throw is not being handled through try catch that's why I i used flag and threw error from non async function and got handled by try catch
+      }
+    });
+    console.log({ flag });
+    if (!flag) {
+      throw new Error("custom threw error");
+    }
+    return acc;
+  }, []);
+  console.log({ updated });
+} catch (error) {
+  console.log(` successfully caught threw error`);
+  console.log(error.message);
+}
+  */
+
+/*
+async function asyncMethod() {
+  return "3";
+}
+try {
+  const arrOfArr = [["1"], ["a"], ["3"]];
+  const updated = arrOfArr.reduce((acc, curr) => {
+    acc.push(...curr);
+    curr.forEach(async (item) => {
+      let res = await asyncMethod();
+      console.log({ item, res });
+      if (item == res) {
+        // throw new Error();
+      }
+    });
+    console.log(curr);
+    return acc;
+  }, []);
+  console.log({ updated });
+} catch (error) {
+  console.log(` successfully caught threw error`);
+  console.log(error.message);
+}
+*/
+
+//chatgpt code
+/*
+async function asyncMethod() {
+  return "3";
+}
+
+(async () => {
+  try {
+    const arrOfArr = [["1"], ["a"], ["3"]];
+
+    const updated = await arrOfArr.reduce(async (accPromise, curr) => {
+      const acc = await accPromise; // Wait for the previous accumulation
+      acc.push(...curr);
+
+      await Promise.all(
+        curr.map(async (item) => {
+          let res = await asyncMethod();
+          console.log({ item, res });
+          if (item == res) {
+            throw new Error("Item matches asyncMethod result");
+          }
+        })
+      );
+
+      console.log(curr);
+      return acc;
+    }, Promise.resolve([]));
+
+    console.log({ updated });
+  } catch (error) {
+    console.log("Successfully caught threw error");
+    console.log(error.message);
+  }
+})();
+*/
+
+/*
+let arr = [1, 2, 3, 4];
+let res = arr.filter(async (item, ind) => {
+  console.log({ item });
+});
+console.log(res); // [1, 2, 3, 4 ]
+*/
+
+/*
+async function asyncMap() {
+  try {
+    const arrOfArr = ["1", "3", "4", "5"];
+    const updated = arrOfArr.map(async (item) => {
+      const res = await Promise.resolve(2);
+      if (item % res === 0) {
+        throw new Error("throwing error ");
+      }
+
+      return item + 1;
+    });
+    const updatedRes = await Promise.all(updated);
+    console.log(updatedRes);
+  } catch (error) {
+    console.log(` successfully caught threw error`);
+    console.log(error.message);
+  }
+}
+asyncMap();
+*/
+
+async function asyncReduce() {
+  try {
+    const arrOfArr = [1, 2, 3, 4, 5];
+    const updated = arrOfArr.reduce(async (acc, curr) => {
+      let res = await acc;
+      res += curr;
+      // return Promise.resolve(res);
+      return res;
+      // async function returns promise so no need of promise.resolve(res), and if an async func returns promise that also behave same or you can say converting a promise in promise has no effect
+    }, Promise.resolve(0));
+    const updatedRes = await updated;
+    console.log({ updatedRes });
+  } catch (error) {
+    console.log(` successfully caught threw error`);
+    console.log(error.message);
+  }
+}
+asyncReduce();
+const res = Promise.resolve(6);
+Promise.resolve(res).then((data) => {
+  console.log(data);
+});
+console.log({ res });

@@ -10,7 +10,9 @@
   <body>
     <button id="myButton">click me</button>
     <script>
-      function debouncing() {
+      //when this file will execute IIFE will run once automatically and will return what ever is being return inside this
+      //created iife so that debouncedFunction can form closure with tier
+      const debouncedFunctionVariable = (function () {
         let timer;
         return function debouncedFunction() {
           clearInterval(timer);
@@ -18,11 +20,11 @@
             console.log(`debounced function called`);
           }, 500);
         };
-      }
-      const debouncedFunction = debouncing();
+      })();
+
       document
         .getElementById("myButton")
-        .addEventListener("click", debouncedFunction);
+        .addEventListener("click", debouncedFunctionVariable);
     </script>
   </body>
 </html>
