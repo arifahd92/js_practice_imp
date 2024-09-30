@@ -946,6 +946,7 @@ console.log(firstElement(arr, arr.length, k));
 //   opIdFromService.includes(item)
 // );
 // console.log({ isOpIdFromRequestSubsetOfOpIdFromService });
+
 /*
 const arrOfArr = [["1"], ["a"], ["3"]];
 try {
@@ -1044,47 +1045,96 @@ console.log(res); // [1, 2, 3, 4 ]
 */
 
 /*
-async function asyncMap() {
-  try {
-    const arrOfArr = ["1", "3", "4", "5"];
-    const updated = arrOfArr.map(async (item) => {
-      const res = await Promise.resolve(2);
-      if (item % res === 0) {
-        throw new Error("throwing error ");
-      }
+const user = [{ id: 1, name: "user1" }, { id: 2 }];
 
-      return item + 1;
-    });
-    const updatedRes = await Promise.all(updated);
-    console.log(updatedRes);
-  } catch (error) {
-    console.log(` successfully caught threw error`);
-    console.log(error.message);
-  }
-}
-asyncMap();
+// const [a, b] = user;
+// const { id: id1, name: name1 } = a;
+// const { id: id2, name: name2 = "default" } = b;
+// console.log({ id1, id2, name1, name2 }); //{ id1: 1, id2: 2, name1: 'user1', name2: 'default' }
+
+const [{ id: id1, name: name1 }, { id: id2, name: name2 = "default" }] = user;
+console.log({ id1, id2, name1, name2 }); //{ id1: 1, id2: 2, name1: 'user1', name2: 'default' }
 */
 
-async function asyncReduce() {
-  try {
-    const arrOfArr = [1, 2, 3, 4, 5];
-    const updated = arrOfArr.reduce(async (acc, curr) => {
-      let res = await acc;
-      res += curr;
-      // return Promise.resolve(res);
-      return res;
-      // async function returns promise so no need of promise.resolve(res), and if an async func returns promise that also behave same or you can say converting a promise in promise has no effect
-    }, Promise.resolve(0));
-    const updatedRes = await updated;
-    console.log({ updatedRes });
-  } catch (error) {
-    console.log(` successfully caught threw error`);
-    console.log(error.message);
+/*
+function format(amount = 0.01) {
+  const arr = amount.toString().split(".");
+  let decimalPart = "00";
+  if (arr[1]?.length >= 2) {
+    decimalPart = arr[1];
+  } else if (arr[1]?.length == 1) {
+    decimalPart = arr[1] + "0";
+  }
+  return arr[0] + "." + decimalPart;
+}
+// console.log(format(0.1999));
+*/
+
+/*
+// imp => Avoid `include` method  in js it makes O(N^2) Time complexity
+
+const statuses = {
+  confirm: [1, 2, 3],
+  unConfirm: [4, 5, 6],
+};
+
+let data = [
+  { statusId: 1, user: "a" },
+  { statusId: 3, user: "b" },
+  { statusId: 5, user: "c" },
+];
+// task is in data array in each element add one more key name status whose value will be taken from statuses key based on its statusId
+
+//expected output , [{ statusId: 1, user: "a", status:"confirm" },{ statusId: 3, user: "b", status:"confirm" },{ statusId: 5, user: "c", status:"unConfirm" }];
+
+//? bad solution  with `include`
+
+// data.forEach((item) => {
+//   for (const key in statuses) {
+//     if (statuses[key].includes(item.statusId)) {
+//       item.status = key;
+//       break;
+//     }
+//   }
+// });
+// console.log(data);//? got correct output
+
+// ? M2 without include
+let obj = {};
+for (const key in statuses) {
+  for (const item of statuses[key]) {
+    obj[item] = key;
   }
 }
-asyncReduce();
-const res = Promise.resolve(6);
-Promise.resolve(res).then((data) => {
-  console.log(data);
+
+data.forEach((item) => {
+  item.status = obj[item.statusId];
 });
-console.log({ res });
+console.log(data);
+*/
+
+//? common in two arrays
+
+const arr1 = [1, 2, 3, 2, 4, 3, 5, 6, 9];
+const arr2 = [9, 5, 2, 2, 3, 2, 4, 4];
+//? op [2,3,2,4,5,9]
+
+const mappedObj1 = arr1.reduce((acc, curr) => {
+  acc[curr] = (acc[curr] ?? 0) + 1;
+  return acc;
+}, {});
+const mappedObj2 = arr2.reduce((acc, curr) => {
+  acc[curr] = (acc[curr] ?? 0) + 1;
+  return acc;
+}, {});
+// console.log(mappedObj2);
+let arr = [];
+for (const key in mappedObj1) {
+  if (mappedObj2[key]) {
+    count = Math.min(mappedObj1[key], mappedObj2[key]);
+    while (count-- > 0) {
+      arr.push(+key);
+    }
+  }
+}
+console.log(arr);

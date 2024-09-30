@@ -747,7 +747,7 @@ const data = {
 };
 
 */
-// imp******************
+// imp,******************
 /*
 
 const fruits = ["apple", "banana", "apple", "orange", "banana", "apple"];
@@ -1604,5 +1604,625 @@ function printDetail() {
   console.log("my detail  ", "name =>", this.name, "email=>", this.email);
 }
 printDetail.call(user1);
-printDetail.call(user2);
+*/
+
+// destructuring***************
+/*
+let list1 = [1, 2, 3];
+let list2 = [list1[0], list1[1]]; //destructuring does this and nothing
+let list3 = [...list1]; // it is same as let list3=[] then list1.forEach(item=>list3.push(item))// and now if item is reference type so list3 will hold the same reference that list one holds
+let list4 = list1;
+console.log(list1 === list4, list1 === list2, list1 === list3); //true false false
+*/
+
+/*
+const arr1 = [
+  { name: "arif", email: "arif1@gmail.com" },
+  { name: "taslim", email: "taslim@gmail.com" },
+];
+const arr2 = [...arr1];
+arr2[0] = {};
+arr2[1].age = 33;
+console.log(arr1);                                           //[{ name: 'arif', email: 'arif1@gmail.com' },{ name: 'taslim', email: 'taslim@gmail..com', age: 33 }]
+console.log(arr2);                                           //[ {}, { name: 'taslim', email: 'taslim@gmail.com', age: 33 } ]
+
+// explanation arr1 has a reference of an array and its index has also stored reference not value
+//arr2= [...arr1], here destructuring broken the reference of array, not elements so both array has different array reference but both arrays element has references of same elements, if ones modified element it will be modifying same element
+*/
+
+/*
+const arr1 = [
+  { name: "arif", email: "arif1@gmail.com" },
+  { name: "taslim", email: "taslim@gmail.com" },
+];
+const arr2 = [...arr1]; // arr2[0]=arr1[0], arr2[1]=arr1[1]
+
+arr2[0] = { name: "shama", email: "shama@gmail.com" }; // arr2[0] has got  a brand new object with completely new ref
+
+arr2[0].age = 25; // it is not going to affect arr1[0] element
+
+arr2[1].name = "updated"; // arr2[1] has same reference as arr1[0], coz object are referenced type, so it will update arr1[0] element too
+
+console.log(arr1[0]); //{ name: 'arif', email: 'arif1@gmail.com' }
+
+console.log(arr1[1]); //{ name: 'updated', email: 'taslim@gmail.com' }
+*/
+
+//imp=> basic rule of destructuring, if you are destructuring an array then use array and if you are destructuring an object literal then use object literal, use : to rename variable = to provide default parameters
+
+//? ex
+/*
+let user = [
+  { status: "success", value: 1 },
+  { status: "fail", reason: "rejected" },
+]; // destructure value from user, if value not present use default value and rename value1 , value2 respectively
+
+const [
+  { status: status1, value: value1 = "default" },
+  { status: status2, value: value2 = "default" },
+] = user;
+//explanation user was an array so made an array for destructuring, now inner destructuring , user[0] is an object so used object for inner destructuring
+console.log({ status1, value1, status2, value2 }); //{ status1: 'success', value1: 1, status2: 'fail', value2: 'default' }
+*/
+
+/*
+(async () => {
+  const [{ value }, { value: value2 }] = await Promise.allSettled([
+    Promise.resolve(3),
+    Promise.reject(3),
+  ]); //[  { status: "fulfilled", value: 3 },  { status: "rejected", reason: 3 }]; this was returned by await
+  console.log(value,value2);//2 undefined
+})();
+*/
+
+/*
+const order = [
+  { id: 1, count: 10, price: 50 },
+  { id: 3, count: 1, price: 0 },
+];
+const user = [
+  { id: 1, name: "user1" },
+  { id: 2, name: "user1" },
+  { id: 3, name: "user1" },
+];
+task insert total field in user from order
+// M1=> nested loop
+user.forEach(({ id }, ind) => {
+  const index = order.findIndex(({ id: userId }) => id === userId);
+  const { count, price } = order[index] ?? {};
+  const total = count * price || 0;
+
+  user[ind].total = total;
+});
+
+m2, we will leverages objects O(1) search capability
+in m1, two loops were nested so time complexity for m1 is O(n squire) and for m2 it is O(n)
+
+learning whenever an array say  array A is searching some elements in an another array say array B 
+by looping on array A, just create an object of array be and find via key
+
+const orderIdObject = order.reduce((acc, { id, ...curr }) => {
+  acc[id] = { ...curr };
+  return acc;
+}, {});
+
+user.forEach((item, ind) => {
+  const { price, count } = orderIdObject[item.id] ?? {};
+  item.total = price * count || 0;
+});
+console.log(user);
+*/
+
+//?: thumb rule of try catch
+
+//imp: until and unless thrown error or promise rejection is not brought in try catch scope it will not handle that error
+
+//? rejection of a promise or error thrown by promise is not handled by try catch block
+//? but both (rejection or thrown error by promise) is handled by .catch method over that promise
+//imp: (without await rejection of a promise can not be brought inside try catch of a promise ),
+// imp,: rejection of a promise can be handled by try catch only and only if await is used before that promise(await will bring rejection in to  try catch scope)
+
+//? example 1
+/*
+const prom = new Promise((res, rej) => {
+  // throw "hbh";
+  rej("message")
+}).catch((e) => console.log(e)); //hbh
+*/
+
+//? example 2
+/*
+(() => {
+  try {
+    const prom = new Promise((res, rej) => {
+      throw "hbh";
+      // rej("message")
+    });
+  } catch (error) {
+    console.log(`i can not handle error thrown by prom`);
+    // imp,: i can not handle error thrown by prom coz error is not being brought in my (try catch ) scope
+    //IMP : NOTE async functions await before a promise brought error in my(try catch) scope so that works
+  }
+})();
+*/
+
+/*
+(async () => {
+  try {
+    const prom = await new Promise((res, rej) => {
+      throw "hbh";
+      //rej("message")
+    });
+  } catch (error) {
+   //now i can  handle error thrown by prom coz await will bring error in my scope 
+    console.log(
+     error.message
+    );
+  }
+})();
+*/
+
+/*
+(() => {
+  function errorFunction() {
+  let user 
+    user.age;// error will be thrown
+    // throw "error thrown by inner";
+  }
+
+  function outerFunc() {
+    try {
+      let user = "wert";
+      errorFunction(); //? this call brings error of errorFunction in try catch scope
+      //?: so easily error thrown by errorFunction will be  caught by outerFuncs try catch block
+    } catch (error) {
+      console.log(error.message); //? Cannot read properties of undefined (reading 'age')
+    }
+  }
+
+  outerFunc();
+})();
+*/
+
+// (() => {
+//   function errorFunction() {
+//     undefined.data;
+//   }
+
+//   function outerFunc() {
+//     try {
+//       let user = "wert";
+//       errorFunction(); //? this call brings error of inner function  in try catch scope
+//     } catch (error) {
+//       console.log(`i ran`);
+//       console.log(error);
+//     }
+//   }
+
+//   outerFunc;
+// })();
+
+/*
+(() => {
+  const data = Promise.resolve("resolved");
+  console.log(data); //? Promise { 'resolved' }
+})();
+*/
+
+// (() => {
+//   const data = Promise.reject("rejected");
+//   console.log(data); //? error
+// })();
+
+/*
+(() => {
+  const data = Promise.reject("rejected").catch((e) => e);//?error handled by .catch and now returned value of catch as a promise will be returned
+  console.log(data); //Promise { <pending> }
+})();
+*/
+
+/*
+(async () => {
+  const data = await Promise.reject("rejected").catch((e) => e);
+  console.log(data); //rejected
+})();
+*/
+
+/*
+(async () => {
+  try {
+    const data = await Promise.reject("rejected");
+    console.log(data, "i will not execute");
+  } catch (error) {
+    console.log(error); //rejected
+  }
+})();
+*/
+
+/*
+(async () => {
+  try {
+    const data = await Promise.reject("rejected").catch((e) => {
+      //? if await is used then returned value of catch is achieved in data
+      //? otherwise promise of returned value of catch
+      console.log(
+        `i handled catch and did'nt returned any thing so you will get undefined 1`
+      );
+    });
+    console.log(data, "5th");
+  } catch (error) {
+    //?will not execute
+  }
+})();
+*/
+
+/*
+(async () => {
+  try {
+    const data = Promise.reject("rejected").catch((e) => {
+      //? if await is used then returned value of catch is achieved in data
+      //? otherwise promise of returned value of catch
+      console.log(
+        `i handled error using .catch and catch  did'nt returned any thing so you will get promise containing undefined as i don't used await`
+      );
+    });
+    console.log(data, ",abc 2nd"); // Promise { <pending> } ,abc 2nd
+  } catch (error) {
+    // will no execute
+  }
+})();
+*/
+
+/*
+  // imp, let me guess order of console  for both  function
+  (async () => {
+    try {
+      Promise.reject("rejected").catch((e) => {
+        console.log("1");
+      });
+      const res = await Promise.reject(
+        "after starting my execution  control will go out, thats why 10 is being printed before 4"
+      ).catch((e) => {
+        console.log("10");
+        return 20;
+      });
+      console.log(res);
+      console.log("2");
+    } catch (error) {}
+  }
+)();
+
+console.log(`3`);
+
+(async () => {
+  try {
+    Promise.reject("rejected").catch((e) => {
+      console.log("4");
+    });
+    console.log("5");
+  } catch (error) {}
+})();
+*/
+
+/*
+async function asyncFunc() {
+  throw new Error("error thrown by asyncFunc");
+  //note:- if an async function throws error it is equivalent to
+  // return Promise.reject(new Error("error thrown by asyncFunc"));
+}
+asyncFunc().then(null, (e) => console.log(e.message));
+*/
+
+/*
+// imp, async callback inside map
+async function asyncMap() {
+  try {
+    const arrOfArr = [["1"], ["3"], ["4"], ["5"]];
+    const updated = arrOfArr.map(async ([item]) => {
+      const res = await Promise.resolve(2);
+      if (item % res === 0) {
+        throw new Error("throwing error ");
+        //note:- if an async function throws error it is equivalent to Promise.reject("threw error")
+      }
+
+      return item + 1;
+    });
+    const updatedRes = await Promise.allSettled(updated);
+    console.log(updatedRes);
+  } catch (error) {
+    console.log(` successfully caught threw error`);
+    console.log(error.message);
+  }
+
+  // as per my experience try catch don't handle promise rejection (it handles only with await )
+  //if there is an array of promise and it contains some rejected promise and not any promise method (except that auto handle rejection like all settled , race) is used with await  then catch of try catch block will fail to handle error and it will break all our code 
+}
+asyncMap();
+*/
+
+/*
+async function asyncReduce() {
+  try {
+    const arrOfArr = [1, 2, 3, 4, 5];
+    const updated = arrOfArr.reduce(async (acc, curr) => {
+      let res = await acc;
+      res += curr;
+      return res; 
+      // return value of an async function is always a promise
+      // async function returns promise so no need of promise.resolve(res), and if an async func returns promise that also behave same or you can say converting a promise in promise has no effect
+    }, Promise.resolve(0));
+    // note inner async and outer async has no relation ship both are totally independent
+    await Promise.resolve(7);
+    console.log("i will be logged before completing loop "); //coz there is no await before me on outer async that waits loop to be completed
+    const updatedRes = await updated;
+    console.log({ updatedRes });
+    console.log("i will be logged after completing loop "); // coz await of outer waits till loop completed
+  } catch (error) {
+    console.log(` successfully caught threw error`);
+    console.log(error.message);
+  }
+}
+asyncReduce();
+*/
+
+/*
+const myPromise = new Promise((res) => {
+  setTimeout(res, 1000, 5);
+});
+Promise.resolve(myPromise).then((data) => {
+  console.log(data); //5,
+  //rather than getting myPromise (as data of .then ) we will get resolved value of myPromise coz Promise.resolve will be resolved by resolved value of myPromise, rather than myPromise
+
+  //this same concept is applied in case of async function when we return a promise
+});
+async function asyncFunc() {
+  return new Promise((res) => {
+    setTimeout(res, 100, 10);
+  });
+}
+asyncFunc().then((data) => console.log(data)); //10
+*/
+
+/*
+//imp => if .catch is applied on a promise then await is applied on return value of .catch if promise rejected
+
+//imp => if .then is applied on a promise then await is applied on return value of .then if promise resolved
+
+(async () => {
+  const res = await Promise.resolve(5).then((data) => data + 5); // here await is applied on return value of .then (thats why we get 10 rather than 5) rather than Promise.resolve, and we know .then returns a promise,
+  console.log({ res }); //{ res: 10 }
+
+  const res2 = await Promise.reject(5).catch((e) => "rejected");
+  console.log(res2); //rejected
+})();
+*/
+
+/*
+//imp error thrown by promise is equivalent to rejecting the promise
+
+const promise = new Promise((res, rej) => {
+  throw "error thrown by promise"; // equivalent to   rej("error thrown by promise");
+});
+promise.then(null, (e) => console.log(e)); //error thrown by promise
+*/
+
+// imp, => if an async function throws error , and this async is being called (without await) inside try block of try-catch , catch will not handle error coz threw error of async will be returning a rejected promise , while a normal function throwing error is called inside try block of try-catch, catch gracefully  will catch error
+
+//? example
+/*
+async function asyncFunc() {
+  throw "async threw error";
+}
+(async () => {
+  try {
+    asyncFunc();
+  } catch (error) {
+    console.log(error);
+  }
+})(); //UnhandledPromiseRejection
+*/
+
+/*
+function normalFunc() {
+  throw "normal func threw error";
+}
+
+(() => {
+  try {
+    normalFunc();
+  } catch (error) {
+    console.log(error); //normal func threw error, gracefully caught by catch
+  }
+})();
+*/
+
+/*
+function normalFunc() {
+  const inner = () => {
+    throw "inner of normal threw error";
+  };
+  inner();
+  return 5;
+}
+
+(() => {
+  try {
+    let res = normalFunc();
+    console.log({ res });// will not run 
+  } catch (error) {
+    console.log(error); //inner of normal threw error, gracefully caught by catch
+  }
+})();
+*/
+/*
+function normalFunc() {
+  setTimeout(() => {
+    throw "error thrown by set timeout"; // this is not return of inner
+  }, 100);
+}
+
+(() => {
+  try {
+    let res = normalFunc();
+    console.log({ res }); //{ res: undefined }
+  } catch (error) {
+    console.log(error); // wil not handle
+  }
+})();
+*/
+
+/*
+try {
+  function normalFunc() {
+    try {
+      setTimeout(() => {
+        throw "error thrown by set timeout"; // this is not return of inner
+      }, 100);
+    } catch (error) {
+      console.log(error); // it will also not handle
+    }
+  }
+
+  (() => {
+    try {
+      let res = normalFunc();
+      console.log({ res }); //?{ res: undefined }
+    } catch (error) {
+      console.log(error); //? wil not handle
+    }
+  })();
+} catch (error) {
+  console.log(error)//? it is also not handling
+}
+*/
+
+/*
+try {
+  function normalFunc() {
+    try {
+      setTimeout(() => {
+        try {
+          throw "error thrown by set timeout"; // this is not return of inner
+        } catch (error) {
+          console.log(`from here `); //? from here  , only this is capable to handle error of set time out
+        }
+      }, 100);
+    } catch (error) {
+      console.log(error); //? it will also not handle
+    }
+  }
+
+  (() => {
+    try {
+      let res = normalFunc();
+    } catch (error) {
+      console.log(error); // wil not handle
+    }
+  })();
+} catch (error) {
+  console.log(error); // it is also not handling
+}
+*/
+
+/*
+function normalFunc() {
+  const inner = () => {
+    setTimeout(() => {
+      return 5;//? this is not return of inner function 
+    }, 100);
+  };
+  return inner();
+}
+
+(() => {
+  try {
+    let res = normalFunc();
+    console.log({ res }); //{ res: undefined }
+  } catch (error) {
+    console.log(error); 
+  }
+})();
+*/
+
+/*
+const promise = new Promise((res, rej) => {
+  setTimeout(() => {
+    res("promise resolved");
+  }, 100);
+  throw "error thrown by promise"; // equivalent to   rej("error thrown by promise");
+});
+promise.then(
+  (data) => console.log(data), // will not execute
+  (e) => console.log(e) //? error thrown by promise
+);
+
+let listCond = "ORDER BY NAME";
+let dataLimit = Math.random() > 0.5 ? 10 : undefined;
+listCond += ` LIMIT ${dataLimit ?? 1}`;
+
+console.log(listCond);
+*/
+
+/*
+(async () => {
+  const res = await Promise.all([1, 2, Promise.resolve(6), null, undefined]);
+  console.log(res);//[ 1, 2, 6, null, undefined ]
+})();
+*/
+
+// ?,  .catch method on a promise is not needed in case of try catch with await keyword
+
+// imp, => use of .catch method on a promise with await (inside async function with try catch)
+// imp, => suppose u have 3 promises to resolve now requirement is that you want that if second one is rejected, do not move control to catch block and in res of second promise store undefined or something else, then use .catch on second promise and return any desired value (that you want to store in res of second promise)
+
+/*
+const promFunc = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(reject, 100, "rejected");
+  });
+};
+
+(async () => {
+  try {
+    await promFunc();
+    console.log({ res }); // will not logged
+  } catch (error) {
+    console.log(error, "=> without catch");
+  }
+})();
+
+(async () => {
+  try {
+    const res = await promFunc().catch((e) => e);
+    console.log({ res }); // only this one will be logged
+  } catch (error) {
+    console.log(error, "=> catch with return "); // will not run, coz await will be applied on return value of .catch (.catch returns a promise)
+  }
+})();
+
+(async () => {
+  try {
+    const res = await promFunc().catch((e) => {
+      throw e;
+    });
+    console.log({ res }); // will not logged
+  } catch (error) {
+    console.log(error, "=> catch with throw");
+  }
+})();
+
+*/
+
+/*
+(async () => {
+  try {
+    const prom = Promise.reject("rejected");
+    const res = await Promise.all([prom]);
+    console.log(res);
+  } catch (error) {
+    console.log(
+      `if on promise any other method like all or allSettled are used then try catch will handle error without await or catch on actual promise`
+    );
+  }
+})();
 */

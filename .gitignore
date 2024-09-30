@@ -1,0 +1,6 @@
+node_modules/
+data.js
+.env
+
+sensitive.md
+readme.md

@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "compression": "^1.7.4",
-    "dayjs": "^1.11.11",
+    "dayjs": "^1.11.13",
     "express": "^4.19.2",
     "morgan": "^1.10.0"
   }

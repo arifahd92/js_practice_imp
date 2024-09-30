@@ -188,3 +188,31 @@ for (let key in person) {
 
 console.log(keyArr); // Output: ["name", "age", "occupation", "nationality", "gender"]
 */
+// const dayjs = require("dayjs");
+// const utc = require("dayjs/plugin/utc");
+// const timezone = require("dayjs/plugin/timezone");
+// dayjs.extend(utc);
+// dayjs.extend(timezone);
+// const res = dayjs("2013-11-18T11:55:20")
+//   .tz("Asia/Kolkata")
+//   .format(" YYYY-MM-DDTHH:mm:ssZ.SSS[Z]");
+// console.log(res);
+// var date = new Date(res); // Or the date you'd like converted.
+// var isoDateTime = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+const dayjs = require("dayjs");
+const utc = require("dayjs/plugin/utc");
+const timezone = require("dayjs/plugin/timezone");
+dayjs.extend(utc);
+dayjs.extend(timezone);
+const res = dayjs("2013-11-18T11:55:20").tz("Asia/Kolkata");
+// console.log(res);
+
+const convertFromUTC = (utcTime, targetTimeZone) => {
+  return dayjs
+    .utc(utcTime)
+    .tz(targetTimeZone)
+    .format("YYYY-MM-DDTHH:mm:ss.SS[Z]");
+};
+
+// Example usage:
+console.log(convertFromUTC("2013-11-18T06:25:20.000Z", "Asia/Kolkata")); // 2013-11-18T11:55:20
