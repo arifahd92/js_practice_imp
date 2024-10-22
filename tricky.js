@@ -2226,3 +2226,171 @@ const promFunc = () => {
   }
 })();
 */
+
+/*
+//call method is used to borrow a method (from an object) for our own object (more precisely to set this  this keyword if method is defined with normal function )
+// call's first param specifies object (this) (on which we want to call borrowed method) do not confuse it with first param of borrowed method
+let obj = {
+  name: "arif",
+  email: "ab@gmail.com",
+  printDetail() {
+    console.log(this.name);
+    console.log(this.email);
+  },
+};
+let objTwo = { name: "razvi", email: "ab@gmail.com" };
+
+obj.printDetail(); // here printDetail is being called for obj Object
+// if i want to call same (printDetail) method of obj1 for objTwo can use call method
+obj.printDetail.call(objTwo);
+
+// arrays are object in js (a special type of object)
+
+// here i'm doing same, borrowing filter method from "[]" object then calling that method for obj "iterable"
+let iterable = [1, 2, 3, 4, 5];
+let res = [].filter.call(iterable, (a, i) => {
+  return a % 2;
+});
+console.log(res);
+*/
+
+//imp related to this
+/*
+function printDetail() {
+  console.log(`${this.name} :: ${this.email}`);
+}
+let user = {
+  name: "qa",
+  email: "qa@email.com",
+  printDetail,
+};
+// this depends on final invocation of function
+user.printDetail(); //qa :: qa@email.com
+*/
+
+/*
+function printDetail() {
+  console.log(`${this.name} :: ${this.email}`);
+}
+let user = {
+  name: "qa",
+  email: "qa@email.com",
+  printDetail() {
+    console.log(`${this.name} :: ${this.email}`);
+  },
+};
+// this depends on final invocation of function
+user.printDetail(); //qa :: qa@email.com
+const storedDetail = user.printDetail;
+storedDetail(); //undefined :: undefined
+// user.storedDetail(); //TypeError: user.storedDetail is not a function,
+const storedAndBindDetail = user.printDetail.bind(user);
+storedAndBindDetail(); //qa :: qa@email.com
+
+storedAndBindDetail.call({ name: "ab", email: "ab@email.com" }); //?qa :: qa@email.com, interesting bound can not be referenced with other this
+let stored = storedAndBindDetail.bind({ name: "ab", email: "ab@email.com" });
+stored(); //? qa :: qa@email.com
+*/
+//imp
+/*
+// indexOf vs  findIndex
+// indexOf is used when element is known , findIndex when element is not known and element has to pass a test (like greater than 5)
+//example 
+let arr = [1,2,3]
+// if some one says find index of 2 we will use indexOf , if some one says find index of element that is greater than 1 in that case findIndex
+*/
+
+/////////////////////////////////////////////////////////////////////////////////
+
+//imp about promise .then
+/*
+const myPromise = new Promise((res) => {
+  setTimeout(res, 100, "success");
+});
+
+// immediateResOfThenOnAPromise is derived promise from `myPromise` whose resolve time and value is same as original promise (myPromise) with extra feature
+const immediateResOfThenOnAPromise = myPromise.then((res) => {
+  console.log(`res inside .then => ${res}`);
+  return res;
+});
+console.log(immediateResOfThenOnAPromise);
+// result will be same for immediateResOfThenOnAPromise.then and myPromise.then (means both are like same promise) but `immediateResOfThenOnAPromise` giving us utility to do some extra thing just before resolve then returning same promise with same resolve value
+
+immediateResOfThenOnAPromise.then((data) =>
+  console.log(`res from immediateResOfThenOnAPromise=> ${data}`)
+);
+myPromise.then((data) => console.log(`res from simple promise=> ${data}`));
+// immediateResOfThenOnAPromise, it will resolve (or say its .then will be pushed in task que) just after .then of myPromise is pushed and invoked inside call stack from micro task que
+// that's why it's (immediateResOfThenOnAPromise) .then running after complete execution of .then of myPromise (call stack should be empty to push .then of immediateResOfThenOnAPromise ) irrespective  order in which they are written
+*/
+
+//imp Promise
+//? except passing array of promise inside Promise.all pass mapped array of same promise inside promise.all it will provide utility to add some  extra feature on resolving each promise
+/*
+function promiseCreator(timer, resVal) {
+  return new Promise((res) => setTimeout(res, timer, resVal));
+}
+function allWithMap(proms) {
+  return Promise.all(proms.map((prom) => prom.then((res) => res)));
+}
+const proms = [
+  promiseCreator(100, "val1"),
+  promiseCreator(300, "val2"),
+  promiseCreator(200, "val3"),
+];
+
+allWithMap(proms).then((res) => console.log(res)); //[ 'val1', 'val2', 'val3' ]
+*/
+
+/*
+console.time("total execution time"); // it will create a reference for time end
+function promiseCreator(timer, resVal) {
+  return new Promise((res) => setTimeout(res, timer, resVal));
+}
+
+function allWithMap(proms, timeTracker) {
+  let count = 0;
+  return Promise.all(
+    proms.map((prom) => {
+      return prom.then((res) => {
+        // return in this line is for map method
+        count++; // this is extra thing im incrementing count whenever any promise is resolving
+        timeTracker(count, proms.length);
+        return res; // return here is for .then so that newly created promise (using .then) has exactly same resolve value for each  promise of proms from which it is being created
+      });
+    })
+  );
+}
+const proms = [
+  promiseCreator(1000, "val1"),
+  promiseCreator(3000, "val2"),
+  promiseCreator(2000, "val3"),
+];
+const timeTracker = function trackCountOfResolvedPromise(count, promsLength) {
+  const completePercent = ((count / promsLength) * 100).toFixed(2) + "%";
+  console.log(completePercent);
+};
+allWithMap(proms, timeTracker).then((res) => {
+  console.log(res);
+  console.timeEnd("total execution time");
+}); //[ 'val1', 'val2', 'val3' ]
+*/
+
+/*
+function promiseCreator(timer, resVal) {
+  return new Promise((res) => setTimeout(res, timer, resVal));
+}
+function allWithMap(proms) {
+  return Promise.all(proms.map((prom) => prom.then((res) => res)));
+  //working 
+  //map will call (dhadaa dhad) to its call back function for each promises of proms & immediate return value (that is promise) of map's cb will be stored in an array and the same array will be returned as result of map thus Promise.all has exactly same thing what it expects 
+  //each invoked callback of map will call promise api of web that will push .then in callback que of micro task (which one will resolve first), thus these promises (actual promises) will run concurrently and as soon as .then will run of a  promise, inside array of promise.all respective promise (whose .then was invoked )will also get resolved
+}
+const proms = [
+  promiseCreator(100, "val1"),
+  promiseCreator(300, "val2"),
+  promiseCreator(200, "val3"),
+];
+
+allWithMap(proms).then((res) => console.log(res)); //[ 'val1', 'val2', 'val3' ]
+*/
