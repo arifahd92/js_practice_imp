@@ -1,0 +1,29 @@
+<!-- @format -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="myButton">click me</button>
+    <script type="module">
+      const button = document.getElementById("myButton");
+      let count = 0;
+      const deBounced = (() => {
+        let timer;
+        return (e) => {
+          clearTimeout(timer);
+          timer = setTimeout(actualFunctionToBeDebounced, 500, e);
+        };
+      })();
+      function actualFunctionToBeDebounced(e) {
+        console.log(`${e}`);
+        console.log(`button clicked ${count++} times`);
+      }
+      button.addEventListener("click", deBounced);
+    </script>
+  </body>
+</html>
