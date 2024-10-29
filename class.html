@@ -1,1 +1,229 @@
 <!-- @format -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <h1>Object.getOwnPropertyNames()</h1>
+    <p>
+      The Object.getOwnPropertyNames() static method returns an array of all
+      properties (including non-enumerable properties except for those which use
+      Symbol) found directly in a given object.
+      <strong
+        >always use this to check all (enumerable non non-enumerable properties
+        and methods, logging object itself will not show non enumerable
+        properties in node environment)</strong
+      >
+    </p>
+    <strong>
+      A class definition sets enumerable flag to false for all methods in the
+      "prototype"
+    </strong>
+    <p>
+      in node environment if you print an object having some properties or
+      methods having enumerable false those methods and property will not be
+      logged
+    </p>
+    <p>
+      thats why it is always better to use Object.getOwnPropertyNames(object),
+      to see all property and methods even if their enumerable is set false
+    </p>
+
+    <p>
+      <strong>
+        when we create a class its method are added in its prototype with
+        enumerable false
+      </strong>
+    </p>
+    <p>
+      first linkage of instances of a class is from prototype of class means
+      instance.__proto__=== class.prototype is true for each instances
+    </p>
+
+    <br />
+
+    <h3>instanceOf operator</h3>
+    <p>remember it is an operator not a method (it will not be invoked)</p>
+    <p>
+      syntax: object instanceof constructor here constructor in a function from
+      which objects are created
+    </p>
+    <p>
+      instanceOf operator just checks whether the object's __proto__ has ref to
+      the constructor's prototype or not (either direct or in chain), if it is
+      it returns true
+    </p>
+    <p>
+      for each and every object object instanceOf Object will always be true
+      cause each objects __proto__ chain has reference of object
+    </p>
+  </head>
+  <body>
+    <script>
+      class Person {
+        constructor(first, last, age, gender, interests) {
+          this.name = {
+            first: first,
+            last: last,
+          };
+          this.age = age;
+          this.gender = gender;
+          this.interests = interests;
+        }
+
+        greeting() {
+          console.log("Hi! I am", this.name.first);
+        }
+
+        farewell() {
+          console.log(this.name.first, "has left the building. Bye for now!");
+        }
+      }
+      console.log(Person.prototype);
+      let p = new Person("Jack", "Beanstalk", 201, "giant", [
+        "crushing things",
+        "stomping things",
+      ]);
+
+      console.log("Person", Object.getOwnPropertyNames(Person)); //["length","name","prototype"]
+
+      console.log("p", Object.getOwnPropertyNames(p)); //["name","age","gender","interests"], greeting and farewell are missing cause they are added  in prototype of Person rather than in object p to save memory
+
+      let p_prototype = Object.getPrototypeOf(p);
+      // let p_prototype = p.__proto__;//both (Object.getPrototypeOf(p) and p.__proto__) is same thing
+      console.log(
+        "p_prototype === Person.prototype is ",
+        p_prototype === Person.prototype
+      );
+      //p's __proto__ is referencing to Person.prototype
+
+      console.log(
+        "Person.prototype",
+        Object.getOwnPropertyNames(Person.prototype) //array of all methods defined in Person class,["constructor","greeting","farewell"]
+      );
+
+      /*
+      class User {
+        name = "aear";
+        constructor(fname, email, message) {
+          // Correctly assign the parameters to instance variables
+          this.fname = fname;
+          this.email = email;
+
+        }
+
+        detail() {
+          return "im detail";
+        }
+      }
+
+      const user1 = new User("arif", "arif@gmail.com", "im fine");
+      console.log(Object.instanceOf user1); // { name: 'aear', fname: 'arif', email: 'arif@gmail.com'}, method is in its prototype
+      console.log(Object.getPrototypeOf(user1));//a ref to User.prototype object
+      console.log(Object.getPrototypeOf(user1).hasOwnProperty("detail")); // true
+      */
+
+      /*
+      const user = { name: "arif", email: "etretey" };
+      const createdUser = Object.create(user);
+      console.log(createdUser); //{}
+      console.log(createdUser.__proto__ === user);// true
+      console.log(createdUser.name); // arif from proto
+      console.log(Object.keys(createdUser)); // empty arr, no error
+      */
+
+      //R & D of extend keyword,
+      //on extending
+      //1) each properties of parent will be copied in child instance object
+      //2) each methods of parent will be added in prototype of child class(it is a mis conception read pt 4a)
+      //3) if child class has'nt constructor method i will be called for that child class instance
+      //4) __proto__ of  protoType of child class refers to prototype of parent class & this is the actual linkage of child to parent for accessing methods of parent class on child instances
+      //4a) child Instance __proto__ => class.prototype , class.prototype.__proto__ => parent.prototype and all methods of parent class are added in parent.prototype, due to this reason pt2 is not correct
+      // /*
+      class Animal {
+        constructor(name) {
+          this.name = name;
+        }
+        category = "animal";
+        parentMethod() {
+          console.log(`im parent method called for instance ${this}`);
+          console.log(`i will be added in prototype of all my child class`);
+        }
+      }
+
+      class Dog extends Animal {
+        // when we do not create constructor method in child class, constructor of parent is called automatically with passed args of child instance (P-1)
+        bark() {
+          console.log(`dog ${this.name} barks =>` + "Woof!");
+        }
+      }
+      console.log(Dog.prototype.__proto__ === Animal.prototype); //true (P-4)
+
+      const myDog = new Dog("Buddy");
+      console.log(myDog); //{"name": "Buddy",category: "animal"}
+      console.log(myDog.bark()); //dog Buddy barks =>Woof!
+      console.log(myDog instanceof Dog); // true, reason: myDog's __proto__ has reference of prototype of Dog class/constructor function
+      console.log(myDog.__proto__ == Dog.prototype, "im true"); //true 'im true'
+      console.log(myDog instanceof Animal); // true (inherits from Animal), reason myDog.__proto__.__proto__ has reference od Animal.protoType
+      console.log(myDog.__proto__.__proto__ == Animal.prototype); // true
+
+      console.log(myDog instanceof Object); // true (inherits from Object)
+
+      console.log(
+        Object.getOwnPropertyNames(Dog.prototype), //only constructor and bark not parentMethod
+        "what Dog.prototype consists"
+      );
+      // */
+      /*
+      class Animal {
+        surName = "anything";
+        constructor(name) {
+          this.name = name;
+        }
+        generalMethod() {
+          return "im general method defined in Animal class";
+        }
+      }
+
+      class Dog extends Animal {
+        constructor(name, breed) {
+          super(name); // Call the parent class constructor with 'name'
+          this.breed = breed; // Add additional properties
+          this.constructorName = this.constructor.name; // Dog
+        }
+
+        bark() {
+          console.log("Woof!");
+        }
+      }
+
+      const myDog = new Dog("Buddy", "Labrador");
+      console.log(myDog); // {surName: 'anything', name: 'Buddy', breed: 'Labrador', constructorName: 'Dog'}
+      myDog.bark(); // Woof!
+      */
+      let User = function (name, age) {
+        this.name = name;
+        this.age = age;
+      };
+
+      let myObj = {
+        name: "ee",
+        email: "dd@gmail.com",
+        greet: function () {
+          console.log("Hello!");
+        },
+      };
+
+      // Change the `enumerable` attribute of `greet` method to true
+      Object.defineProperty(myObj, "greet", {
+        enumerable: true,
+      });
+
+      // Verify that `greet` is now enumerable
+      console.log(Object.keys(myObj)); // ["name", "email", "greet"]
+      console.log(myObj, "my object");
+    </script>
+  </body>
+</html>
