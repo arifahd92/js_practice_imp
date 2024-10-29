@@ -2394,3 +2394,79 @@ const proms = [
 
 allWithMap(proms).then((res) => console.log(res)); //[ 'val1', 'val2', 'val3' ]
 */
+
+/*
+//closure
+function Adder(addBy) {
+  return {
+    sum: () => arguments[0] + addBy, //this sum method is creating closure over Adder due to arguments and addBy variable
+  };
+}
+
+const myAdder1 = new Adder(2);
+const myAdder2 = new Adder(5);
+console.log(myAdder1.sum(6)); //4, sum method will run in its declared environment and will access addBy and arguments from Adder Function due to closer
+console.log(myAdder2.sum(6)); //10
+
+let myObj = {
+  sum: () => arguments[0],
+};
+console.log(myObj.sum.bind(6)());
+*/
+Array.prototype.filter = function (cb) {
+  let arr = [];
+  for (let i = 0; i < this.length; i++) {
+    let res = cb(this[i]);
+    arr.push(this[i]);
+  }
+  return arr;
+};
+/*
+let func1 = async (data) => {
+  try {
+    let c = data.xyz;
+  } catch (err) {
+    console.log(err.message);
+  }
+  return true;
+};
+
+let func2 = async (data) => {
+  try {
+    let c = data.xyz;
+    return true;
+  } catch (err) {
+    console.log(err.message);
+    return true;
+  }
+};
+
+func1().then((val) => {
+  console.log(val);
+});
+func2().then((val) => {
+  console.log(val);
+});
+*/
+
+/*
+let func = async (data = {}) => {
+  try {
+    let c = data.xyz;
+    const res = await Promise.reject("rejected").catch((err) => err);
+    console.log({ res });
+  } catch (err) {
+    console.log(err.message);
+  }
+  return "out";
+};
+func().then((val) => {
+  console.log(val);
+});
+*/
+let array = [1, 2, 3];
+array.name = "tyt";
+let filtered = array.filter((item, ind) => {
+  return item > 1;
+});
+console.log(filtered, "im filtered");

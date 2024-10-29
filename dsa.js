@@ -1113,6 +1113,7 @@ data.forEach((item) => {
 console.log(data);
 */
 
+/*
 //? common in two arrays
 
 const arr1 = [1, 2, 3, 2, 4, 3, 5, 6, 9];
@@ -1138,3 +1139,146 @@ for (const key in mappedObj1) {
   }
 }
 console.log(arr);
+
+*/
+/*
+const user = {
+  name: "arif",
+  age: 20,
+  address: {
+    current: { village: "thaltej", post: "ahmedabad" },
+    local: "abcd",
+  },
+};
+
+let obj = {};
+function createDeepCopy(obj, newObj = {}) {
+  for (const key in obj) {
+    let run = {};
+    if (typeof key === "object") {
+      createDeepCopy(key);
+    } else {
+      run[key] = obj[key];
+    }
+    deep = { ...deep, ...run };
+  }
+  return deep;
+}
+let res = createDeepCopy(user);
+res.local = "hju";
+console.log(user);
+*/
+/*
+let arr1 = [1, 2, 3];
+let updated = [4, 3, 2];
+//common in both, newElm in updated ,discarded by arr 2
+const obj1 = arr1.reduce((acc, curr) => {
+  acc[curr] = (acc[curr] ?? 0) + 1;
+  return acc;
+}, {});
+const common = updated.filter((item) => obj1[item]); //[3,2]
+
+const newElm = updated.filter((item) => !obj1[item]); //4
+
+const discarded = arr1.filter((item) => !updated.includes(item));
+console.log({ common, newElm, discarded }); //[1]
+*/
+/*
+let str = `A.createdBy`;
+str = str.replaceAll("A.createdBy", "A.createdBy.id");
+console.log(str);
+*/
+/*
+let start = 0;
+function handlePressNum(num) {
+  numToAdd = num / 100;
+  start = (start * 10 + numToAdd).toFixed(2);
+  console.log(start);
+}
+
+handlePressNum(7); // === 0.07
+handlePressNum(5); // === 0.75
+handlePressNum(6); //=== 7.56
+handlePressNum(8); //=== 75.68
+handlePressNum(0); // === 756.80
+*/
+//imp flatten array
+/*
+let arr = [1, 2, 3, 3, [2, [7, [5, 6, [4]]]]];
+
+function flattenedArr(arr, res = []) {
+  for (const item of arr) {
+    if (!Array.isArray(item)) {
+      res.push(item);
+    } else {
+      flattenedArr(item, res);
+    }
+  }
+
+  return res;
+}
+console.log(flattenedArr(arr));
+*/
+
+/*
+// first repeating character
+let arr = [1, 3, 2, 4, 2, 3];
+const freqObj = arr.reduce((acc, curr) => {
+  acc[`${curr}a`] = acc[`${curr}a`] + 1 || 1;
+  return acc;
+}, {});
+console.log(freqObj);
+*/
+
+/*
+// unique and duplicate 
+let arr = [1, 3, 2, 4, 2, 3];//unique 1,4;duplicate 3,4
+let tempObj = arr.reduce((acc, curr) => {
+  acc[`${curr}a`] = acc[`${curr}a`] + 1 || 1;
+  return acc;
+}, {});
+let unique = [],
+  duplicate = [];
+for (const key in tempObj) {
+  tempObj[key] > 1
+    ? duplicate.push(+key.replace("a", ""))
+    : unique.push(+key.replace("a", ""));
+}
+
+console.log(duplicate, unique);
+*/
+/*
+let arr = [1, 3, 2, 4, 2, 1];
+let duplicate = arr.filter((item, ind) => {
+  return arr.indexOf(item) !== ind;
+});
+console.log(duplicate);
+*/
+
+/*
+var twoSum = function (numbers, target) {
+  let i = 0,
+    j = numbers.length - 1,
+    res = [];
+  while (i < j) {
+    if (numbers[i] + numbers[j] === target) {
+      res = [i, j];
+      i = j + 1;
+    } else if (numbers[i] + numbers[j] > target) {
+      j--;
+    } else {
+      i++;
+    }
+  }
+  return res;
+};
+console.log(twoSum([2, 7, 11, 15], 9));
+*/
+//find interval for a given number interval is 5 ,
+//example for number from 1 to 5 interval will be 1 , 6 to 10 will be 2, 11 to 15 will be 3
+function findInterval(num, interval = 5) {
+  let res1 = Math.ceil(num / interval);
+  console.log({ res1 });
+}
+findInterval(1); //1
+findInterval(10); //2

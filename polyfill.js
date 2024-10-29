@@ -100,10 +100,10 @@ res = arr.myReduce((acc, curr) => {
 });
 console.log(res);
 */
-//
+//imp -------------------------------------------
 function myReduce(cb, acc = this[0]) {
   for (let i = 0; i < this.length; i++) {
-    acc = cb(acc, this[i]);
+    acc = cb(acc, this[i]); // just do this, over head nothing
   }
   return acc;
 }
@@ -116,6 +116,10 @@ let res = arr.myReduce((acc, curr) => {
 console.log(res);
 
 const res2 = arr.myReduce((acc, curr) => {
-  return acc + curr;
-}, 0);
+  acc.push(curr);
+  return acc;
+}, []);
 console.log(res2);
+
+const res3 = arr.myReduce((acc, curr) => acc + curr, 0);
+console.log(res3);
