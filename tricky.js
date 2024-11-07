@@ -2464,9 +2464,65 @@ func().then((val) => {
   console.log(val);
 });
 */
-let array = [1, 2, 3];
-array.name = "tyt";
-let filtered = array.filter((item, ind) => {
-  return item > 1;
-});
-console.log(filtered, "im filtered");
+
+/*
+// imp Nested Destructuring
+//https://najm-eddine-zaga.medium.com/top-javascript-best-practices-cf897022b6fd
+//? You can destructure nested objects or arrays, which can simplify accessing deeply nested data.
+const user = { profile: { name: "Md arif", age: 25 } };
+const { profile: data } = user; //here data will be ref of { name: "Md arif", age: 25 } and this (means data ) further can be  destructured
+
+// extract name as userName and age  from user  object
+const {
+  profile: { name: userName, age },
+} = user;
+console.log({ userName, age }); // { userName: 'Md arif', age: 25 }
+*/
+
+// imp prototype based task
+/*
+function Bird() {}
+Bird.prototype.printLeg = function () {
+  console.log(`it has two log`);
+};
+function Owl() {}
+const owlInstance = new Owl();
+//task=> owlInstance.printLeg(); should access the printLeg function from Bird's prototype (if it is not present in Owl's prototype), basically inheritance (without using class concept)
+// ex, owlInstance.printLeg(); // it should print `it has two log`, ie call  the printLeg function of Bird constructor function,at this moment throwing error
+
+// console.log(Owl.prototype.__proto__ === Object.prototype);//true
+// Owl.prototype.__proto__ = Bird.prototype;
+// owlInstance.printLeg(); // it has two log
+// console.log(Owl.prototype.__proto__ === Object.prototype); //false
+// console.log(Owl.prototype.__proto__.__proto__ === Object.prototype); //true
+
+
+//attempt1
+// Owl.prototype = Bird.prototype;// failed, in prototype obj we  can modify / add properties and methods, we cant change the ref or say cant assign brand new object
+// owlInstance.printLeg();
+
+// attempt-2
+// Owl.prototype = function printLeg() {
+//   console.log(`it has two log`);
+// };
+// owlInstance.printLeg(); // doing same mistake
+
+// attempt-3
+// Owl.prototype.printLeg = function printLeg() {
+//   console.log(`it has two log`);
+// };
+// owlInstance.printLeg();
+//any how  attempt 3 worked, but it is not  good and scalable
+
+//attempt-4
+// Owl.prototype.__proto__ = Object.create(Bird.prototype);
+// owlInstance.printLeg(); // it has two log
+// this is the good and scalable way to do it, but it is not recommended in modern js
+
+// attempt-5
+// console.log(Owl.prototype.__proto__ === Object.prototype);//true
+// Owl.prototype.__proto__ = Bird.prototype;
+// owlInstance.printLeg(); // it has two log
+// console.log(Owl.prototype.__proto__ === Object.prototype); //false
+// console.log(Owl.prototype.__proto__.__proto__ === Object.prototype); //true
+*/
