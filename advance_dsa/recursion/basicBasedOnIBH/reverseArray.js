@@ -79,3 +79,22 @@
   sortArr(arr);
   console.log(arr, "see here ");
 })();
+
+(() => {
+  let arr = [1, 3, 5, 7, 6];
+  function deleteMiddleOfArray(arr) {
+    let k = Math.floor(arr.length / 2) + 1;
+    function helper(arr, k) {
+      if (k == 1) {
+        arr.pop();
+        return;
+      }
+      let temp = arr.pop();
+      helper(arr, k - 1);
+      arr.push(temp);
+    }
+    helper(arr, k);
+  }
+  deleteMiddleOfArray(arr);
+  console.log(arr);
+})();
