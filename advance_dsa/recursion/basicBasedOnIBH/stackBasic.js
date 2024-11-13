@@ -31,7 +31,7 @@ let n = arr.length;
 for (let i = 0; i < n; i++) {
   stack.push(arr[i]);
 }
-
+//------------------------------------------stack created-------------------------
 /*
 
 function insertAtCorrectPosition(stack, temp) {
@@ -110,3 +110,22 @@ function putTempInLast(reversedStack, temp) {
 }
 reverseStack(stack);
 console.log("after reversing", stack.items);
+
+//delete middle item of stack------------------------------------------------------------------------
+
+console.log("current", stack.items);
+
+function deleteMiddle(stack, k) {
+  //first  i assumed deleteMiddle function will delete middle item of stack , how it will do i don't know but surely it will
+  //base case,  when we can delete item without calling function directly, isn't it k==1? when we directly can delete item from stack, without calling function
+  if (k == 1) {
+    stack.pop();
+    return;
+  }
+  let temp = stack.pop();
+  deleteMiddle(stack, k - 1); // i supposed it will delete correctly without top element, now i will put temp in stack,
+  stack.push(temp);
+}
+let k = Math.floor(stack.size() / 2) + 1;
+deleteMiddle(stack, k);
+console.log("after deleting", stack.items);
