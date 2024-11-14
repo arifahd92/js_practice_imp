@@ -26,7 +26,7 @@ function printAllSubSet(arr, op = [], set = new Set()) {
   }
   const last = arr.pop();
 
-  printAllSubSet([...arr], op, set); // here  spreading arr is necessary think why
+  printAllSubSet([...arr], op, set);
   printAllSubSet([...arr], [...op, last], set);
 }
 printAllSubSet([...arr]);
