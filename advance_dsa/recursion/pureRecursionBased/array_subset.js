@@ -7,8 +7,7 @@ function printAllSubSet(arr, op = []) {
     return;
   }
   const last = arr.pop();
-
-  printAllSubSet([...arr], op); // here  spreading arr is necessary think why
+  printAllSubSet([...arr], op); // here  spreading arr is necessary think why, reason how recursion works when it will  returns to execute stacked left function it will not get array state where it was left if we dont spred ,
   printAllSubSet([...arr], [...op, last]);
 }
 printAllSubSet([...arr]);
