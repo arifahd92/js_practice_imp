@@ -2497,6 +2497,8 @@ const owlInstance = new Owl();
 // console.log(Owl.prototype.__proto__.__proto__ === Object.prototype); //true
 
 
+// some random approaches
+
 //attempt1
 // Owl.prototype = Bird.prototype;// failed, in prototype obj we  can modify / add properties and methods, we cant change the ref or say cant assign brand new object
 // owlInstance.printLeg();
@@ -2525,4 +2527,191 @@ const owlInstance = new Owl();
 // owlInstance.printLeg(); // it has two log
 // console.log(Owl.prototype.__proto__ === Object.prototype); //false
 // console.log(Owl.prototype.__proto__.__proto__ === Object.prototype); //true
+*/
+
+//recursion
+/*
+function printNumberRecursively(n) {
+  if (n === 0) return;
+  console.log(n);
+  printNumberRecursively(n - 1);
+  console.log(`i will be running in reverse order ${n}`);
+}
+printNumberRecursively(5);
+*/
+
+/*
+5
+4
+3
+2
+1
+i will be running in reverse order 1
+i will be running in reverse order 2
+i will be running in reverse order 3
+i will be running in reverse order 4
+i will be running in reverse order 5
+*/
+/*
+function printNumberRecursively(n) {
+  if (n === 0) return;
+  console.log(n);
+  console.log(`start`);
+  printNumberRecursively(n - 1);
+  console.log(`middle`);
+  printNumberRecursively(n - 1);
+   console.log(`last`);
+}
+printNumberRecursively(3);
+*/
+
+//imp .catch on promise inside  async/await with and without try catch block and with and without await
+
+(async () => {
+  /*
+  let res = await Promise.reject("rejected deliberately").catch(
+    (e) => "from catch"
+  );
+  //await applied on .catch
+  console.log(res); //from catch
+*/
+  /*
+  res = await Promise.resolve("resolved deliberately").catch(
+    (e) => "from catch"
+  );
+  console.log(res); //resolved deliberately
+  // await applied on promise, not on catch
+*/
+  // res = await Promise.reject("rejected deliberately").catch((e) => {
+  //   throw new Error();
+  // });
+  //broken code
+  /*
+  try {
+    res = await Promise.reject("rejected deliberately").catch((e) => {
+      throw new Error("tufted");
+    });
+    console.log(`i will not be running ${res}`); //did'nt execute
+  } catch (error) {
+    console.log(error.message); //Error: tufted
+  }
+    */
+  //await applied on .catch on above snippet
+  /*
+  try {
+    res = Promise.reject("rejected deliberately").catch((e) => {
+      throw new Error("tufted");
+    });
+    console.log(`i will  be running ${res}`); //i will be running [object Promise], .catch of promise is not awaited (or say will be executed async way , before that try catch will get executed)
+  } catch (error) {
+    console.log(error.message); // imp did'nt execute, reason is .catch is not awaited, it will be pushed in microtask que bu .catch Api, call stack will execute its next peace of code , so this will end execution of complete code (including try catch )and then cb of .catch will be pushed in call stack now try catch isn't available so its thrown error  will not be handled and  will break code
+  }
+    //this is breaking our code even we used try catch
+  */
+})();
+
+//Imp this keyword in constructor function and in class and in normal function //////////////////////////////////////////
+//imp  this inside a Normal function completely depend on how the function is being invoked /////////////////////////////
+/*
+function spFunction(a) {
+  return this;
+}
+const this1 = spFunction(); // global window
+const this2 = spFunction(); // global window
+console.log(this1 === this2); // true
+
+const this3 = new spFunction(); //
+const this4 = new spFunction(); //
+console.log(this3 === this4); // false
+
+// for instances this3 and this4, 'this' of spFunction will be different different
+// for each instances, constructor function has different different `this`
+//imp when a function is invoked with new keyword, it creates separate-separate  this for each invocation of that function and  adds all properties and method in `this`and return that this, same thing happens in class 
+function User(name) {
+  this.name = name;
+  this.printName = () => console.log(this.name);
+  this.printName2 = function () {
+    console.log(this.name);
+  };
+}
+const user1 = new User("abc"); // this inside User will be user1 object, for user1 instance, now if any method (arrow method ) of user1 is called, this inside that method will be user1 object coz this will be inherited from User function and User function's this is user1 object for user1 instance
+const user2 = new User("def");
+
+const pr = user1.printName;
+// for user1 and user2 this of User will be different different
+pr(); // int this case `this` will be user1 object for User function, when print detail will look this inside User function it will found that object as this
+
+// user1.printName2(); //abc, inside printName2 user1 object is specified as this
+
+const tr = user1.printName2;
+tr(); //imp undefined, printName 2 is normal function so here the function was expecting specified this but it did'nt get, so it will not look this in its parent scope, it will look global scope and will print undefined
+*/
+
+/*
+// rest and spread
+// rest parameter is used to pass variable number of arguments to a function
+//if you are not sure with how many arguments function will be called , you can use rest parameter
+//it will take all arguments and store them in an array
+let arr = [1, 2, 3, 4];
+function rest1(...rest) {
+  //rest concept applied, one array of all passed args, so it made array of array as array was passed
+  console.log(rest, "rest1"); //
+}
+rest1(arr);
+//--------------
+function rest2(...rest) {
+  //rest concept applied, one array of all passed args, so it made array of all passed args
+  console.log(rest, "rest1"); //
+}
+rest2(...arr);
+//--------------
+
+let scores = [1, 2, 3];
+
+let [a, ...excludedFirstFromScoreAndMadeNewArr] = scores;
+console.log(excludedFirstFromScoreAndMadeNewArr); //[2,3]
+
+let completeNewFromScore = [...scores];
+console.log(completeNewFromScore); //[1,2,3]
+
+const [...completeNewFromScore2] = scores;
+console.log(completeNewFromScore2); //[1,2,3]
+
+function rest3([...rest]) {
+  // array destructring concept will be applied
+  // it is like, var [...rest] = arr
+
+  console.log(rest, "rest3");
+}
+rest3(arr);
+*/
+/*
+//imp: rest, spread & destructuring
+let obj = { name: "arif", age: 26, email: "ab@gmail.com" };
+let { ...newObj1 } = obj;//destructuring with rest syntax
+let newObj2 = { ...obj };
+console.log(newObj1, newObj2); //{ name: 'arif', age: 26, email: 'ab@gmail.com' } { name: 'arif', age: 26, email: 'ab@gmail.com' }
+console.log(newObj1 === newObj2); //false,
+
+let { name: fName, ...newobj3 } = obj;
+console.log({ fName, ...newobj3 }); //{ fName: 'arif', age: 26, email: 'ab@gmail.com' }
+
+//imp:
+// ... it act as both spread and rest operator
+//it is used at time of assignment
+//if it is used in left side it act as rest
+//if it is used in right side of assignment, it act as spread
+//if rest is used with array , it will create array of spreded
+
+function acceptObj({ ...newObj }) {
+  //it is same as var {...newObj} = passed obj
+  console.log(newObj, "from acceptObj"); //{ name: 'arif', age: 26, email: 'ab@gmail.com' } from acceptObj
+}
+acceptObj(obj);
+
+function acceptObj2(...newObj) {
+  console.log(newObj, "from acceptObj2"); //[ { name: 'arif', age: 26, email: 'ab@gmail.com' } ] from acceptObj2
+}
+// acceptObj2(...obj);//error
+acceptObj2({ ...obj });
 */

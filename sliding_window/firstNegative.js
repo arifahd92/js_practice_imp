@@ -26,7 +26,7 @@ function FirstNegativeInteger(arr, k) {
       if (stack.length > 0) {
         res.push(stack[0]);
       } else {
-        res.push(0);
+        res.push(0); // if no negative number is found in the window, push 0
       }
       if (arr[i] < 0) {
         stack.shift();

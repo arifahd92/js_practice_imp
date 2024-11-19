@@ -48,6 +48,7 @@ let n = arr.length;
  * @param {number} k
  * @return {number}
  */
+//sabhi sub array ka sum karo unme jo max ho usko return karo
 var maximumSubarraySum = function (nums, k) {
   let n = nums.length;
   // if (n < k) {
@@ -58,6 +59,9 @@ var maximumSubarraySum = function (nums, k) {
   let j = 0;
   let i = 0;
   while (j < n) {
+    if (j - i + 1 < k) {
+      sum += nums[j];
+    }
     if (j - i + 1 < k) {
       sum += nums[j];
       j++;
@@ -71,3 +75,4 @@ var maximumSubarraySum = function (nums, k) {
   }
   return max;
 };
+console.log(maximumSubarraySum(arr, k));

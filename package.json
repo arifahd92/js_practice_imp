@@ -1,18 +1,25 @@
 {
-  "name": "js",
-  "version": "1.0.0",
-  "description": "",
-  "main": "async.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "before": {
+    "fld_auto_intappid": 6,
+    "fld_intpatid": 4,
+    "fld_bytappstatid": 1,
+    "fld_shtchid": 4,
+    "fld_shtprid": 3,
+    "fld_shtpr2id": 3,
+    "mnvcustomerid": "9184a57a",
+    "mnvlocationid": "606068b7"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "compression": "^1.7.4",
-    "dayjs": "^1.11.13",
-    "express": "^4.19.2",
-    "morgan": "^1.10.0"
+  "after": {
+    "fld_auto_intappid": 6,
+    "fld_intpatid": 4,
+    "fld_bytappstatid": 1,
+    "fld_shtchid": 4,
+    "fld_shtprid": 3,
+    "fld_shtpr2id": 3,
+    "mnvcustomerid": "9184a57a",
+    "mnvlocationid": "606068b7"
+  },
+  "source": {
+    "table": "cd_tbl_schapp_606068b7"
   }
 }

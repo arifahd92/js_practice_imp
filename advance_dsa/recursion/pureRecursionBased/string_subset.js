@@ -31,3 +31,22 @@ function printUniqueSubSet(str, op = "", set = new Set()) {
   printUniqueSubSet(str.slice(1), op + str[0], set);
 }
 printUniqueSubSet("abcb");
+
+//imp: recursion always use brand new variable, dont use same variable in recursive call, it will lead to unexpected result
+//reson for this is because of call stack, when we call function, it gets stored in call stack,
+// ex
+str = "abc"; // in case of abcb duplicate subset will also get generated
+function printAllSubSetBug(str, op = "") {
+  if (str.length === 0) {
+    // answer at leaf node, at leaf node we have empty string
+    console.log(`{'${op}'}`);
+    return;
+  }
+  const op1 = op; // when not taking current character
+  const op2 = op + str.slice(0, 1); //taking current character
+  ip = str.slice(1); // declare ip as const, other wise it wll be stored in global and will be used in next recursive call
+  printAllSubSet(ip, op1);
+  printAllSubSet(ip, op2);
+}
+
+printAllSubSetBug(str);

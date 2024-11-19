@@ -1276,9 +1276,571 @@ console.log(twoSum([2, 7, 11, 15], 9));
 */
 //find interval for a given number interval is 5 ,
 //example for number from 1 to 5 interval will be 1 , 6 to 10 will be 2, 11 to 15 will be 3
+/*
 function findInterval(num, interval = 5) {
   let res1 = Math.ceil(num / interval);
   console.log({ res1 });
 }
 findInterval(1); //1
 findInterval(10); //2
+*/
+// 123;
+
+/*
+const mydata = [
+  {
+    data: [
+      {
+        count: 0,
+        quarter: 1,
+      },
+      {
+        count: 0,
+        quarter: 2,
+      },
+      {
+        count: 0,
+        quarter: 3,
+      },
+      {
+        count: 0,
+        quarter: 4,
+      },
+      {
+        count: 0,
+        quarter: 5,
+      },
+      {
+        count: 0,
+        quarter: 6,
+      },
+    ],
+    realData: [
+      {
+        count: 4,
+        quarter: 5,
+      },
+      {
+        count: 5,
+        quarter: 1,
+      },
+      {
+        count: 11,
+        quarter: 4,
+      },
+      {
+        count: 12,
+        quarter: 3,
+      },
+    ],
+    source: "source1",
+  },
+  {
+    data: [
+      {
+        count: 0,
+        quarter: 1,
+      },
+      {
+        count: 0,
+        quarter: 2,
+      },
+      {
+        count: 0,
+        quarter: 3,
+      },
+      {
+        count: 0,
+        quarter: 4,
+      },
+      {
+        count: 0,
+        quarter: 5,
+      },
+      {
+        count: 0,
+        quarter: 6,
+      },
+    ],
+    realData: [
+      {
+        count: 2,
+        quarter: 2,
+      },
+      {
+        count: 4,
+        quarter: 4,
+      },
+      {
+        count: 4,
+        quarter: 5,
+      },
+    ],
+    source: "source2",
+  },
+];
+const mapped = mydata.map(({ data, realData, source }) => {
+  let updated = [];
+  data.forEach(({ count, quarter }) => {
+    const index = realData.findIndex((item) => item.quarter == quarter);
+    index === -1
+      ? updated.push({ count, quarter })
+      : updated.push(realData[index]);
+  });
+  return { updated, source };
+});
+*/
+
+// target: generate a four digit number ( 1000 to 9999)
+let rand = Math.random() * 9999; // 0 to 9999 with point
+// discard 0 to 999 by adding 1000
+rand = rand + 1000;
+// now the problem is when rand will generate  9999, it will be 9999+1000
+//
+
+const randomNumber = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
+console.log(randomNumber);
+
+const wish = (additionalMessage = "") => {
+  const bDate = Date.now();
+  const bEnd = new Date("2024-11-06T00:00:00.000Z").getTime();
+  const message =
+    bEnd > bDate
+      ? `Happy Birthday! @Anup 🎂. Let all your wishes come true ✨ ${additionalMessage}`
+      : "happy birthday belated ";
+  console.log(message);
+};
+wish();
+
+/*
+
+const students = [
+  {
+    name: "John",
+    scores: {
+      math: 90,
+      science: 85,
+      english: 88,
+    },
+  },
+  {
+    name: "Alice",
+    scores: {
+      math: 85,
+      science: 90,
+      english: 85,
+    },
+  },
+  {
+    name: "Emma",
+    scores: {
+      math: 90,
+      science: 85,
+      english: 88,
+    },
+  }
+];
+const getHighestScorer = (students) => {
+  let max = 0;
+  sumArr = students.map(({ scores }) => {
+    return Object.values(scores).reduce((acc, item) => acc + item, 0);
+  });
+  max = Math.max(...sumArr);
+  let maxScorer = students
+    .filter(({ scores }) => {
+      return Object.values(scores).reduce((acc, item) => acc + item, 0) === max;
+    })
+    .map(({ name }) => name);
+  return maxScorer;
+};
+
+console.log(getHighestScorer(students)); // Output: ["John", "Emma"]
+*/
+
+// imp dsa
+/*
+const students = [
+  {
+    name: "John",
+    scores: {
+      math: 90,
+      science: 85,
+      english: 88,
+      hindi: 60,
+    },
+  },
+  {
+    name: "Alice",
+    scores: {
+      math: 85,
+      science: 90,
+      english: 85,
+      urdu: 50,
+    },
+  },
+  {
+    name: "Emma",
+    scores: {
+      math: 90,
+      science: 85,
+      english: 88,
+      urdu: 90,
+    },
+  },
+  {
+    name: "DEmma",
+    scores: {
+      science: 85,
+      english: 88,
+      art: 70,
+      arabic: 50,
+    },
+  },
+];
+
+//check fail pass for  each student in each subject based on average of mark by all student in that subject, subject  may be inconsistent
+
+function failPass(student) {
+  const subjects = [
+    ...new Set(student.flatMap(({ scores }) => Object.keys(scores))),
+  ];
+  // console.log(subjects);
+  const average = subjects.reduce((acc, item) => {
+    let sum = 0;
+    count = 0;
+    student.forEach(({ scores }) => {
+      for (let key in scores) {
+        if (key === item) {
+          count++;
+          sum += scores[key];
+        }
+      }
+    });
+    acc[item] = { averageMark: sum / count, noOfStudentOptedThisSub: count };
+    return acc;
+  }, {});
+  console.log(`average of all subjects `);
+  console.log(average);
+
+  let finalRes = student.reduce((acc, { name, scores }) => {
+    let data = [];
+    for (let key in scores) {
+      const criteria = average[key]?.averageMark;
+
+      const status = criteria > scores[key] ? "fail" : "pass";
+      data.push({ subject: key, status });
+    }
+    acc[name] = data;
+    return acc;
+  }, {});
+  return finalRes;
+}
+
+console.log(failPass(students));
+*/
+
+/*
+//merge two sorted array
+let arr1 = [1, 2, 6, 7];
+let arr2 = [3, 4, 5, 8, 9, 10];
+let res = [];
+let i = 0,
+  j = 0;
+while (i < arr1.length && j < arr2.length) {
+  if (arr1[i] < arr2[j]) {
+    res.push(arr1[i++]);
+  } else {
+    res.push(arr2[j++]);
+  }
+}
+while (i < arr1.length) {
+  res.push(arr1[i++]);
+}
+while (j < arr2.length) {
+  res.push(arr2[j++]);
+}
+console.log(res);
+*/
+/*
+//binary search
+let arr = [1, 4, 4, 4, 4, 6, 8, 8, 8],
+  target = 8;
+function binarySearch(arr, target, start = 0, end = arr.length - 1) {
+  if (start > end) {
+    return -1; //not found
+  }
+  let mid = Math.floor((start + end) / 2);
+  if (arr[mid] === target && (arr[mid + 1] > target || mid + 1 == arr.length)) {
+    return mid;
+  }
+  if (arr[mid] > target) {
+    return binarySearch(arr, target, start, mid - 1);
+  }
+  if (arr[mid] <= target) {
+    return binarySearch(arr, target, mid + 1, end);
+  }
+}
+console.log(binarySearch(arr, target));
+*/
+
+/*
+const generatePromise = (message, time = 1000) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(message);
+    }, time);
+  });
+};
+let promArr = [1, 2, 3, 4, 5].map((item) => {
+  return generatePromise(item, item * 1000);
+});
+const customPromiseAll = (CB) => {
+  //basic rule promise.then returns a promise , whose resolve value is return of .then
+  let count = 1;
+  let newPromArr = promArr.map(async (prom) => {
+    const data = await prom;
+    CB(count++, promArr.length);
+    return data;
+  });
+  console.log(newPromArr);
+  return Promise.all(newPromArr);
+};
+
+const calculatePercentage = (a, b) => {
+  console.log(a + "out of " + b + " completed", (a / b) * 100 + "%");
+};
+customPromiseAll(calculatePercentage).then((data) => {
+  console.log(data);
+});
+*/
+
+// const set = new Set([1, 2, 2, { a: 4 }, { a: 4 }, 1]);
+// set.add([8]);
+// set.add([8]);
+// console.log(set);
+
+//--------------------------------------------
+/*
+let m = 3,
+  n = 4;
+let t = Array(m)
+  .fill(0)
+  .map(() => Array(n).fill(0));
+console.log(t);
+for (let i = 0; i < m; i++) {
+  for (let j = 0; j < t[i].length; j++) {
+    console.log(t[i][j]);
+  }
+}
+ */
+/*
+let arr = [24, 12, 12, 24, 1, 4, 5, 2, 1, 1, 1, 4, 5, 100];
+let target = 24;
+let n = arr.length;
+let maxLength = 0;
+
+// for (let i = 0; i < n; i++) {
+//   let sum = 0;
+//   for (let j = i; j < n; j++) {
+//     sum += arr[j];
+//     if (sum === target) {
+//       maxLength = Math.max(j - i + 1, maxLength);
+//       break;
+//     } else if (sum > target) {
+//       break;
+//     }
+//   }
+// }
+
+// console.log(maxLength);
+
+// Using Knapsack
+function myFunc(arr, n, w) {
+  if (n === 0 || w === 0) {
+    return 0;
+  }
+  if (arr[n - 1] > w) {
+    return myFunc(arr, n - 1, w);
+  } else {
+    return Math.max(
+      myFunc(arr, n - 1, w),
+      myFunc(arr, n - 1, w - arr[n - 1]) + 1
+    );
+  }
+}
+console.log(myFunc(arr, n, target), "from hrre");
+*/
+
+/*
+let arr = [1, 4, 5, 2, 1, 1, 4, 15, 5];
+function insertLast(sortedArr, temp) {
+  if (sortedArr.length === 0 || sortedArr[sortedArr.length - 1] <= temp) {
+    sortedArr.push(temp);
+    return;
+  }
+  let val = sortedArr.pop(); // if i have taken out the last element from sorted array, then i have to put it back
+  insertLast(sortedArr, temp);
+  sortedArr.push(val); // put the last element back
+}
+function sortArr(arr) {
+  if (arr.length <= 1) {
+    return;
+  }
+  let temp = arr.pop();
+  sortArr(arr);
+  insertLast(arr, temp);
+}
+sortArr(arr);
+console.log(arr);
+*/
+
+/*
+let arr = [1, 2, 3, 4, 5];
+
+function reverseArr(arr) {
+  if (arr.length <= 1) {
+    return;
+  }
+  let temp = arr.pop();
+  reverseArr(arr);
+  arr[0] = temp;
+}
+vs;
+function reverseArr(arr) {
+  if (arr.length <= 1) {
+    return;
+  }
+  let temp = arr.pop();
+  reverseArr(arr);
+  arr.unshift(temp);
+}
+// why both working differently
+reverseArr(arr);
+console.log(arr);
+*/
+/*
+let str = "cabacc";
+let max = 1;
+let op = "";
+
+function checkPalindrome(s) {
+  let i = 0;
+  j = s.length - 1;
+  while (i < j) {
+    if (s[i] !== s[j]) {
+      break;
+    } else {
+      i++;
+      j--;
+    }
+  }
+
+  return j - i <= 0;
+}
+
+for (let i = 0; i < str.length; i++) {
+  for (let j = i; j < str.length; j++) {
+    let runner = "";
+    for (let k = i; k <= j; k++) {
+      runner += str[k];
+    }
+    if (checkPalindrome(runner)) {
+      if (runner.length >= max) {
+        max = runner.length;
+        op = runner;
+      }
+    }
+  }
+}
+console.log(op);
+console.log(checkPalindrome("abba"));
+*/
+/*
+let obj1 = {
+  name: 1,
+  age: 5,
+};
+let obj2 = {
+  age: 5,
+  name: 1,
+};
+console.log(
+  JSON.stringify(
+    Object.keys(obj1)
+      .sort()
+      .reduce((acc, key) => ({ ...acc, [key]: obj1[key] }), {})
+  ) ===
+    JSON.stringify(
+      Object.keys(obj2)
+        .sort()
+        .reduce((acc, key) => ({ ...acc, [key]: obj2[key] }), {})
+    )
+);
+*/
+//check anagram efficiently
+/*
+let s = "anagram",
+  t = "nagaram";
+
+function checkAnagram(s, t) {
+  let obj = {};
+  let n1 = s.length,
+    n2 = t.length;
+  if (n1 != n2) {
+    return false;
+  }
+  for (let i = 0; i < n1; i++) {
+    obj[s[i]] = obj[s[i]] + 1 || 1;
+  }
+  let count = Object.keys(obj).length;
+  for (let i = 0; i < n2; i++) {
+    if (t[i] in obj) {
+      obj[t[i]]--;
+      if (obj[t[i]] === 0) {
+        count--;
+      }
+    }
+  }
+  return count === 0;
+}
+console.log(checkAnagram(s, t));
+*/
+/*
+// move non zero to left or right problem
+const input = [0, 1, 2, 0, 3, 0, 5, 0, 2, 7, 9, 0];
+//trick always decide  non zero elements place (so that we can maintain order too), start loop from (start of non zero index elemnt)
+function moveZerosToEnd(...arr) {//array of all individual
+  console.log(arr, "arrf");
+  console.log(`going to move 0`);
+  let n = arr.length;
+  let nonzeroIndex = 0;
+  let i = 0; //started loop from nonzero index start position
+  while (i < n) {
+    if (arr[i] !== 0) {
+      [arr[nonzeroIndex], arr[i]] = [arr[i], arr[nonzeroIndex]];
+      nonzeroIndex++;
+    }
+    i++;
+  }
+
+  return arr;
+}
+
+
+console.log(moveZerosToEnd(...input));
+
+function moveZerosToStart(...arr) {
+  let n = arr.length;
+  let nonzeroIndex = n - 1;
+  let i = n - 1;
+  while (i >= 0) {
+    if (arr[i] != 0) {
+      [arr[nonzeroIndex], arr[i]] = [arr[i], arr[nonzeroIndex]];
+      nonzeroIndex--;
+    }
+    i--;
+  }
+  return arr;
+}
+console.log(moveZerosToStart(...input));
+*/
