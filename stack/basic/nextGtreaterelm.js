@@ -1,5 +1,6 @@
 /** @format */
 
+//imp: loop from the element for which you know answer
 const { Stack } = require("../ctackClass");
 
 let arr = [1, 2, 1, 5, 4, 6, 7, 9, 3];
@@ -10,7 +11,7 @@ for (let i = n - 1; i >= 0; i--) {
     stack.pop();
   }
   console.log(stack.isEmpty() ? -1 : stack.peek());
-  stack.push(arr[i]);
+  stack.push(arr[i]); // arr[i] is smaller than peek of stack so it arr[i] may be answer for its left side element ( if its left side element is less than arr[i] arr[i] is going to be answer other wise it will be poped in loop)
 }
 
 /*

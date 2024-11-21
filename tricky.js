@@ -2715,3 +2715,26 @@ function acceptObj2(...newObj) {
 // acceptObj2(...obj);//error
 acceptObj2({ ...obj });
 */
+
+//imp; smart swapping of values
+function destructring() {
+  let a, b;
+  [a, b] = [1, 2];
+  // in [a,b]=[1,2], left side is assignment by destructurring an array, right side is simple array (who is being de structured)
+  console.log(a, b); //1,2
+}
+
+function swappingTwoNum() {
+  let a = 10;
+  let b = 20;
+  [b, a] = [a, b];
+  console.log(a, b);
+}
+swappingTwoNum();
+
+let arr = [1, 2, 3, 4, 5];
+function swapIthWithJth(arr, i, j) {
+  [arr[i], arr[j]] = [arr[j], arr[i]];
+}
+swapIthWithJth(arr, 1, 4);
+console.log(arr); //[ 1, 5, 3, 4, 2 ]

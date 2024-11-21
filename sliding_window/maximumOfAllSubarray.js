@@ -1,5 +1,6 @@
 /** @format */
-//traverse once from 0 to k sabse max waale ko 0 pe store karo
+// har sub array ke max Number ko print karana hai
+//traverse once from 0 to k, sabse max waale ko 0 pe store karo, thus max arr ke andar decreasing order me honge elements
 let arr = [3, 4, -1, 6, 5, 3, 2, 7];
 let k = 3;
 let i = 0,

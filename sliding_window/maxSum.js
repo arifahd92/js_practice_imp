@@ -1,5 +1,5 @@
 /** @format */
-
+// saare sub array ka sum karo jo max hai dedo ans me
 // find max sum of sub array of size k in arr
 // brute force
 let arr = [1, 3, 8, 6, 7, 4, 5];
