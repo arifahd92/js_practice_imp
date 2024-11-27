@@ -1845,6 +1845,7 @@ function moveZerosToStart(...arr) {
 console.log(moveZerosToStart(...input));
 */
 
+/*
 var twoSum = function (nums, target) {
   let compIndObj = {};
   for (let i = 0; i < nums.length; i++) {
@@ -1857,6 +1858,7 @@ var twoSum = function (nums, target) {
   return [];
 };
 console.log(twoSum([1, 2, 3, 4], 6));
+*/
 
 /*
 Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
@@ -1877,3 +1879,40 @@ The distinct triplets are [-1,0,1] and [-1,-1,2].
 Notice that the order of the output and the order of the triplets does not matter.
 why  nums[0] + nums[3] + nums[4] = (-1) + 2 + (-1) = 0. this get discarded from answer
 */
+
+let users = [
+  { id: 1, name: "name1" },
+  { id: 2, name: "name2" },
+  { id: 3, name: "name3" },
+  { id: 4, name: "name4" },
+  { id: 5, name: "name5" },
+  { id: 6, name: "name6" },
+  { id: 7, name: "name7" },
+];
+
+let posts = [
+  { id: 1, createdAt: "2022-01-01T08:00:00Z", Uid: 1, post: "post1" },
+  { id: 2, createdAt: "2022-01-02T08:00:00Z", Uid: 1, post: "post2" },
+  { id: 3, createdAt: "2022-01-03T08:00:00Z", Uid: 2, post: "post3" },
+  { id: 4, createdAt: "2022-01-04T08:00:00Z", Uid: 3, post: "post4" },
+  { id: 5, createdAt: "2022-01-05T08:00:00Z", Uid: 1, post: "post5" },
+  { id: 6, createdAt: "2022-01-06T08:00:00Z", Uid: 4, post: "post6" },
+  { id: 7, createdAt: "2022-01-07T08:00:00Z", Uid: 5, post: "post7" },
+  { id: 8, createdAt: "2022-01-08T08:00:00Z", Uid: 5, post: "post8" },
+];
+const userWithPosts = users.reduce((acc, curr) => {
+  const { id, ...rest } = curr;
+  let post = posts
+    .filter(({ Uid }) => id == Uid)
+    .map(({ id, post }) => {
+      return {
+        id,
+        post,
+      };
+    });
+
+  const userWithPost = { ...curr, post };
+  acc.push(userWithPost);
+  return acc;
+}, []);
+console.log(userWithPosts[0]);

@@ -7,6 +7,7 @@ let i = 0,
   j = 0,
   n = arr.length,
   max = [-Infinity];
+
 while (j < n) {
   if (arr[j] > max[0]) {
     max.unshift(arr[j]);
@@ -22,3 +23,30 @@ while (j < n) {
     j++;
   }
 }
+
+var maximumofAllSubArray = function (arr, k) {
+  let n = arr.length;
+  let i = 0,
+    j = 0,
+    max = [-Infinity];
+
+  while (j < n) {
+    //do calculation
+    if (arr[j] > max[0]) {
+      max.unshift(arr[j]);
+    }
+    if (j - i + 1 < k) {
+      j++;
+    } else if (j - i + 1 == k) {
+      // ans from calculation
+      if (arr[i] == max[0]) {
+        arr.shift();
+      }
+      i++;
+      j++;
+    }
+  }
+  console.log(max[0], "ans");
+  return max[0];
+};
+maximumofAllSubArray(arr, k);

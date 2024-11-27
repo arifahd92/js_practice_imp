@@ -5,6 +5,7 @@
 let arr = [1, 3, 8, 6, 7, 4, 5];
 let k = 3;
 let n = arr.length;
+// bruteforce
 () => {
   let max = 0;
   for (let i = 0; i < n - k; i++) {
@@ -48,27 +49,21 @@ let n = arr.length;
  * @param {number} k
  * @return {number}
  */
-//sabhi sub array ka sum karo unme jo max ho usko return karo
+//sabhi sub array of size(K) ka sum karo unme jo max ho usko return karo
+
 var maximumSubarraySum = function (nums, k) {
-  let n = nums.length;
-  // if (n < k) {
-  //   return null;
-  // }
-  let max = 0;
+  let i = 0,
+    j = 0,
+    max = 0;
   let sum = 0;
-  let j = 0;
-  let i = 0;
+  let n = nums.length;
   while (j < n) {
+    sum += nums[j];
     if (j - i + 1 < k) {
-      sum += nums[j];
-    }
-    if (j - i + 1 < k) {
-      sum += nums[j];
       j++;
-    } else {
-      sum += nums[j];
-      max = Math.max(max, sum);
-      sum -= nums[i];
+    } else if (j - i + 1 == k) {
+      max = Math.max(sum, max);
+      sum = sum - nums[i];
       i++;
       j++;
     }

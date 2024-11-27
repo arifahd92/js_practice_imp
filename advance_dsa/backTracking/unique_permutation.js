@@ -1,28 +1,31 @@
 /** @format */
 
 let s = "ABCA";
-//all unique permutation
+
 function swapIthWithJth(s, i, j) {
   let arr = s.split("");
   [arr[i], arr[j]] = [arr[j], arr[i]];
   return arr.join("");
 }
-function permutation(s, ind = 0) {
-  if (ind == s.length - 1) {
-    console.log(s);
 
+function permutation(s, ind = 0, set = new Set()) {
+  if (ind == s.length - 1) {
+    set.add(s);
     return;
   }
-  set = new Set();
   for (let i = ind; i < s.length; i++) {
-    if (set.has(s)) {
-      s = swapIthWithJth(s, i, ind);
-      continue;
+    const swapped = swapIthWithJth(s, i, ind);
+    if (!set.has(swapped)) {
+      permutation(swapped, ind + 1, set);
     }
-    set.add(s);
-    s = swapIthWithJth(s, i, ind);
-    permutation(s, ind + 1);
-    s = swapIthWithJth(s, i, ind);
   }
 }
-permutation(s, 0);
+
+function getUniquePermutations(s) {
+  let set = new Set();
+  permutation(s, 0, set);
+  return set;
+}
+
+const uniquePermutations = getUniquePermutations(s);
+console.log(uniquePermutations);
