@@ -56,11 +56,3 @@ function permute(str) {
 const str = "abac";
 const permutations = permute(str);
 console.log(permutations);
-
-/*
-SELECT S.id
-FROM [
-{"id":1},{"id":2},{"id":3},{"id":4},{"id":5},{"id":6},{"id":7}
-]S
-WHERE EXISTS (select id from [{"id":1},{"id":3},{"id":5},{"id":7}] P  where P.id=S.id)
-*/

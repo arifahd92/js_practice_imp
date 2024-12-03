@@ -47,7 +47,7 @@ functions[2]();
 function myFunction() {
   var arr = [];
   for (var i = 0; i < 3; i++) {
-    (function (i) {
+    (function (i) {// a function has capability to remember the value of its parameter on which it was called, it is possible through closure
       arr.push(function () {
         console.log(i);
       });
@@ -67,10 +67,24 @@ function foo() {
   let a = 1;
   setTimeout(function () {
     console.log(a);
-  }, 1000);
+  }, 0);
   a = 2;
 }
 
+foo();
+*/
+/*
+function foo() {
+  let a = 1;
+  setTimeout(
+    function (a) {
+      console.log(a);
+    },
+    0,
+    a
+  );
+  a = 2;
+}
 foo();
 */
 
@@ -84,16 +98,47 @@ outer();
 */
 
 /*
-function outer() {
+function outer(y) {//imp: y is a local variable, and y will not be over written by next call of outer function
   var x = 10;
+  function inner() {
+    console.log(x, y);
+  }
+  return inner;
+}
+let x = 20; // global variable
+var innerFunction1 = outer(100);
+var innerFunction2 = outer(200);
+innerFunction1();
+innerFunction2();
+*/
+//imp: when ever a function is called it captures all variable and creates a copy of them in its scope, that is isolated from other function calls, they are not shared between function calls, thus they are not over written by next call of function. this is called closure.
+//imp: same thing happens when we create object using class or construtor function
+
+// imp: function always runs in its defined scope, even if it's called from another scope
+//imp: it will search variable in outer scope only when that variable is not present in its scope
+
+/*
+function outer(y) {
   function inner() {
     console.log(x);
   }
   return inner;
 }
+let x = 20; // global variable
+var innerFunction = outer(100);
+innerFunction();//imp: inner will look x in its own then in its parent scope and then in global scope.since when it will be looking in global scope at that time x will be 20 so it will print 20. 
+*/
 
-var innerFunction = outer();
-innerFunction();
+/*
+function outer(y) {
+  function inner() {
+    console.log(x);
+  }
+  return inner;
+}
+var innerFunction = outer(100);
+innerFunction();// error since x is in temporal dead zone when innerFunction is called
+let x = 20; // global variable
 */
 
 /*
@@ -125,13 +170,15 @@ console.log(multiplyByIndex());
 const person = {
   firstName: "John",
   lastName: "Doe",
-  getFullName: function () {
+  getFullName: function () {//imp: this function is defined somewhere else in memory and ref is being stored in getfullNmae
     return `${this.firstName} ${this.lastName}`;
   },
 };
 
-const getFullName = person.getFullName;
-console.log(getFullName());
+//FYI: this inside a normal function depends on how the function is being called
+
+const getFullName = person.getFullName;//imp: this is also returning reference of the function that is assigned to getFullName (not exactly function)
+console.log(getFullName());//imp: thats is why here it is like a normal call to that function and `this` is window function rather than person object
 */
 
 /*
@@ -145,28 +192,27 @@ const myObj = {
 };
 
 const {
-  a,
-  b = 18,
-  c: { d, e }, // re destructure c
-  f = "default", // if f is not present assign default
+  a: p, // here we are assigning value of a to p, in simple word , a ki jo bhi value hogi wo p me store hogi, isi concept ka use hum nested object ke destructuring me karenge
+  c: t, // here t is an object and it can be further destructured
+  c: { d: u, e: v, f: g = "yuy" },
 } = myObj;
+console.log(u, v, g);
 
-console.log(a, b, d, e, f);
 */
 
 /*
 let x = 4;
 x = x++; //first increments value of x then returns previous value(value before inc) & ++x first increments value of x then returns incremented value
 // console.log(x++);//4 output
-console.log(x++ + ++x);//10
+console.log(x++ + ++x); //10
 */
 
 /*
 var a = 1;
 function foo() {
   if (!a) {
-    // let a = 10;
-    var a = 10;
+    let a = 10;
+    // var a = 10;
   }
   console.log(a);
 }
@@ -187,7 +233,7 @@ console.log(bar.a); //'world' bar is global variable as bar is not declared usin
 */
 
 /*
-var a = 1;
+let a = 1;
 
 function b() {
   a = 10;
@@ -256,7 +302,8 @@ function outer() {
   var a = 1;
 
   function inner() {
-    console.log(a);
+    console.log(a); //? when this function is called, it searches for a in the inner scope first, then the outer scope, then the global scope.,
+    //aur jis scope mein a milta hai use print karta hai, us scope me isF function ke just call se pahle a ki value kya hai wahi capture karta hai.
   }
 
   a = 2;
@@ -280,7 +327,9 @@ function foo() {
 foo();
 console.log(a);
 */
+
 /////////////////////////////////////////////////////////////////////////////
+//imp: imp scope based question,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 /*
 function outer() {
   var a = 1;
@@ -288,14 +337,18 @@ function outer() {
   function inner() {
     console.log(a);
   }
+
   a = 5;
   return inner;
 }
 
+var a = 10;
 var innerFunction = outer();
-a = 10;
 innerFunction();
+
+//imp: inner function ko jab call kiya to wo `a` ko outer me dhoodhne gaya , now we have to think what is value of a in outer scope just before the call of inner function.
 */
+
 /*
 var a = 1;
 
@@ -303,14 +356,14 @@ function foo() {
   console.log(a);
 }
 
-
 function bar() {
-  var a = 2;
+  a = 2;
   foo();
 }
 
 bar();
-// */
+*/
+
 /*
 var a = 1;
 
@@ -326,9 +379,11 @@ foo();
 console.log(a);
 */
 
+//imp:: whenever a function is called it creattes a copy of its scope and metain it seperately from new call
 /*
 function outer() {
-  var a = [];
+  var a = []; // in second call of outer this a will be different from first call of outer(), and a will be completely isolated from first call of outer()
+  //but this a will be shared accross all call of inner function of an outer() call
 
   function inner() {
     a.push("hello");
@@ -347,15 +402,34 @@ innerFunction1(); //2
 */
 
 /*
+var arr = [];
+function outer() {
+  for (var i = 0; i < 3; i++) {
+    arr.push(function () {// function is defined here, and when ever it will be called from any scope  it will run in defined scope, as we know function always run in its defined scope, and when it will search value of i it will find that i is 3 in its scope for each call of function
+      console.log(i);
+    });
+  }
+
+  return arr;
+}
+
+var functions = outer();
+
+functions[0](); //
+functions[1]();
+functions[2]();
+*/
+
+/*
 function outer() {
   var arr = [];
 
   for (var i = 0; i < 3; i++) {
-    // ((i) => {
+    ((i) => {//this will make different different call of a function,  each  call of function  will create seperate seperate scope for all i and function written inside push will create a closer with functions called i
     arr.push(function () {
       console.log(i);
     });
-    // })(i);
+    })(i);
   }
 
   return arr;
@@ -401,7 +475,7 @@ functions[2]();
 /*
 function outer() {
   function inner(i) {
-    // var i = i;
+
     setTimeout(() => {
       console.log(i);
     }, i * 500);
@@ -412,7 +486,8 @@ let inner = outer();
 for (var i = 0; i < 3; i++) {
   inner(i);
 }
-*/ // 0 1 2, it is working like each time declaring a variable inside inner function like i commented
+*/
+
 /*
 for (var i = 1; i <= 5; i++) {
   (function (i) {
@@ -422,12 +497,13 @@ for (var i = 1; i <= 5; i++) {
   })(i);
 }
 */
+
 /*
 let tricky = { x: 1, y: 2 };
 let copy = tricky;
 copy.x = 5;
-tricky.x = copy.x++; //copy.x ke value ko 1 se increment karo and then then return previous value, so finally copy.x remain same
-// copy.x++;// copy.x ke value ko 1 se increment
+tricky.x = copy.x++; 
+
 console.log(tricky.x);
 */
 /*
@@ -436,6 +512,7 @@ const strongPasswordRegex =
 const result = strongPasswordRegex.test("f@1Ayuyyuy");
 console.log(result);
 */
+
 /*
 var a = {};
 var b = { key: "b" };
@@ -446,6 +523,7 @@ a[c] = 456;
 
 console.log(a[b]); // 465
 */
+
 /*
 (function () {
   var x = (y = 1);
@@ -466,6 +544,7 @@ const myObj = {
   }
 };
 */
+
 /*
 //moderate
 const myObj = {
@@ -477,18 +556,19 @@ const myObj = {
 
 const getValue = myObj.getValue;
 
-console.log(myObj.getValue()); // 1
-console.log(getValue()); // 2
+console.log(myObj.getValue()); // 10
+console.log(getValue()); // undefined
 */
+
 /*
-//easy
+
 function myFunc() {
   console.log(a);
-  console.log(foo());
+  foo(); // jab foo call hua foo function chalega aur variable a ko apne parent me dekhega ki a ki value parent me just foo ke  call se pahle kya hai
 
   var a = 1;
   function foo() {
-    return 2;
+    console.log(a);
   }
 }
 
@@ -508,6 +588,7 @@ for (let key in num) {
   console.log(num[key]);
 }
 */
+
 /*
 let user = {
   name: "arid",
@@ -520,6 +601,27 @@ for (let key in user) {
   console.log(user.key);
 }
 */
+
+/*
+function foo() {
+  var a = 10;
+  function a() {}
+  console.log(a); //  
+}
+foo(); //imp:: guess what will be the output of this code?
+
+//imp: memory allocation phase
+//sabse pahle function name ko memory allocate hota hai, usme function ka body  store hota hai, uske baad variable ko memory allocate hota hai
+// so var a =10 will update value of a in memory by 10, 
+//now you might think in execution phase `function a() {}` it will update value of a in memory , but it is not the case, function has no effect in execution phase it is ignored very cutely in execution phase ( untill it is invoked )
+*/
+
+function foo() {
+  var a;
+  function a() {}
+  console.log(a); //
+}
+foo();
 /*
 function foo() {
   return bar;
@@ -2716,6 +2818,7 @@ function acceptObj2(...newObj) {
 acceptObj2({ ...obj });
 */
 
+/*
 //imp; smart swapping of values
 function destructring() {
   let a, b;
@@ -2738,3 +2841,30 @@ function swapIthWithJth(arr, i, j) {
 }
 swapIthWithJth(arr, 1, 4);
 console.log(arr); //[ 1, 5, 3, 4, 2 ]
+*/
+
+/*
+let arr = [1, 2, 3, 4];
+
+function pivtIndex(arr) {
+  const n = arr.length;
+  let start = 0;
+  let end = arr.length - 1;
+
+  while (start <= end) {
+    const mid = Math.floor(start + (end - start) / 2);
+    const next = (mid + 1) % n;
+    const prev = (mid + n - 1) % n;
+    if (arr[mid] < arr[prev] && arr[mid] < arr[next]) {
+      return mid;
+    }
+    if (arr[mid] < arr[end]) {
+      // arr is sorted from mid to end (so search in between start to mid-1)
+      end = mid - 1;
+    } else {
+      start = mid + 1;
+    }
+  }
+  return -1;
+}
+*/
