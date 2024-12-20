@@ -186,7 +186,7 @@ const myObj = {
   a: 10,
   b: 20,
   c: {
-    d: 30,
+    d: id,
     e: 40,
   },
 };
@@ -616,12 +616,18 @@ foo(); //imp:: guess what will be the output of this code?
 //now you might think in execution phase `function a() {}` it will update value of a in memory , but it is not the case, function has no effect in execution phase it is ignored very cutely in execution phase ( untill it is invoked )
 */
 
+/*
+
 function foo() {
   var a;
   function a() {}
   console.log(a); //
 }
-foo();
+foo(); // guess output in this case too
+
+// concept is as in above only diffrence is that if a variable has got some value in memory then it will not be updatet by default value(that is undefined) of variable a, REMEMBER IF WE ASSIGN delibrately by undefined then it will be updated
+*/
+
 /*
 function foo() {
   return bar;
@@ -631,6 +637,23 @@ function foo() {
 }
 
 console.log(typeof foo());
+
+
+//first of all memory allocation will take place then execution phase will take place
+//in memory allocation phase function name will be allocated memory first then variable will be allocated memory, as we know bar already got a value so it will not be over written by default undefined of var bar
+
+*/
+
+/*
+function foo() {
+  var bar = 10;
+  function bar() {}
+  return bar;
+  function bar() {}
+}
+
+console.log(typeof foo());//imp: guess the output of this code
+
 */
 
 /*
@@ -640,11 +663,20 @@ if (function f() {}) {
 }
 console.log(x);
 */
+
 /*
 addUptoThree = (a) => (b) => (c) => a + b + c;
 
-console.log(addUptoThree(1)(2)(3));
+const res1 = addUptoThree(1)(2)(3);
+const res2 = addUptoThree(4);
+const res3 = res2(5)(6);
+const res4 = res2(7)(9);
+console.log({ res1, res2, res3, res4 });
 */
+
+// addUptoThree(1) this will return a function that will create closure with parent scope
+//this is based on concept of  closure and seperate copy of a function call
+
 /*
 var a = 1;
 function b() {
@@ -655,40 +687,46 @@ function b() {
 b();
 console.log(a);//1 inside function bv only function will be hoisted (it is only declared so suppose let a=function(){} , then a = 10 will modify this block scoped variable)
 */
-/*
-var a = 1;
-function b() {
- let  a = 10;
-  return;
-  function a() {}
-}
-b();
-console.log(a);// error a is already declared
-*/
-/*
-var a = 1;
-function b() {
-  a = 1;
-  function a() {}
-  console.log(a);
-  return;
-}
-b();
-console.log(a)
-*/
 
 /*
+var a = 1;
 function b() {
-  // var a = 5;
+  let a = 10;
+  return;
+  function a() {}
+}
+b();
+console.log(a); 
+*/
+
+//imp: beautiful question based on memory allocation / hoisting
+
+/*
+let a = 1;
+function b() {
+  a = 10;
+  function a() {}
+  console.log(a);
+  return;
+}
+b();
+console.log(a);
+*/
+
+//imp:: beautiful question based on memory allocation / hoisting
+/*
+function b() {
   console.log(a);
   var a = 10;
-  var a = 11; // This re-declares the variable a
+  var a = 11;
   function a() {}
-  // console.log(a()); //: a is not a function
+  console.log(a);
   return;
 }
 b();
 */
+
+//variable declaration will not overwrite memory allocation until execution phase reaches to declared line, coz in memory allocation phase it is undefined and a has already got some real value from functions memory allocation so it will not be updated by default undefined
 
 // let obj1 = { name: "arid" };// this data is safe in memory and only this dat's ref is assigned to obj1 , if at any point of time a brand new data is assigned to obj1 this data will be safe new
 // let obj2 = obj1;
@@ -714,13 +752,17 @@ let b = obj.address;
 obj.address.vill = "badgawa";// data of same ref being change
 console.log(b);
 */
+
 /*
 var a = 10;
 var a;
-console.log(a);//10
+console.log(a);// guess output
 */
+//imp: var a = 10;// always see it in two part var a;  a = 10, `var a` will be used only in memory allocation phase, it has nothing to do in execution phase
+//imp:: and a = 10 will be used in execution phase only it has nothing to do in memory allocation phase , so in memory allocation phase var a is undefined
 
 //object.create
+
 /*
 const user = { name: "sdsfsd" };
 let copy = Object.create(user);
@@ -728,15 +770,17 @@ console.log(copy); //{}
 console.log(copy.name); //?
 const keys = Object.keys(copy);
 console.log({ keys });
+console.log(copy.__proto__, "im being logged here ");
 */
+
 //to string on array and on object
 /*
-let arr = [1, "ab", 5];
+let arr = [1, "ab", "5"];
 let stringOfArr = arr.toString();
-// console.log(stringOfArr);
+console.log([stringOfArr]);
 const user = { name: "sdsfsd" };
 let stringOfObj = user.toString();
-console.log(stringOfObj); //'[object Object]'
+console.log([stringOfObj]); //'[object Object]'
 */
 
 // console.log({} + []);
@@ -744,8 +788,9 @@ console.log(stringOfObj); //'[object Object]'
 const arr = ["str1", "str2", 5];
 console.log(Object.keys(arr)); //['0,'1,'2]
 */
+
 /*
-let val;
+let val = 0;
 let obj = { marks: val };
 console.log(obj.marks ? obj.marks : "default"); // if obj.marks is a falsy then default
 console.log(obj.marks || "default");
@@ -782,6 +827,7 @@ for (var i = 0; i < 5; i++) {
 
 }
 */
+
 /*
 for (var i = 0; i < 5; i++) {
   setTimeout(
@@ -908,37 +954,76 @@ const result = userData.reduce((dummyObj, item) => {
 
 console.log(result); 
 console.log(userData);
+*/
+//imp:: use of in operator in objects
+/*
+let obj = { name: "abc", mark: 0 };
 
+if (obj["mark"]) {
+  // this is buggy code
+  console.log("mark key exists in obj, checked by value");
+}
+if ("mark" in obj) {
+  console.log("mark key exists in obj checked by key");
+}
 */
 
+// in operator is used in both array and object,
+//in object it is used to check if a key exists in object or not irrespective of value
+// and in array it is used to check if if an index has a value or not irrespective of (truthy and falsy nature of value )
+//in operator in array is used to check if it is sparsed or not
 /*
 
-let arr = [1, , 3, 4]; // Sparse array, no element at index 1
-console.log(arr.toString()); //1,,3,4
+let arr = [1, , null, 4, undefined]; // Sparse array, no element at index 1
+console.log(arr, "arr");
+console.log(arr[1], "arr[1]");
+console.log(arr.toString(), "to string"); //1,,,4, //  null and undefined are converted to empty string
 let transformedArr = [];
 for (let i = 0; i < arr.length; i++) {
   if (i in arr) {
     transformedArr.push(arr[i]);
   }
-  console.log(arr[i]);
 }
-console.log(transformedArr);
+console.log(transformedArr, "transformedArr");
 console.log(0 in arr); // true, there is an element at index 0
 console.log(1 in arr); // false, no element at index 1
 console.log(2 in arr); // true, there is an element at index 2
+console.log(3 in arr); // true, there is an element at index 3
 */
+// imp: related to `this`
+
+//how to decide this  inside normal function
+//first all all check how it is called
+//if it is called with new keyword then this will a brand new object created from function itself (`this` objects __proto__ will be pointing to functions prototype that is empty object) and at the end of function execution `this will be returned`
+
+//if it is called without new keyword then this will be pointing to the object  on which object the function is called and any modification done on `this` will be reflected on that object
 
 /*
 function user(name) {
   this.name = name;
+  console.log(this.__proto__, "dyxgdxg");
 }
-const obj = { fn: user };
-obj.fn("java script");
+const obj = new user("abc");
+
+console.log(obj.__proto__ === user.prototype); // true
+*/
+
+//imp:: -------------------------------
+/*
+const obj = { method: user };
+
+function user(name) {
+  console.log(this === obj); // true
+  this.name = name;
+  console.log(this, "value of this");
+}
+obj.method("java script");
 console.log(obj.name);
 */
 
 /*
 function myMethod() {
+  this.userPassword = "123456";
   console.log(`my method called on  `, this);
 }
 const myObj = {
@@ -955,14 +1040,47 @@ var length = 20;
 function count() {
   console.log(this.length);
 }
-const obj2 = [count, "A", 0];
+const obj2 = [count, "A", 0]; //imp: at zero index count functions reference is stored
 obj2[0](); //3, in js everything is object array is also an object 0 is key of method it is like obj2.method()
+obj2?.[0]();//3
 console.log(obj2["1"]); //A
 */
 
 /*
+//imp::  optional chaining
+
+// whenever we try to access  accidentally a key on an undefined or null  it throws an error so to avoid this we use optional chaining
+//if you try to access index value in a null or undefined array it will also throw an error so to avoid this we can use optional chaining
+
+// examples
+let obj = 9;
+console.log(obj.__proto__, Object.getPrototypeOf(obj), "__proto__"); // {} {} __proto__
+
+console.log(obj.name, obj[2]); //undefined undefined, not error as its prototype get created
+obj = null;
+// console.log(obj.__proto__, "__proto__");//error
+// console.log(Object.getPrototypeOf(obj)); //Cannot convert undefined or null to object
+// console.log(obj.name, obj[2]);// error
+
+function getGrades() {
+  return;
+}
+let grades = getGrades(); // expected array
+// console.log(grades[0]); //Cannot read properties of undefined (reading '0')
+console.log(grades?.[0]); // undefined rather than throwing error
+
+//imp:: note option chaining can be used to access a method if exist on the object (but make sure if method exist it is function other wise calling will throw error)
+const myObj = { name: "favorite" };
+// console.log(myObj.printDetail()); // error
+console.log(myObj.printDetail?.()); // undefined,myObj.printDetail was undefined so it returned undefined rather than continuing chain
+
+myObj.printDetail = "im not function";
+// console.log(myObj.printDetail?.());// threw error
+*/
+
+/*
 let people = [
-  { name: "John", age: 30 },
+  { name: "John", age: id },
   { name: "Jane", age: 25 },
   { name: "Alice", age: 35 },
   { name: "Bob", age: 20 },
@@ -974,7 +1092,7 @@ console.log(people);
 /*
 
 let people2 = [
-  { name: "John", age: 30 },
+  { name: "John", age: id },
   { name: "Jane", age: 25 },
   { name: "Alice", age: 35 },
   { name: null, age: 20 },
@@ -993,7 +1111,7 @@ console.log(people2);
 
 /*
 // const grades = getData().grades
-const grades = (Math.random() > 0.5 ? [30, 40, 50] : undefined) || [];
+const grades = (Math.random() > 0.5 ? [id, 40, 50] : undefined) || [];
 
 let newGrade = 80;
 
@@ -1009,7 +1127,7 @@ let updatedGrade = [newGrade, ...grades];
 */
 
 /*
-const grades = Math.random() > 0.5 ? [30, 40, 50] : undefined;
+const grades = Math.random() > 0.5 ? [id, 40, 50] : undefined;
 console.log(grades);
 let randIndex = Math.ceil(Math.random() * 10);
 console.log(randIndex);
@@ -1037,7 +1155,7 @@ console.log(data);
 */
 
 /*
-//handling is new in single variable 
+//handling isNew in single variable 
 function saveData({ isNew, ...data }) {// here data has different ref as actual data on which this was called
   console.log({ isNew });
   data.address = "varanasi";
@@ -1122,8 +1240,10 @@ console.log(stringifyStore); //[ '1', '2', '3', '"a"', '"b"', '"c"' ]
 
 /*
 let user;
-// const name=user?.name
-const { name } = user ?? {};
+const name1 = user?.name || "default";
+// const { name: name2 = "default" } = user; //error
+const { name: name3 = "default" } = user ?? {};
+console.log({ name1, name3 });
 */
 
 /*
@@ -1156,7 +1276,7 @@ console.log(user);
 const res = (() => {
   return { name: "iife", email: "123" };
 })();
-console.log(res); //5
+console.log(res); //{ name: "iife", email: "123" };
 
 const cachedAdder = (function () {
   let obj = {};
@@ -1413,7 +1533,7 @@ function func3() {
   return new Promise((res, rej) => {
     setTimeout(() => {
       res("data3");
-    }, 300);
+    }, id0);
   });
 }
 async function badResolver() {
@@ -1439,7 +1559,7 @@ async function goodResolver() {
   console.log(`${one}::${two}::${three}`);
   console.log(new Date().getTime() - start);
 }
-goodResolver(); // taking 300 millisecond only
+goodResolver(); // taking id0 millisecond only
 // badResolver(); //600 milliseconds
 */
 
@@ -2437,7 +2557,7 @@ function allWithMap(proms) {
 }
 const proms = [
   promiseCreator(100, "val1"),
-  promiseCreator(300, "val2"),
+  promiseCreator(id0, "val2"),
   promiseCreator(200, "val3"),
 ];
 
@@ -2465,7 +2585,7 @@ function allWithMap(proms, timeTracker) {
 }
 const proms = [
   promiseCreator(1000, "val1"),
-  promiseCreator(3000, "val2"),
+  promiseCreator(id00, "val2"),
   promiseCreator(2000, "val3"),
 ];
 const timeTracker = function trackCountOfResolvedPromise(count, promsLength) {
@@ -2490,7 +2610,7 @@ function allWithMap(proms) {
 }
 const proms = [
   promiseCreator(100, "val1"),
-  promiseCreator(300, "val2"),
+  promiseCreator(id0, "val2"),
   promiseCreator(200, "val3"),
 ];
 
@@ -2842,29 +2962,127 @@ function swapIthWithJth(arr, i, j) {
 swapIthWithJth(arr, 1, 4);
 console.log(arr); //[ 1, 5, 3, 4, 2 ]
 */
+/*
+let objType = [
+  100,
+  [1, 2, 3],
+  "arif",
+  { name: "arif", email: "gdt@gmail" },
+  null,
+  undefined,
+];
+const index = Math.floor(Math.random() * 5);
+console.log({ index });
+let obj = objType[index];
+
+for (const key in obj) {
+  console.log(`${key} ==> ${obj[key]} `);
+}
+//for (const key in obj) , is working well with string array and object but not with number and null and undefined, but not throwing error in any case
+*/
 
 /*
-let arr = [1, 2, 3, 4];
+//imp:: Object.keys(), and values
 
-function pivtIndex(arr) {
-  const n = arr.length;
-  let start = 0;
-  let end = arr.length - 1;
-
-  while (start <= end) {
-    const mid = Math.floor(start + (end - start) / 2);
-    const next = (mid + 1) % n;
-    const prev = (mid + n - 1) % n;
-    if (arr[mid] < arr[prev] && arr[mid] < arr[next]) {
-      return mid;
-    }
-    if (arr[mid] < arr[end]) {
-      // arr is sorted from mid to end (so search in between start to mid-1)
-      end = mid - 1;
-    } else {
-      start = mid + 1;
-    }
-  }
-  return -1;
-}
+console.log(Object.keys(100)); //[]
+console.log(Object.keys([1, 2, 3])); //[ '0', '1', '2' ]
+console.log(Object.values("arif")); //[ 'a', 'r', 'i', 'f' ]
+console.log(Object.values("")); //[]
+console.log(Object.keys(null)); //imp:: null and undefined will throw error
+console.log(Object.keys(null??{})); //imp:: handle it like this
 */
+
+/*
+let age = { min: 5, max: 10 };
+let data = age ?? {};
+
+function verifyAge({ min, max }) {
+  if (!min && !max) {
+    return true;
+  }
+  if (min && !max) {
+    throw new Error("max should not be empty");
+  }
+  if (max && !min) {
+    throw new Error("min should not be empty");
+  }
+  if (min < 0 || max < 0) {
+    throw new Error("age cant be negative");
+  }
+  if (max > 200) {
+    throw new Error("age cant be greater than 200");
+  }
+  if (min > max) {
+    throw new Error("min cant be greater than max");
+  }
+}
+// this function failed for 0,0 min and max
+*/
+
+/*
+let age = {
+  a: null,
+  b: undefined,
+  c: "",
+  d: 0,
+};
+let arr = ["a", "b", "c", "d"];
+arr.forEach((item) => {
+  console.log(item in age);
+});
+// all true
+*/
+
+/*
+function validateAge(age) {
+const { min, max } = age;
+if (!('min' in age) && !('max' in age)) {
+  return true;
+}
+if ('min' in age && !('max' in age)) {
+  throw new Error('max age should not be empty');
+}
+if ('max' in age && !('min' in age)) {
+  throw new Error('min age should not be empty');
+}
+if (min > max) {
+  throw new Error('min age cant be greater than max');
+}
+}
+//this handled 0,0 case 
+imp: but will fail in case of null and undefined
+*/
+
+/*
+
+select id,(select L.* from (SELECT  SUM(L.amt) as amount
+FROM Laser L
+LET proccodeidCond=(CASE WHEN L.patid = L.guarid
+        AND L.patid = id THEN 0 ELSE id END),
+cond2=(L.proccodeid = proccodeidCond
+        OR L.proccodeid = id),
+cond3=( cond2
+        AND L.chartstatus = 90 ), cond4=(cond3   OR  L.patid = id
+                    AND L.proclogclass = 0)
+WHERE META(L).id LIKE 'Laser::920219a1::dtx::fullproclog::%'
+    AND cond4)L)[0]L from [30,31] id
+
+*/
+
+(async () => {
+  console.time();
+  const arr = [];
+  let n = 5;
+
+  for (let i = 1; i <= n; i++) {
+    const primer = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(i);
+      }, 2000);
+    });
+    arr.push(primer);
+  }
+  const res = await Promise.all(arr);
+  console.log(res);
+  console.timeEnd();
+})();

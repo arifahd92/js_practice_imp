@@ -1,6 +1,6 @@
 /** @format */
 
-let arr = [3, 1];
+let arr = [4, 5, 6, 1, 2, 3];
 
 function findPivotIndex(arr) {
   const n = arr.length;
@@ -16,7 +16,7 @@ function findPivotIndex(arr) {
       return mid;
     }
 
-    if (arr[mid] <= arr[end]) {
+    if (arr[mid] < arr[end]) {
       end = mid - 1;
     } else {
       start = mid + 1;

@@ -1,9 +1,9 @@
 /** @format */
 
-//some imp methods are written in dsa here basic will be given
+//some imp methods are written in dsa, here basic will be given
 /*
 let arr = [10, 20, 30];
-const shifted = arr.shift();
+const shifted = arr.shift();// pops brother
 console.log({ arr, shifted }); //{ arr: [ 20, 30 ], shifted: 10 }
 */
 
@@ -21,16 +21,16 @@ console.log({ pushed, arr });//{ pushed: 4, arr: [ 10, 20, 30, 40 ] }, pushed is
 
 /*
 let arr = [10, 20, 30];
-let unShifted = arr.unshift(40);
+let unShifted = arr.unshift(40);// push brother
 console.log({ arr, unShifted });//{ arr: [ 40, 10, 20, 30 ], unShifted: 4 }, same as pop
 */
 
-/*
+// /*
 let arr = [10, 20, 30];
 let res1 = arr.join("");
 console.log(res1); //102030
 console.log(arr.join("::appt::"));
-*/
+// */
 
 /*
 //         0   1    2  3   4
