@@ -3035,41 +3035,26 @@ arr.forEach((item) => {
 
 /*
 function validateAge(age) {
-const { min, max } = age;
-if (!('min' in age) && !('max' in age)) {
-  return true;
+  let { min, max } = age;
+  if (!("min" in age) && !("max" in age)) {
+    return true;
+  }
+  if ("min" in age && !("max" in age)) {
+    throw new Error("max age should not be empty while min is non empty");
+  }
+  if ("max" in age && !("min" in age)) {
+    throw new Error("min age should not be empty while max is non empty");
+  }
+  if (min > max) {
+    throw new Error("min age cant be greater than max");
+  }
 }
-if ('min' in age && !('max' in age)) {
-  throw new Error('max age should not be empty');
-}
-if ('max' in age && !('min' in age)) {
-  throw new Error('min age should not be empty');
-}
-if (min > max) {
-  throw new Error('min age cant be greater than max');
-}
-}
-//this handled 0,0 case 
-imp: but will fail in case of null and undefined
+//this handled 0,0 case
+// imp: but will fail in case of null and undefined
 */
 
 /*
-
-select id,(select L.* from (SELECT  SUM(L.amt) as amount
-FROM Laser L
-LET proccodeidCond=(CASE WHEN L.patid = L.guarid
-        AND L.patid = id THEN 0 ELSE id END),
-cond2=(L.proccodeid = proccodeidCond
-        OR L.proccodeid = id),
-cond3=( cond2
-        AND L.chartstatus = 90 ), cond4=(cond3   OR  L.patid = id
-                    AND L.proclogclass = 0)
-WHERE META(L).id LIKE 'Laser::920219a1::dtx::fullproclog::%'
-    AND cond4)L)[0]L from [30,31] id
-
-*/
-
-(async () => {
+async () => {
   console.time();
   const arr = [];
   let n = 5;
@@ -3085,4 +3070,363 @@ WHERE META(L).id LIKE 'Laser::920219a1::dtx::fullproclog::%'
   const res = await Promise.all(arr);
   console.log(res);
   console.timeEnd();
-})();
+};
+
+
+let x = "",
+  y = "";
+console.log((x || y) && "ab");
+*/
+/*
+let min = "10",
+  max = "0";
+let res =
+  (max || min) &&
+  (min && ` AND B.${"key"} >${min && max ? "=" : ""} ${min} `) +
+    (max && ` AND B.${"key"} <${min && max ? "=" : ""}  ${max} `);
+console.log(res);
+
+*/
+
+/*
+//imp::  date related
+
+const dateRegex =
+  /[1-9][0-9][0-9]{2}-([0][1-9]|[1][0-2])-([1-2][0-9]|[0][1-9]|[3][0-1])/gm;
+let num = 8;
+console.log(num.match?.(dateRegex));
+
+function validate(date) {
+  return new Date(date) >= new Date(new Date().toDateString());
+}
+console.log(validate("2025-01-05"));
+
+console.log(new Date()); //2025-01-16T09:24:24.225Z object
+
+console.log(new Date().toISOString()); //2025-01-16T09:24:24.225Z
+
+console.log(Date.now(), "Date.now()"); //1737024176893 Date.now()
+
+console.log(new Date(Date.now()), "new Date(Date.now())"); //2025-01-16T10:43:58.345Z new Date(Date.now())
+
+console.log(new Date(Date.now()), new Date()); //2025-01-16T10:45:23.377Z 2025-01-16T10:45:23.377Z
+
+console.log(new Date("2025-01-16"), "custom start"); //2025-01-16T00:00:00.000Z custom start
+
+console.log(new Date().setUTCHours(0, 0, 0, 0), "ggg"); //1736985600000
+
+const startToday = new Date(new Date().setUTCHours(0, 0, 0, 0));
+const endToday = new Date(new Date().setUTCHours(23, 59, 59, 999));
+console.log(startToday, endToday);
+
+const anyDysEndDate = new Date(
+  new Date("2024-12-01").setUTCHours(23, 59, 59, 999)
+);
+console.log(anyDysEndDate);
+
+const offset = "-05:30";
+const [hors, min] = offset.split(":");
+console.log(hors, min);
+
+console.log(parseInt("-05")); //-5
+console.log(parseInt("+05")); //-5
+console.log(parseInt("+0.5")); //0
+console.log(+"+0.5"); //0.5
+
+const anyDysEndDateWithSubtractedTimeZone = new Date(
+  new Date("2024-12-01").setUTCHours(
+    23 - parseInt(hors),
+    59 - parseInt(min),
+    59,
+    999
+  )
+);
+console.log(
+  `anyDysEndDateWithSubtractedTimeZone`,
+  anyDysEndDateWithSubtractedTimeZone
+);
+
+*/
+
+/*
+//imp:: try catch without await
+async function func() {
+  try {
+    console.log("try");
+    Promise.reject("6t").catch((e) => {
+      console.log(
+        `from promises catch, i will be executed after event loop pushes in call stack `
+      );
+      return 5;
+    });
+    return "from try"; //this return will not block  execution of finally
+  } catch (error) {
+    console.log(`catch block`);
+  } finally {
+    console.log(`outside try catch or say from finally`);
+    return "returned from outSide / finally";
+  }
+}
+console.log(func()); //Promise { 6 }
+console.log(`i will be executed before .catch of rejected promise`);
+*/
+
+/*
+async function func() {
+  try {
+    console.log("try");
+    Promise.reject("6t").catch((e) => {
+      console.log(
+        `from promises catch, i will be executed after event loop pushes in call stack `
+      );
+      return 5;
+    });
+    return "from try"; //this return will  block  execution of code written after catch
+  } catch (error) {
+    console.log(`catch block`);
+  }
+  console.log(`outside try catch or say from finally`);
+  return "returned from outSide / finally";
+}
+console.log(func()); //Promise { 6 }
+console.log(`i will be executed before .catch of rejected promise`);
+*/
+
+const returnPromise = (timer, val) => {
+  return new Promise((res) => setTimeout(res, timer, val));
+};
+const promiseArr = [1, 2, 3, 4, 5].map((item) =>
+  returnPromise(item * 1000, item * 1000)
+);
+
+function enhancedPromiseDotAll({ promiseArr }) {
+  let count = 0;
+  const percentageCB = (percentage) => {
+    console.log(`execution ${percentage}% completed`);
+  };
+  const promiseArrLength = promiseArr.length;
+  const res = promiseArr.map(async (item) => {
+    const res = await item;
+    count++;
+    const percentage = (count / promiseArrLength) * 100;
+    percentageCB(percentage);
+    return res;
+  });
+  return Promise.all(res);
+}
+enhancedPromiseDotAll({ promiseArr }).then((data) => {
+  console.log(data);
+});
+let patientList = [
+  {
+    id: "01bb4e47",
+    name: "Arohi",
+    email: "arohi@mail.com",
+    contactNumber: "5269854655",
+  },
+  {
+    id: "6f7e0954",
+    name: "Devabc",
+    email: "dev@gmail.com",
+    contactNumber: "9365566562",
+  },
+  {
+    id: "2d9742c7",
+    name: "HloMona",
+    email: "hellomona@gmail.com",
+    contactNumber: "6565555555",
+  },
+  {
+    id: "d2f2136e",
+    name: "Loki is adopted brother",
+    email: "vijay@gmail.com",
+    contactNumber: "8004545454",
+  },
+  {
+    id: "26d698b0",
+    name: "Ms",
+    email: "meet@medianv.com",
+    contactNumber: "4545454545",
+  },
+  {
+    id: "ab2e8c0b",
+    name: "Pathan",
+    email: "swe@gmail.com",
+    contactNumber: "7777777777",
+  },
+  {
+    id: "e33a60a8",
+    name: "Pname",
+    email: "swwp@gmail.com",
+    contactNumber: "8888888888",
+  },
+  {
+    id: "e7baf9e0",
+    name: "Pname",
+    email: "sandip@gmail.com",
+    contactNumber: "9998555555",
+  },
+  {
+    id: "99106285",
+    name: "Pname",
+    email: "a@gmail.com",
+    contactNumber: "1236524561",
+  },
+  {
+    id: "6845eb8b",
+    name: "Pname",
+    email: "ashdkj@gmail.com",
+    contactNumber: "4545454545",
+  },
+  {
+    id: "9c56d59c",
+    name: "Pname",
+    email: "shubh@gmail.com",
+    contactNumber: "5555555555",
+  },
+  {
+    id: "b7071ebb",
+    name: "Pname",
+    email: "mnni@gmail.com",
+    contactNumber: "6969966966",
+  },
+  {
+    id: "5b238003",
+    name: "Pname",
+    email: "e@email.com",
+    contactNumber: "8888888888",
+  },
+  {
+    id: "f597cd0b",
+    name: "Pname",
+    email: "parita@medianv.com",
+    contactNumber: "6355613744",
+  },
+  {
+    id: "8ade3d06",
+    name: "Pname",
+    email: "nn@gmai.com",
+    contactNumber: "6035555555",
+  },
+  {
+    id: "dc0356a8",
+    name: "Pname",
+    email: "nn@test.com",
+    contactNumber: "6055654455",
+  },
+  {
+    id: "8e2c76b4",
+    name: "Sandy",
+    email: "sandip@medianv.com",
+    contactNumber: "4545454545",
+  },
+  {
+    id: "9788b596",
+    name: "Test test",
+    email: "test@xyz.com",
+    contactNumber: "1234567890",
+  },
+  {
+    id: "444f79dc",
+    name: "Test test",
+    email: "",
+    contactNumber: "1234567890",
+  },
+  {
+    id: "1f4c78ec",
+    name: "This is preferred",
+    email: "",
+    contactNumber: "1234567890",
+  },
+  {
+    id: "83dbdfd6",
+    name: "aNAYA ",
+    email: "ana",
+    contactNumber: "4536456457",
+  },
+  {
+    id: "0b1fa91c",
+    name: "anayaaa",
+    email: "a@",
+    contactNumber: "7000125844",
+  },
+  {
+    id: "1c6049ad",
+    name: "arif",
+    email: "arif@mail.com",
+    contactNumber: "5265897451",
+  },
+  {
+    id: "ff552295",
+    name: "ayushi",
+    email: "ayushi@mail.com",
+    contactNumber: "5269854658",
+  },
+  {
+    id: "9eb17976",
+    name: "est",
+    email: "test@gmail.com",
+    contactNumber: "1235647890",
+  },
+  {
+    id: "4c3e86d3",
+    name: "hii",
+    email: "test@1234.com",
+    contactNumber: "1234567890",
+  },
+  {
+    id: "4c585497",
+    name: "hpa",
+    email: "harry@gmail.com",
+    contactNumber: "8888888888",
+  },
+  {
+    id: "01ebc0ad",
+    name: "ironman",
+    email: "tonystark@gmail.com",
+    contactNumber: "1111111111",
+  },
+  {
+    id: "d1f1054b",
+    name: "pavanB",
+    email: "pavan@gmail.com",
+    contactNumber: "9349232321",
+  },
+  {
+    id: "daa8625b",
+    name: "preferredName",
+    email: "aanad@gmail.com",
+    contactNumber: "1234123412",
+  },
+  {
+    id: "bcf70039",
+    name: "preferredName",
+    email: "yogesh@medianv.com",
+    contactNumber: "1234567890",
+  },
+  {
+    id: "799816e6",
+    name: "sfdsdfsdfds user 4",
+    email: "xyz@gmail.com",
+    contactNumber: "8888888888",
+  },
+  {
+    id: "8713b8c6",
+    name: "test patient   user",
+    email: "ab@gmail.com",
+    contactNumber: "9415199138",
+  },
+  {
+    id: "137a2769",
+    name: "test prem",
+    email: "test@gmail",
+    contactNumber: "1234568970",
+  },
+  {
+    id: "8bebf225",
+    name: "test1",
+    email: "test2@gmail.com",
+    contactNumber: "1234567890",
+  },
+];
+console.log(patientList.length);

@@ -21,5 +21,8 @@
   },
   "source": {
     "table": "cd_tbl_schapp_606068b7"
+  },
+  "dependencies": {
+    "dayjs": "^1.11.13"
   }
 }

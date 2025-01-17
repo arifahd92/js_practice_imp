@@ -1,6 +1,6 @@
 /** @format */
 
-let s = "ABCA";
+let s = "ABC";
 
 function swapIthWithJth(s, i, j) {
   let arr = s.split("");
