@@ -3192,13 +3192,13 @@ console.log(func()); //Promise { 6 }
 console.log(`i will be executed before .catch of rejected promise`);
 */
 
+/*
 const returnPromise = (timer, val) => {
   return new Promise((res) => setTimeout(res, timer, val));
 };
 const promiseArr = [1, 2, 3, 4, 5].map((item) =>
   returnPromise(item * 1000, item * 1000)
 );
-
 function enhancedPromiseDotAll({ promiseArr }) {
   let count = 0;
   const percentageCB = (percentage) => {
@@ -3217,216 +3217,110 @@ function enhancedPromiseDotAll({ promiseArr }) {
 enhancedPromiseDotAll({ promiseArr }).then((data) => {
   console.log(data);
 });
-let patientList = [
-  {
-    id: "01bb4e47",
-    name: "Arohi",
-    email: "arohi@mail.com",
-    contactNumber: "5269854655",
-  },
-  {
-    id: "6f7e0954",
-    name: "Devabc",
-    email: "dev@gmail.com",
-    contactNumber: "9365566562",
-  },
-  {
-    id: "2d9742c7",
-    name: "HloMona",
-    email: "hellomona@gmail.com",
-    contactNumber: "6565555555",
-  },
-  {
-    id: "d2f2136e",
-    name: "Loki is adopted brother",
-    email: "vijay@gmail.com",
-    contactNumber: "8004545454",
-  },
-  {
-    id: "26d698b0",
-    name: "Ms",
-    email: "meet@medianv.com",
-    contactNumber: "4545454545",
-  },
-  {
-    id: "ab2e8c0b",
-    name: "Pathan",
-    email: "swe@gmail.com",
-    contactNumber: "7777777777",
-  },
-  {
-    id: "e33a60a8",
-    name: "Pname",
-    email: "swwp@gmail.com",
-    contactNumber: "8888888888",
-  },
-  {
-    id: "e7baf9e0",
-    name: "Pname",
-    email: "sandip@gmail.com",
-    contactNumber: "9998555555",
-  },
-  {
-    id: "99106285",
-    name: "Pname",
-    email: "a@gmail.com",
-    contactNumber: "1236524561",
-  },
-  {
-    id: "6845eb8b",
-    name: "Pname",
-    email: "ashdkj@gmail.com",
-    contactNumber: "4545454545",
-  },
-  {
-    id: "9c56d59c",
-    name: "Pname",
-    email: "shubh@gmail.com",
-    contactNumber: "5555555555",
-  },
-  {
-    id: "b7071ebb",
-    name: "Pname",
-    email: "mnni@gmail.com",
-    contactNumber: "6969966966",
-  },
-  {
-    id: "5b238003",
-    name: "Pname",
-    email: "e@email.com",
-    contactNumber: "8888888888",
-  },
-  {
-    id: "f597cd0b",
-    name: "Pname",
-    email: "parita@medianv.com",
-    contactNumber: "6355613744",
-  },
-  {
-    id: "8ade3d06",
-    name: "Pname",
-    email: "nn@gmai.com",
-    contactNumber: "6035555555",
-  },
-  {
-    id: "dc0356a8",
-    name: "Pname",
-    email: "nn@test.com",
-    contactNumber: "6055654455",
-  },
-  {
-    id: "8e2c76b4",
-    name: "Sandy",
-    email: "sandip@medianv.com",
-    contactNumber: "4545454545",
-  },
-  {
-    id: "9788b596",
-    name: "Test test",
-    email: "test@xyz.com",
-    contactNumber: "1234567890",
-  },
-  {
-    id: "444f79dc",
-    name: "Test test",
-    email: "",
-    contactNumber: "1234567890",
-  },
-  {
-    id: "1f4c78ec",
-    name: "This is preferred",
-    email: "",
-    contactNumber: "1234567890",
-  },
-  {
-    id: "83dbdfd6",
-    name: "aNAYA ",
-    email: "ana",
-    contactNumber: "4536456457",
-  },
-  {
-    id: "0b1fa91c",
-    name: "anayaaa",
-    email: "a@",
-    contactNumber: "7000125844",
-  },
-  {
-    id: "1c6049ad",
-    name: "arif",
-    email: "arif@mail.com",
-    contactNumber: "5265897451",
-  },
-  {
-    id: "ff552295",
-    name: "ayushi",
-    email: "ayushi@mail.com",
-    contactNumber: "5269854658",
-  },
-  {
-    id: "9eb17976",
-    name: "est",
-    email: "test@gmail.com",
-    contactNumber: "1235647890",
-  },
-  {
-    id: "4c3e86d3",
-    name: "hii",
-    email: "test@1234.com",
-    contactNumber: "1234567890",
-  },
-  {
-    id: "4c585497",
-    name: "hpa",
-    email: "harry@gmail.com",
-    contactNumber: "8888888888",
-  },
-  {
-    id: "01ebc0ad",
-    name: "ironman",
-    email: "tonystark@gmail.com",
-    contactNumber: "1111111111",
-  },
-  {
-    id: "d1f1054b",
-    name: "pavanB",
-    email: "pavan@gmail.com",
-    contactNumber: "9349232321",
-  },
-  {
-    id: "daa8625b",
-    name: "preferredName",
-    email: "aanad@gmail.com",
-    contactNumber: "1234123412",
-  },
-  {
-    id: "bcf70039",
-    name: "preferredName",
-    email: "yogesh@medianv.com",
-    contactNumber: "1234567890",
-  },
-  {
-    id: "799816e6",
-    name: "sfdsdfsdfds user 4",
-    email: "xyz@gmail.com",
-    contactNumber: "8888888888",
-  },
-  {
-    id: "8713b8c6",
-    name: "test patient   user",
-    email: "ab@gmail.com",
-    contactNumber: "9415199138",
-  },
-  {
-    id: "137a2769",
-    name: "test prem",
-    email: "test@gmail",
-    contactNumber: "1234568970",
-  },
-  {
-    id: "8bebf225",
-    name: "test1",
-    email: "test2@gmail.com",
-    contactNumber: "1234567890",
-  },
-];
-console.log(patientList.length);
+*/
+//map , forech or any other method triggers promise parallely, despite await , only await changes return
+//value and nothoingh else
+
+// example
+/*
+console.log(promiseArr);
+console.time('a')
+const executedParallely = promiseArr.map(async (item) => await item);
+console.log(executedParallely,'executedParallely')
+console.timeEnd('a')// 0 ms , promise.map completes loop noremally without considering await
+console.time('b')
+Promise.all(promiseArr).then((item)=>{
+  console.timeEnd('b')//only 5 sec
+  console.log(item)
+})
+  */
+
+//imp:
+//  now suppose i have an array of id we want make api call for each id parallely
+/*
+const promiseFunc = (id) => {
+  return new Promise((res, rej) => {
+    if (id === 2) {
+      setTimeout(rej, 1000, "something went wrong");
+    }
+    setTimeout(res, 1000, id * 2);
+  });
+};
+const cbOfMap = async (id) => {
+  try {
+    const res = await promiseFunc(id);
+    return { id, res };
+  } catch (error) {
+    return { id, res: error };
+  }
+};
+(async () => {
+  let ids = [1, 2, 3];
+
+  promiseOfFetchResults = ids.map(cbOfMap);
+  console.time();
+  Promise.all(promiseOfFetchResults)
+    .then((item) => {
+      console.log(item);
+      console.timeEnd(); // 1 second
+    })
+    .catch((e) => console.log(e));
+})();
+*/
+
+/*
+const promise1 = Promise.resolve(1);
+const promise2 = Promise.reject("due to some reason");
+let promiseArr = [promise1, promise2];
+async function fromllToAllSettled(arr) {
+  const mapped = arr.map(async (item) => {
+    try {
+      const res = await item;
+      return { status: true, value: res };
+    } catch (error) {
+      return { status: false, reason: error };
+    }
+  });
+  return  Promise.all(mapped);
+}
+fromllToAllSettled(promiseArr).then((item)=>console.log(item))
+console.log("i will be printed early")
+*/
+Promise.resolve("first")
+  .then((a) => console.log(a))
+  .then((a) => console.log("second"))
+  .then(() => console.log("third"));
+Promise.resolve("fourth")
+  .then((a) => console.log(a))
+  .then((a) => console.log("fifth"))
+  .then(() => console.log("sixth"));
+
+const promise1 = new Promise((res) => setTimeout(res, 1000, "one"));
+const promise2 = new Promise((res) => setTimeout(res, 1000, "two")).then(
+  (res) => res
+);
+promise1.then((res1) => console.log(res1));
+promise2.then((res2) => console.log(res2));
+// here we can say promise2 has unnecessary .then it has no effect
+// the only diffrence is that on 2nd  promise actual code will run on definition
+//same things happens in map function with await it has no effect
+let arr = [1, 2];
+// let promiseArr = arr.map(async (item) => {
+//   return new Promise((res) => setTimeout(res, 5000, item));
+// });
+let promiseArr = arr.map(async (item) => {
+  return await new Promise((res) => setTimeout(res, 5000, item));
+});
+function printPercentage(a) {
+  console.log(a, "mmmmmmmmmmmmmmmmmmm");
+}
+console.log(promiseArr);
+Promise.all(promiseArr).then((item) => console.log(item));
+function AllWithPercentage(arr) {
+  let res = arr.map(async (item) => {
+    const res = await item;
+    printPercentage("yy");
+  });
+  return Promise.all(res);
+}
+AllWithPercentage(promiseArr);
