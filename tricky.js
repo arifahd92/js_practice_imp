@@ -3324,3 +3324,58 @@ function AllWithPercentage(arr) {
   return Promise.all(res);
 }
 AllWithPercentage(promiseArr);
+//----------------------------------------
+const min = "2025-01-24T00:00:00Z";
+const max = "2025-01-24T05:15:00Z";
+console.log(new Date(new Date(max).setUTCHours(0, 0, 0)), new Date(min));
+console.log(
+  new Date(min).toDateString() === new Date(new Date(max)).toDateString()
+);
+
+//imp: if an async function throws error it mens the function is returning rejected promise
+/*
+async function throwErrorByAsyncFunction() {
+  throw new Error("threw error");
+}
+throwErrorByAsyncFunction().catch((e) => {
+  console.log(`e`, e.message);
+});
+*/
+
+/*
+//imp: if you call an async function that returns a rejected promise and still you want to process further and do not want go execution in catch of try catch block
+//imp: use .catch on rejected promise
+async function throwErrorByAsyncFunction() {
+  throw new Error("threw error");
+}
+
+(async () => {
+  try {
+    await throwErrorByAsyncFunction();
+    console.log(`i will nt be executed 1`);
+  } catch (error) {
+    console.log(`error 1`, error.message);
+  }
+})();
+(async () => {
+  try {
+    await throwErrorByAsyncFunction().catch((e) => e.message);
+    console.log(`i will  be executed 2`); //
+  } catch (error) {
+    console.log(`error 2`, error.message);
+  }
+})();
+*/
+//imp:: finally is finally, execution will go inside that even if try / catch has return statement
+function testTryCatch() {
+  try {
+    console.log(w.y);
+    return "try";
+  } catch (error) {
+    console.log(`inside catch`);
+    return "catch";
+  } finally {
+    return "finally";
+  }
+}
+console.log(testTryCatch()); // amazing, finally was returned
