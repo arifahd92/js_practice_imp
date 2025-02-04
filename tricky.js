@@ -2635,14 +2635,14 @@ let myObj = {
 };
 console.log(myObj.sum.bind(6)());
 */
-Array.prototype.filter = function (cb) {
-  let arr = [];
-  for (let i = 0; i < this.length; i++) {
-    let res = cb(this[i]);
-    arr.push(this[i]);
-  }
-  return arr;
-};
+// Array.prototype.filter = function (cb) {
+//   let arr = [];
+//   for (let i = 0; i < this.length; i++) {
+//     let res = cb(this[i]);
+//     arr.push(this[i]);
+//   }
+//   return arr;
+// };
 /*
 let func1 = async (data) => {
   try {

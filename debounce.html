@@ -9,6 +9,23 @@
   </head>
   <body>
     <button id="myButton">click me</button>
-    <script type="module"></script>
+    <script type="module">
+      const button = document.getElementById("myButton");
+
+      const debounced = (() => {
+        let timer;
+        return () => {
+          clearTimeout(timer);
+          timer = setTimeout(handleTaskOnButtonClick, 500);
+        };
+      })();
+      function handleTaskOnButtonClick() {
+        console.log(`'i will be called by debounced'`);
+      }
+      button.addEventListener("click", () => {
+        console.log(`button clicked`);
+        debounced();
+      });
+    </script>
   </body>
 </html>

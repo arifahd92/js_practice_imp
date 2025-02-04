@@ -17,9 +17,10 @@ let constant = 10000; // can be directly access inside class
 // if you want to add a method in multiple classes
 function globalMethod() {
   // console.log("this inside global method", this); //"this" will refer to global this in case of class, but in case of instance "this" will refer to that instance
+  console.log(this.t, "true");
   return "returned value of global method";
 }
-/*
+// /*
 class User {
   t = true;
   globalMethodVal = globalMethod();
@@ -27,8 +28,9 @@ class User {
   constructor(name, age) {
     this.name = name;
     this.age = age;
-    this.t = false;
-    // console.log(`this inside constructor,,,,,,,,,,,,,,,,`, this);
+    this.t = false; // imp: no matter where t is declared, if constructor overwrites, it will be updated
+    //imp: in short class fields position does'nt matter (where class field is declared), constructor is last phase
+    console.log(`this inside constructor,,,,,,,,,,,,,,,,`, this);
   }
   later = false;
   methodOne() {
@@ -48,10 +50,10 @@ console.log(
   user1,
   "instance, i also do not associate methods directly (coz even this do not add methods directly)"
 );
-// console.log(user1.globalMethod()); //returned value of global method
+console.log(user1.globalMethod()); //returned value of global method
 // console.log(user1.methodOne());
 
-*/
+// */
 
 /*
  class Dog {
