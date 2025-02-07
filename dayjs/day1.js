@@ -8,6 +8,8 @@ const utc = require("dayjs/plugin/utc");
 const customParseFormat = require("dayjs/plugin/customParseFormat");
 dayjs.extend(utc);
 dayjs.extend(customParseFormat);
+
+/*
 const currentUtcTime = new Date().toISOString();
 console.log(currentUtcTime);
 
@@ -35,3 +37,11 @@ console.log(b);
 const min = "2025-01-24T05:15:00Z";
 const max = "2025-01-24T05:15:00Z";
 console.log(new Date(min) === new Date(new Date(max).toDateString()));
+*/
+function calculatePercentage({ previousCount, currentCount }) {
+  if (previousCount === 0) {
+    return currentCount === 0 ? 0 : 100;
+  }
+  return Math.ceil(((currentCount - previousCount) / previousCount) * 100);
+}
+calculatePercentage({ previousCount: 19, currentCount: 10 });

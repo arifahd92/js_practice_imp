@@ -3286,6 +3286,7 @@ async function fromllToAllSettled(arr) {
 fromllToAllSettled(promiseArr).then((item)=>console.log(item))
 console.log("i will be printed early")
 */
+/*
 Promise.resolve("first")
   .then((a) => console.log(a))
   .then((a) => console.log("second"))
@@ -3331,7 +3332,7 @@ console.log(new Date(new Date(max).setUTCHours(0, 0, 0)), new Date(min));
 console.log(
   new Date(min).toDateString() === new Date(new Date(max)).toDateString()
 );
-
+*/
 //imp: if an async function throws error it mens the function is returning rejected promise
 /*
 async function throwErrorByAsyncFunction() {
@@ -3366,6 +3367,8 @@ async function throwErrorByAsyncFunction() {
   }
 })();
 */
+
+/*
 //imp:: finally is finally, execution will go inside that even if try / catch has return statement
 function testTryCatch() {
   try {
@@ -3379,3 +3382,41 @@ function testTryCatch() {
   }
 }
 console.log(testTryCatch()); // amazing, finally was returned
+*/
+/*
+let count = 0;
+let arr = [1, 2, 3, 4];
+let res = arr.reduce((acc, curr) => {
+  count += 1;
+  return acc + curr;
+});
+console.log(`res`, res, count); //res 10 3
+// imp:: if default value of acc is not assigned , first element is assigned to acc and loop start from second element, thats why here count was 3
+*/
+
+/*
+
+let count = 0;
+let arr = [1, 2, 3, 4];
+let res = arr.reduce((acc, curr) => {
+  count += 1;
+  return acc + curr;
+}, 0); // assigned default value
+console.log(`res`, res, count); // imp:: res 10 4
+*/
+
+let arr = [1, 2, 3, 4, 6, 9];
+let res = arr.reduce(
+  (acc, curr) => {
+    curr > 5 ? acc.greater.push(curr) : acc.smaller.push(curr);
+    return acc;
+  },
+  { greater: [], smaller: [] } //in single loop found both
+);
+const { greater, smaller } = res;
+console.log({ greater, smaller });
+console.log(
+  `${new Date(
+    new Date("2025-02-04T09:53:46.063Z").setUTCHours(-72)
+  ).toISOString()}`
+);
