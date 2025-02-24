@@ -3420,3 +3420,75 @@ console.log(
     new Date("2025-02-04T09:53:46.063Z").setUTCHours(-72)
   ).toISOString()}`
 );
+/*
+function daterFunc() {
+  console.time("loop");
+  const dater = Date.now();
+  while (Date.now() < dater + 3000) {}
+  console.timeEnd("loop");
+}
+for (let i = 0; i < 3; i++) {
+  setTimeout(() => {
+    daterFunc();
+  }, 0);
+}
+console.timeEnd("global");
+*/
+/*
+function isIsoDate(str) {
+  return /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/.test(str);
+}
+const startTime = new Date().toISOString();
+const slicedStartTime = startTime.slice(0, 19);
+console.log("2024-12-16T06:00:00");
+console.log(slicedStartTime.length);
+console.log(isIsoDate(slicedStartTime));
+*/
+
+//imp: again promise
+/*
+(async () => {
+  try {
+    const promise1 = Promise.reject("rejected");
+    const promise2 = Promise.resolve("resolve");
+    const res1 = await promise1;
+    const res2 = await promise2;
+    console.log(res1, res2);
+  } catch (error) {
+    console.log(`inside catch`);
+    console.log(error);
+  }
+})();
+*/
+
+/*
+//imp: just call a promise and send response to user ands let run promise in background
+//imp: and when promise is resolved log result
+const promise1 = new Promise((res, rej) =>
+  setTimeout(res, 3000, "promise1 resolved")
+);
+const promise2 = new Promise((res, rej) =>
+  setTimeout(rej, 3000, "promise2 rejected")
+);
+(async () => {
+  //i did'nt used await so that this function can return response to its caller before resolving promises
+  promise1
+    .then((data) => console.log(data))
+    .catch((e) => console.log(e.message));
+  promise2.then((data) => console.log(data)).catch((e) => console.log(e));
+  await new Promise((res) => setTimeout(res, 1000, "wait for me only"));
+  console.log(
+    "i will be logged before promise 1 and promise 2 to being settled"
+  );
+})();
+*/
+
+/*
+//imp: destructuring
+const userData = { name: "t", email: "t@", phone: "1235" };
+function printName({ name, ...data }) {
+  console.log(data);
+}
+printName(userData);
+const { name, ...data } = userData; // this is done inside function parameter
+*/
