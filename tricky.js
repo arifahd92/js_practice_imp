@@ -3287,6 +3287,7 @@ fromllToAllSettled(promiseArr).then((item)=>console.log(item))
 console.log("i will be printed early")
 */
 /*
+/*
 Promise.resolve("first")
   .then((a) => console.log(a))
   .then((a) => console.log("second"))
@@ -3302,9 +3303,11 @@ const promise2 = new Promise((res) => setTimeout(res, 1000, "two")).then(
 );
 promise1.then((res1) => console.log(res1));
 promise2.then((res2) => console.log(res2));
+*/
 // here we can say promise2 has unnecessary .then it has no effect
 // the only diffrence is that on 2nd  promise actual code will run on definition
 //same things happens in map function with await it has no effect
+/*
 let arr = [1, 2];
 // let promiseArr = arr.map(async (item) => {
 //   return new Promise((res) => setTimeout(res, 5000, item));
@@ -3315,6 +3318,7 @@ let promiseArr = arr.map(async (item) => {
 function printPercentage(a) {
   console.log(a, "mmmmmmmmmmmmmmmmmmm");
 }
+  
 console.log(promiseArr);
 Promise.all(promiseArr).then((item) => console.log(item));
 function AllWithPercentage(arr) {
@@ -3325,6 +3329,8 @@ function AllWithPercentage(arr) {
   return Promise.all(res);
 }
 AllWithPercentage(promiseArr);
+*/
+/*
 //----------------------------------------
 const min = "2025-01-24T00:00:00Z";
 const max = "2025-01-24T05:15:00Z";
@@ -3370,6 +3376,7 @@ async function throwErrorByAsyncFunction() {
 
 /*
 //imp:: finally is finally, execution will go inside that even if try / catch has return statement
+/*
 function testTryCatch() {
   try {
     console.log(w.y);
@@ -3383,40 +3390,3 @@ function testTryCatch() {
 }
 console.log(testTryCatch()); // amazing, finally was returned
 */
-/*
-let count = 0;
-let arr = [1, 2, 3, 4];
-let res = arr.reduce((acc, curr) => {
-  count += 1;
-  return acc + curr;
-});
-console.log(`res`, res, count); //res 10 3
-// imp:: if default value of acc is not assigned , first element is assigned to acc and loop start from second element, thats why here count was 3
-*/
-
-/*
-
-let count = 0;
-let arr = [1, 2, 3, 4];
-let res = arr.reduce((acc, curr) => {
-  count += 1;
-  return acc + curr;
-}, 0); // assigned default value
-console.log(`res`, res, count); // imp:: res 10 4
-*/
-
-let arr = [1, 2, 3, 4, 6, 9];
-let res = arr.reduce(
-  (acc, curr) => {
-    curr > 5 ? acc.greater.push(curr) : acc.smaller.push(curr);
-    return acc;
-  },
-  { greater: [], smaller: [] } //in single loop found both
-);
-const { greater, smaller } = res;
-console.log({ greater, smaller });
-console.log(
-  `${new Date(
-    new Date("2025-02-04T09:53:46.063Z").setUTCHours(-72)
-  ).toISOString()}`
-);
