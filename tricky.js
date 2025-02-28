@@ -87,6 +87,7 @@ function foo() {
 }
 foo();
 */
+//imp:  parameter value that is passed as an argument to a function is not changed, or we can say here a inside a function is local variable a of with with value 1
 
 /*
 var x = 10;
@@ -110,7 +111,7 @@ var innerFunction1 = outer(100);
 var innerFunction2 = outer(200);
 innerFunction1();
 innerFunction2();
-*/
+// */
 //imp: when ever a function is called it captures all variable and creates a copy of them in its scope, that is isolated from other function calls, they are not shared between function calls, thus they are not over written by next call of function. this is called closure.
 //imp: same thing happens when we create object using class or construtor function
 
@@ -3405,21 +3406,21 @@ let res = arr.reduce((acc, curr) => {
 console.log(`res`, res, count); // imp:: res 10 4
 */
 
-let arr = [1, 2, 3, 4, 6, 9];
-let res = arr.reduce(
-  (acc, curr) => {
-    curr > 5 ? acc.greater.push(curr) : acc.smaller.push(curr);
-    return acc;
-  },
-  { greater: [], smaller: [] } //in single loop found both
-);
-const { greater, smaller } = res;
-console.log({ greater, smaller });
-console.log(
-  `${new Date(
-    new Date("2025-02-04T09:53:46.063Z").setUTCHours(-72)
-  ).toISOString()}`
-);
+// let arr = [1, 2, 3, 4, 6, 9];
+// let res = arr.reduce(
+//   (acc, curr) => {
+//     curr > 5 ? acc.greater.push(curr) : acc.smaller.push(curr);
+//     return acc;
+//   },
+//   { greater: [], smaller: [] } //in single loop found both
+// );
+// const { greater, smaller } = res;
+// console.log({ greater, smaller });
+// console.log(
+//   `${new Date(
+//     new Date("2025-02-04T09:53:46.063Z").setUTCHours(-72)
+//   ).toISOString()}`
+// );
 /*
 function daterFunc() {
   console.time("loop");
@@ -3492,3 +3493,19 @@ function printName({ name, ...data }) {
 printName(userData);
 const { name, ...data } = userData; // this is done inside function parameter
 */
+let arr = [1, 2, 3, [4, 5, [6], [7, 8], 11, 12], 9, 10];
+const res = flattenArray(arr);
+
+function flattenArray(arr, i = 0, ans = []) {
+  for (let i = 0; i < arr.length; i++) {
+    if (Array.isArray(arr[i])) {
+      ans = [...ans, ...flattenArray(arr[i])];
+    } else {
+      ans.push(arr[i]);
+    }
+  }
+  return ans;
+}
+
+console.log(res); // [1, 2, 3, 4, 5, 6, 7, 8, 11, 12, 9, 10]
+
