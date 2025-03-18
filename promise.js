@@ -152,3 +152,25 @@ Promise.reject(new Error('Failed')).catch(error => {
 
 These advanced promise methods allow for flexible and powerful handling of multiple asynchronous operations in JavaScript, making it easier to manage complex workflows and error handling scenarios.
 */
+//imp: promise Chaining 
+// Example of promise chaining
+const step1 = () => Promise.resolve("Step 1 completed");
+const step2 = (data) => Promise.resolve("Step 2 completed");
+const step3 = (data) => Promise.resolve("Step 3 completed");
+
+// Chaining promises
+step1()
+  .then((result1) => {
+    console.log(result1); // Logs: "Step 1 completed"
+    return step2(result1);
+  })
+  .then((result2) => {
+    console.log(result2); // Logs: "Step 2 completed"
+    return step3(result2);
+  })
+  .then((result3) => {
+    console.log(result3); // Logs: "Step 3 completed"
+  })
+  .catch((error) => {
+    console.error("Error occurred:", error); // Handles errors
+  });

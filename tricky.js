@@ -3493,6 +3493,7 @@ function printName({ name, ...data }) {
 printName(userData);
 const { name, ...data } = userData; // this is done inside function parameter
 */
+/*
 let arr = [1, 2, 3, [4, 5, [6], [7, 8], 11, 12], 9, 10];
 const res = flattenArray(arr);
 
@@ -3509,3 +3510,122 @@ function flattenArray(arr, i = 0, ans = []) {
 
 console.log(res); // [1, 2, 3, 4, 5, 6, 7, 8, 11, 12, 9, 10]
 
+*/
+
+/*
+
+// move 0's in left and non 0's in right
+
+let arr = [1, 2, 3, 0, 4, 0, 5, 0, 0];
+let zeroPlace = 0;
+let nonZeroPlace = arr.length - 1;
+while (zeroPlace < nonZeroPlace) {
+  if (arr[zeroPlace] > 0 && arr[nonZeroPlace] == 0) {
+    [arr[zeroPlace], arr[nonZeroPlace]] = [arr[nonZeroPlace], arr[zeroPlace]]; // both has opposite values ( swap and move)
+    zeroPlace++, nonZeroPlace--;
+  } else if (arr[zeroPlace] === 0) {
+    // zeroPlace has zero but nonZeroPlace has not non zero (or nonZero place also has also zero)
+    zeroPlace++;
+  } else if (arr[nonZeroPlace] > 0) {
+    nonZeroPlace--;
+  }
+}
+console.log(arr);
+*/
+// let arr = [1, 2, 3, 0, 4, 0, 5, 0, 0]; //swap and maintain order
+
+/*
+//imp: 
+const odd = arr.reduce((acc, curr) => {
+  console.log(curr)
+  curr % 2 && acc.push(curr);
+  return acc;
+}, []);
+console.log(odd);
+
+*/
+/*
+// imp: suppose you have an end point that support update by id, you have array of ids
+
+const disableCronById = (item) => {
+  if (item % 2) {
+    return new Promise((res, rej) => setTimeout(res, 1000, item));
+  } else {
+    return new Promise((res, rej) => setTimeout(rej, 1000, item));
+  }
+};
+(async () => {
+  let cronIds = [1, 2, 3, 4];
+
+  console.time();
+
+  const mappedArr = cronIds.map(async (item) => {
+    try {
+      await disableCronById(item); // suppose here u r making update request (disableCronById) it may success or fail, here await is making sure that if request is rejected it go in catch
+      return { status: true, id: item };
+    } catch (error) {
+      return { status: false, id: item };
+    }
+  });
+  const mappedValues = await Promise.all(mappedArr);
+
+  console.timeEnd(); //default: 1.015s
+
+  const successId = mappedValues
+    .filter(({ status }) => status)
+    .map(({ id }) => id);
+
+  const failedId = mappedValues
+    .filter(({ status }) => !status)
+    .map(({ id }) => id);
+  console.log({ successId, failedId }); //{ successId: [ 1, 3 ], failedId: [ 2, 4 ] }
+})();
+*/
+
+/*
+let arr = [1, 3, 2, 4];
+function handleSort(arr) {
+  sortDesc(arr);
+}
+handleSort(arr);
+console.log(arr);
+function sortDesc(arr) {
+  arr.sort((a, b) => a - b);
+}
+
+let x = -123;
+// Output: 321
+
+let remaining = Math.abs(x);
+let ans = 0;
+
+while (remaining > 0) {
+  const last = remaining % 10;
+  remaining = Math.floor(remaining / 10);
+  ans = ans * 10 + last;
+}
+*/
+//imp: whose .then handler will be registered first will get printed first (if settling time is same )
+/*
+new Promise((res)=>{
+  console.log(`i will print first`)
+  res(1)
+  console.log(`second`)
+  Promise.resolve(2).then((data)=>{
+    console.log(data)
+  })
+}).then((data)=>console.log(data))
+console.log(3)
+*/
+
+/*
+new Promise((res,rej)=>{
+  console.log(`i will print first`)
+  rej('ghtgt')
+  console.log(`second`)
+  Promise.resolve(2).then((data)=>{
+    console.log(data)
+  })
+}).then((data)=>console.log(data)).catch((e)=>console.log(e))
+console.log(3)
+*/

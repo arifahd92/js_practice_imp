@@ -7,7 +7,7 @@
  * //generally objects are created from Object constructor function
  *
  * //prototype of a function is {} so __proto__ of {} is equal to prototype of Object function as we know __proto__ of an object is
- * //ref. to the function from which the object created
+ * //ref. to the prototype of function from which the object was created
  *
  *  prototype is a property of a Function object. It is the prototype of objects constructed by that function.
  *
@@ -74,4 +74,39 @@ console.log(obj); //{ name: 'ee', email: 'dd@gmail.com' }
 let arr = Object.keys(obj);
 console.log(arr);
 
+*/
+/*
+
+{
+    "transitional": {
+        "silentJSONParsing": true,
+        "forcedJSONParsing": true,
+        "clarifyTimeoutError": false
+    },
+    "adapter": [
+        "xhr",
+        "http",
+        "fetch"
+    ],
+    "transformRequest": [
+        null
+    ],
+    "transformResponse": [
+        null
+    ],
+    "timeout": 0,
+    "xsrfCookieName": "XSRF-TOKEN",
+    "xsrfHeaderName": "X-XSRF-TOKEN",
+    "maxContentLength": -1,
+    "maxBodyLength": -1,
+    "env": {},
+    "headers": {
+        "Accept": "application/json, text/plain, *",
+        "Content-Type": "application/json",
+        "Authorization": "d8e0b11fbfe76bc2f65f08406bee31"
+    },
+    "url": "http://dev-api.daily.local:30008/api",
+    "data": "{\"query\":\"mutation MyMutation($page: Int , $perPage: Int , $search: String , $sortKey: String , $sortValue: String ) { PATIENT_SVC_PatientService_patientGroupList( input: {page: $page, perPage: $perPage, search: $search, sortKey: $sortKey, sortValue: $sortValue} ) { data { count groupListData { groupName id patientCount uniqueEmailCount uniqueNumberCount updatedAt } } error status } }\",\"variables\":{\"perPage\":20,\"page\":1,\"search\":\"\",\"sortKey\":\"groupName\",\"sortValue\":\"asc\"}}",
+    "method": "post"
+}
 */

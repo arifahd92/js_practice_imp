@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Delegation Example</title>
+    <p>Event Propagation Recap
+        Event propagation in the DOM consists of three phases:
+        
+        Capturing Phase: The event travels from the root of the DOM tree (e.g., document) to the target element.
+        
+        Target Phase: The event reaches the target element where it was triggered.
+        
+        Bubbling Phase: The event travels back up from the target element to the root of the DOM tree.
+        
+        By default, most event listeners operate in the bubbling phase, but we can use event capturing by setting the capture option to true.</p>
+</head>
+<body>
+    <ul id="item-list">
+        <li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+        <li>Item 4</li>
+    </ul>
+
+    <script>
+        // Select the parent element (the <ul>)
+        const itemList = document.getElementById('item-list');
+
+        // Attach an event listener to the parent using event bubbling
+        itemList.addEventListener('click', function(event) {
+            // Check if the clicked element is a <li>
+                for(const key in event.target){
+                    console.log(key, event.target[key])
+                }
+            if (event.target.tagName === 'LI') {
+                // Update the text content of the clicked <li> item
+                event.target.textContent = `${event.target.textContent} clicked`;
+            }
+        });
+    </script>
+</body>
+</html>

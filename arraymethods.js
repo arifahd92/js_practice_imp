@@ -75,3 +75,63 @@ console.log(arr.includes(4)); //true
 console.log(arr.find((item) => item > 2)); // 3
 console.log(arr.findIndex((item) => item > 2)); // 2, index of 3
 */
+
+//imp:  Arrays.prototype.sort
+//in case of undefined provide a fallback value as it don't work as expected
+/*
+function sortObjects(arr) {
+  return arr.sort((a, b) => {
+    // Convert createdAt to Date objects, handle case where there's only the date part
+    const aCreatedAt = a.createdAt ? new Date(a.createdAt) : null;
+    const bCreatedAt = b.createdAt ? new Date(b.createdAt) : null;
+    
+    // If createdAt is null or undefined in a, prioritize a
+    if (!aCreatedAt) return 1;
+    // If createdAt is null or undefined in b, prioritize b
+    if (!bCreatedAt) return -1;
+
+    // Compare createdAt values (for descending order)
+    if (aCreatedAt > bCreatedAt) return -1;
+    if (aCreatedAt < bCreatedAt) return 1;
+
+    // Convert updatedAt to Date objects
+    const aUpdatedAt = new Date(a.updatedAt);
+    const bUpdatedAt = new Date(b.updatedAt);
+
+    // If createdAt is the same, compare updatedAt values (for descending order)
+    if (aUpdatedAt > bUpdatedAt) return -1;
+    if (aUpdatedAt < bUpdatedAt) return 1;
+
+    return 0; // They are equal
+  });
+}
+
+const data = [
+  { createdAt: '2025-03-06', updatedAt: '2025-03-06T12:00:00Z' },
+  { createdAt: '2025-03-06T10:00:00Z', updatedAt: '2025-03-06T11:00:00Z' },
+  { createdAt: null, updatedAt: '2025-03-06T10:00:00Z' },
+  { createdAt: '2025-03-06', updatedAt: '2025-03-06T09:00:00Z' }
+];
+
+console.log(sortObjects(data));
+*/
+//imp 
+/*
+
+
+The callback function is called with two elements (a and b) at a time. It returns:
+
+-1 if a should come before b
+
+1 if a should come after b
+
+0 if a and b are equal in terms of ordering
+
+if uoy write like 
+
+if(b<a){
+return -1
+}//here you are pushing up to a when a is greater it will sort in descending order 
+
+//imp: trick take decision on a , return -1 to come a before b 
+*/

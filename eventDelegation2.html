@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Capturing Use Case</title>
+    <style>
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            z-index: 1;
+        }
+        .dropdown-menu.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="dropdown">
+        <button id="dropdown-btn">Toggle Dropdown</button>
+        <div class="dropdown-menu">
+            <p>Menu Item 1</p>
+            <p>Menu Item 2</p>
+            <p>Menu Item 3</p>
+        </div>
+    </div>
+
+    <script>
+        const dropdown = document.querySelector('.dropdown');
+        const dropdownMenu = document.querySelector('.dropdown-menu');
+        const dropdownBtn = document.getElementById('dropdown-btn');
+
+        // Toggle the dropdown menu on button click
+        dropdownBtn.addEventListener('click', function(event) {
+            event.stopPropagation(); // Prevent click event from bubbling to the parent
+            dropdownMenu.classList.toggle('show');
+        });
+
+        // Add a capturing-phase event listener to the document
+        document.addEventListener(
+            'click',
+            function() {
+                // Close the dropdown if it’s open
+                if (dropdownMenu.classList.contains('show')) {
+                    dropdownMenu.classList.remove('show');
+                }
+            },
+            true // Enable event capturing
+        );
+    </script>
+</body>
+</html>
+// promise is reference to the async task on which we can add .then and .catch method 
