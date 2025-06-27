@@ -6,8 +6,8 @@
  *
  * //generally objects are created from Object constructor function
  *
- * //prototype of a function is {} so __proto__ of {} is equal to prototype of Object function as we know __proto__ of an object is
- * //ref. to the prototype of function from which the object was created
+ * //prototype of a function is {} so __proto__ of {}(functions prototype) is equal to prototype of Object function as we know __proto__ of an object is
+ * //ref. to the prototype of function from which the object was created (prototype of function {} created from Object)
  *
  *  prototype is a property of a Function object. It is the prototype of objects constructed by that function.
  *

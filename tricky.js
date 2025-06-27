@@ -2849,7 +2849,7 @@ console.log(this3 === this4); // false
 
 // for instances this3 and this4, 'this' of spFunction will be different different
 // for each instances, constructor function has different different `this`
-//imp when a function is invoked with new keyword, it creates separate-separate  this for each invocation of that function and  adds all properties and method in `this`and return that this, same thing happens in class 
+//imp when a function is invoked with new keyword, it creates separate-separate  this for each invocation of that function and  adds all properties and method in `this`and return that this, same thing happens in class
 function User(name) {
   this.name = name;
   this.printName = () => console.log(this.name);
@@ -3535,7 +3535,7 @@ console.log(arr);
 // let arr = [1, 2, 3, 0, 4, 0, 5, 0, 0]; //swap and maintain order
 
 /*
-//imp: 
+//imp:
 const odd = arr.reduce((acc, curr) => {
   console.log(curr)
   curr % 2 && acc.push(curr);
@@ -3629,3 +3629,38 @@ new Promise((res,rej)=>{
 }).then((data)=>console.log(data)).catch((e)=>console.log(e))
 console.log(3)
 */
+
+
+/*
+// imp: if you are calling a function passing a call back that callback will be executed by that function 
+// in this case call the function iside a promise and pass res as call back when callback will be 
+
+(async () => {
+
+  // simulate async task with a callback
+  function getGreeting(name, callback) {
+    setTimeout(() => {
+      const greeting = `Hello, ${name}! 🌟`;
+      callback(greeting);
+    }, 1000); // simulate 1 second delay
+  }
+
+  // usage
+  const userName = "Arif";
+  let message = 'initial'
+  getGreeting(userName, (greetingMessage) => {
+    message = greetingMessage
+  });
+  console.log(message)// initial
+
+  getGreeting(userName, (greetingMessage) => {
+    console.log(greetingMessage)
+  });
+
+
+  const directExtractMessage = await new Promise((res) => {
+    getGreeting(userName, res)//as soon as res will be called by getGreeting this promise will be resolved and we will be value 
+  })
+  console.log(directExtractMessage)// Hello, Arif! 🌟 
+})()
+  */

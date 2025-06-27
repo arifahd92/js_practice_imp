@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Socket.IO Room Test</title>
+  </head>
+  <body>
+    <h1>Socket.IO Room Test</h1>
+    <p id="status">Connecting...</p>
+
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script>
+      const roomId = "cs_684023c0e425ee4e61729fe6"; // Room to listen on
+      const token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2Y1MjRiMzlhNGVkZjA0Mzc4YTg0MmQiLCJkZXZpY2VJZCI6IjM2YzEzMTUwMDVjOTRjMDgiLCJpYXQiOjE3NDg1ODQyNzgsImV4cCI6MTc4MDE0MTg3OH0.Axnvx1RKmeTylwZnUy3JsUdooxvTMtNTb57xDFxMYNo";
+
+      const socket = io("http://localhost:8088", {
+        query: {
+          token: token,
+          fcmToken: "browser-client", // optional
+          lastSynced: new Date().toISOString(), // optional
+        },
+        transports: ["websocket"],
+      });
+
+      socket.on("connect", () => {
+        console.log("✅ Connected:", socket.id);
+        document.getElementById(
+          "status"
+        ).textContent = `Connected as ${socket.id}`;
+
+        // Listen for events emitted to this room
+        socket.on(roomId, (data) => {
+          console.log(`📩 Message received in room ${roomId}:`, data);
+        });
+        socket.on("messages:incoming", (data) => {
+          console.log("📩 Message received:", data);
+        });
+        // Optionally listen to system messages
+        socket.on("joined_rooms", (rooms) => {
+          console.log("🔔 Joined Rooms:", rooms);
+        });
+      });
+
+      socket.on("connect_error", (err) => {
+        console.error("❌ Connection Error:", err.message);
+        document.getElementById("status").textContent = "Connection failed";
+      });
+
+      socket.on("auth_error", (data) => {
+        console.error("🚫 Auth Error:", data);
+        document.getElementById("status").textContent = "Unauthorized";
+      });
+    </script>
+  </body>
+</html>

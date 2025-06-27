@@ -199,6 +199,7 @@ console.log(keyArr); // Output: ["name", "age", "occupation", "nationality", "ge
 // console.log(res);
 // var date = new Date(res); // Or the date you'd like converted.
 // var isoDateTime = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+/*
 const dayjs = require("dayjs");
 const utc = require("dayjs/plugin/utc");
 const timezone = require("dayjs/plugin/timezone");
@@ -216,3 +217,20 @@ const convertFromUTC = (utcTime, targetTimeZone) => {
 
 // Example usage:
 console.log(convertFromUTC("2013-11-18T06:25:20.000Z", "Asia/Kolkata")); // 2013-11-18T11:55:20
+*/
+
+//   let {page, perpage, search = '', callStatus = ["y",'t'], callType = ['o','i']} = {page:1, perpage :20};
+//   const searchQuery = search && `&search=${search}`;
+//   const callStatusQuery =
+//     callStatus.map(item => `&callStatus=${item}`).join('') ?? '';
+//   const callTypeQuery =
+//     callType.map(item => `&callType=${item}`).join('') ?? '';
+
+//   let queryParam = `?page=${page}&perpage=${perpage}${callStatusQuery}${callTypeQuery}`;
+// console.log(queryParam)
+
+const time = Date.now()
+const rs=  time-10
+console.log(time, time-10, time>rs, typeof rs, typeof time)
+
+console.log(new Date(time-190))
