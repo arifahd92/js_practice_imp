@@ -1915,4 +1915,38 @@ const userWithPosts = users.reduce((acc, curr) => {
   acc.push(userWithPost);
   return acc;
 }, []);
-console.log(userWithPosts[0]);
+// console.log(userWithPosts[0]);
+
+let userDetail = {
+  name: "abcd",
+  email: "123@email.com",
+  age: undefined,
+  marks: [12, 3],
+  maritalStatus: null,
+  address: {
+    village: "abcd",
+    street: undefined,
+    house: null,
+  },
+};
+
+function addNonUndefinedProperties(obj) {
+  let filteredObj = {};
+
+  for (const [key, value] of Object.entries(obj)) {
+    // Handle nested object (but not array)
+    if (value !== null && typeof value === "object" && !Array.isArray(value)) {
+      let innerRes = addNonUndefinedProperties(value);
+      filteredObj[key] = innerRes;
+    }
+    // Keep if not undefined
+    else if (value !== undefined) {
+      filteredObj[key] = value;
+    }
+  }
+
+  return filteredObj;
+}
+
+console.log(addNonUndefinedProperties(userDetail));
+

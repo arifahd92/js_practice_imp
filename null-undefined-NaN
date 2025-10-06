@@ -1,0 +1,69 @@
+//imp !: null and undefined are loosely equal and all other falsy value return false with null and undefined 
+// imp: string conversion of all falsy value is just wrapped in string 
+
+
+//imp null and undefined are only equal to each other and not to any other falsy value
+console.log(null == undefined)// true
+// imp NaN is not equal to anything including itself
+console.log(NaN == NaN)// false
+
+
+//imp :1 if you fund equality question so first check is NaN present any side if yes say false 
+// imp :2 if Not case 1 then check is null or undefined present any side if yes then check other side is null or undefined if not say false
+
+
+//imp string conversion of falsy values is just wrapped in string (including null)
+
+let falsyArray = [0, false, '', null, NaN, undefined]
+console.log('string conversion of falsy values')
+const stringFalsyArray = falsyArray.map((item) => ({ item, string: String(item) }))
+console.log(stringFalsyArray, "falsy values converted to string")
+console.log('' == false)// from number conversion true
+console.log(undefined == false)// false, but not from number conversion , from special rule of null and undefined
+console.log(null == false)
+// NaN and undefined can not be converted in number and all other converted to 0
+console.log('number conversion of falsy values')
+const numberConversionOfFalsy = falsyArray.map((item) => ({
+    item,
+    number: Number(item)
+}))
+console.log(numberConversionOfFalsy, "falsy values converted to number")
+//imp number conversion of falsy values is 0except NaN and undefined
+console.log(
+    null == undefined,//true
+    null == '',//any side null /undefined is not equal to any other falsy value
+    null == 0,
+    null == false,
+    null == NaN,
+    null == !NaN,//false(because null == true)
+    null !== NaN,// true
+)
+//number conversion of falsy values
+console.log(
+    Number(null),// 0 null intensional empty value
+    Number(undefined), //NaN
+    Number(NaN),//NaN
+    Number(false),// 0
+    Number(''),//0
+    Number([])// 0
+)
+
+// NaN is not to equal to anything including itself
+// use Number.isNaN to check is value NaN
+// Number.isNaN just check is value NaN or not but isNaN first convert its arguments to number
+//  then checks is it NaN or not 
+console.log(
+    NaN == NaN,
+    NaN == false,
+    Number.isNaN(NaN),// true
+    isNaN(NaN),
+    Number.isNaN(''), // did'nt try to convert in number to its arguments, false 
+    isNaN(''),// safely converted number so false 
+    Number.isNaN('uu'),// false, did'nt try to convert in number 
+    isNaN('uu'),// true, first tried to convert in number and got NaN
+)
+
+// comparison with boolean => if null , undefined , NaN is not then both side are converted to number  
+console.log([] == false)// true 
+
+console.log(null == false)
