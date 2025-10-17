@@ -3630,7 +3630,6 @@ new Promise((res,rej)=>{
 console.log(3)
 */
 
-
 /*
 // imp: if you are calling a function passing a call back that callback will be executed by that function 
 // in this case call the function iside a promise and pass res as call back when callback will be 
@@ -3664,3 +3663,30 @@ console.log(3)
   console.log(directExtractMessage)// Hello, Arif! 🌟 
 })()
   */
+
+const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+const { odd, even } = numbers.reduce(
+  (acc, current) => {
+    console.log(current);
+    if (current % 2) {
+      acc.odd.push(current);
+    } else {
+      acc.even.push(current);
+    }
+    return acc;
+  },
+  { even: [], odd: [] }
+);
+console.log(odd, even);
+
+const odd2 = [];
+const even2 = [];
+for (const item of numbers) {
+  if (item % 2) {
+    odd2.push(item);
+  } else {
+    even2.push(item);
+  }
+}
+console.log(odd2, even2);
