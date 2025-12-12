@@ -18,7 +18,6 @@
 // const anotherAnimal = new dog.constructor("Bird");
 // console.log(anotherAnimal.type); // Output: Bird
 
-
 /*
 function asyncTimer(a) {
   setTimeout(() => {
@@ -33,7 +32,6 @@ const canYouProvideMeUpdatedA = (updatedA) => {
 const res = asyncTimer(5)
 console.log(res)
 */
-
 
 /*
 //solution 
@@ -64,7 +62,7 @@ const canYouProvideMeUpdatedA = (updatedA) => {
 //     }, 0)
 //     return a
 //   }
-//   //don't change any thing in "canYouProvideMeUpdatedA" 
+//   //don't change any thing in "canYouProvideMeUpdatedA"
 //   const canYouProvideMeUpdatedA = (updatedA) => {
 //     console.log('im updated A', updatedA)
 //   }
@@ -76,8 +74,7 @@ const canYouProvideMeUpdatedA = (updatedA) => {
 //   console.log(`updated a ${res}`)
 // })()
 
-
-let arr = [1, 2, 3, 4, 5]
+let arr = [1, 2, 3, 4, 5];
 
 // let filtered = arr.filter((item) => item > 3)
 // console.log(filtered)
@@ -110,20 +107,36 @@ const reduceRes = arr.myReduce((acc, curr, ind) => {
 }, [])
 console.log(reduceRes)
 */
-const multiplier = {
-  factor: 2
+// const multiplier = {
+//   factor: 2
+// };
+
+// const nums = [1, 2, 3];
+
+// const mapCb = (val) => {
+//   return val * this.factor;
+// }
+
+// const doubled = nums.map(function (val) {
+
+//   return mapCb(val)
+// }, multiplier);
+
+// console.log(doubled);
+
+Array.prototype.myReduce = function (cb, acc) {
+  const isCurrNullOrUndefined = acc == null;
+  let i = isCurrNullOrUndefined ? 1 : 0;
+  acc = isCurrNullOrUndefined ? this[0] : acc;
+  console.log(i, acc);
+  for (i; i < this.length; i++) {
+    acc = cb( acc,this[i]);
+  }
+  return acc;
 };
 
-const nums = [1, 2, 3];
-
-const mapCb = (val) => {
-  return val * this.factor;
-}
-
-const doubled = nums.map(function (val) {
-
-
-  return mapCb(val)
-}, multiplier);
-
-console.log(doubled);
+const sum = arr.myReduce((acc, curr) => {
+  acc[curr] = (acc[curr] || 0) + 1;
+  return acc;
+},{});
+console.log(sum);
