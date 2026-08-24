@@ -1,3 +1,6 @@
+// objects ka janm function se hi hota hai,  aur har function ka ek prototype hota hai, jo ki {} hota hai, aur ye prototype object ka __proto__ , Object constructor ke prototype ko point karta hai
+//Object constructor ke prototype me kuchh methods hote hai jaise hasOwnProperty, isPrototypeOf, toString, valueOf etc, ye methods har object ke liye available hote hai, kyoki har object ka __proto__ , Object constructor ke prototype ko point karta hai
+// har constructor function ka ek prototype hota hai, aur ye prototype object ka __proto__ , Object constructor ke prototype ko point karta hai
 // Key Points About __proto__:
 // Reference to the Prototype:
 
@@ -77,3 +80,5 @@ myObj.sayHello()//err, myObj.sayHello is not a function
 //null ke alawa aap kuchh bhi assign karoge to chain , Object.prototype tak pahunch jayegi au sayHellow method access ho jayega
 myObj.__proto__=undefined
 myObj.sayHello()
+
+

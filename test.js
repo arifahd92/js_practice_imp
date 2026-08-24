@@ -235,17 +235,14 @@ console.log(convertFromUTC("2013-11-18T06:25:20.000Z", "Asia/Kolkata")); // 2013
 
 // console.log(new Date(time-190))
 
-
-
-
-let arr = [1, 2, 3]
-arr.forEach((item) => {
-  if (item === 1) {
-    return
-  }
-  console.log({ item })
-  return
-})
+// let arr = [1, 2, 3]
+// arr.forEach((item) => {
+//   if (item === 1) {
+//     return
+//   }
+//   console.log({ item })
+//   return
+// })
 /*
 with fullRecord  as (select A.id as Aid, A.name as Aname, B.id as Bid, B.name as Bname from A
  full join B on A.id = B.id)
@@ -267,16 +264,24 @@ const obj2= formObj(english, 80)//{userId:2, sub_english:100}
 
 
 */
-let count = 0
-const formObj = (subjectName, marks) => {
-  return {
-    userId: ++count,
-    [`sub_${subjectName}`]: marks ?? 40
-  }
-}
-const obj1 = formObj('maths', 100)//{userId:1, sub_maths:100}
-const obj2 = formObj('english', 80)//{userId:2, sub_english:100}
-const obj3 = formObj('english')//{userId:3, sub_english:40}
-// marks can be only 3 types any positive number including 0 , null and undefined 
-// if marks value is 0 consider 0 but in case of null and undefined default passing mark that is 40 
-console.log(obj1, obj2, obj3)//
+// let count = 0
+// const formObj = (subjectName, marks) => {
+//   return {
+//     userId: ++count,
+//     [`sub_${subjectName}`]: marks ?? 40
+//   }
+// }
+// const obj1 = formObj('maths', 100)//{userId:1, sub_maths:100}
+// const obj2 = formObj('english', 80)//{userId:2, sub_english:100}
+// const obj3 = formObj('english')//{userId:3, sub_english:40}
+// marks can be only 3 types any positive number including 0 , null and undefined
+// if marks value is 0 consider 0 but in case of null and undefined default passing mark that is 40
+// console.log(obj1, obj2, obj3)//
+
+const obj = { name: "arif", email: "arif@example.com" };
+console.log(obj.__proto__); // Output: [object Object]
+console.log(obj.__proto__.__proto__); // Output: null
+function Person(name, email) {}
+console.log(Person.__proto__); // Output: [Function: Person]
+console.log(Person.prototype); 
+console.log(Object.__proto__); // Output: [Function: Object]
